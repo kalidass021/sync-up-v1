@@ -1,7 +1,12 @@
+import { Outlet } from 'react-router-dom';
 import './index.css';
 
 const App = () => {
-  return <h1 className='text-3xl font-bold underline'>Hello, Sync Up</h1>;
+  return (
+    <main className='flex h-screen'>
+      <Outlet />
+    </main>
+  );
 };
 
 export default App;
