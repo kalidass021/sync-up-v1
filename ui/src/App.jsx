@@ -1,5 +1,7 @@
+import './index.css';
+
 const App = () => {
-  return <div>App</div>;
+  return <h1 className='text-3xl font-bold underline'>Hello, Sync Up</h1>;
 };
 
 export default App;
