@@ -3,11 +3,12 @@ import express from 'express';
 import dotenv from 'dotenv';
 
 // files
-
-// routes
+import dbConnect from './src/config/dbConnect.js';
 
 // configurations
 dotenv.config();
+
+// routes
 
 const app = express();
 
@@ -19,12 +20,13 @@ app.get('/', (req, res) => {
 });
 
 const serverConfig = () => {
-  const port = process.env.port || 5000;
+  const port = process.env.PORT || 5000;
   const server = app.listen(port, () => {
     const url = `http://localhost:${port}`;
     console.info(`Server is up and listening at ${url}`);
   });
   // connect to db
+  dbConnect();
 
   return server;
 };
