@@ -44,12 +44,12 @@ const SignupForm = () => {
       >
         {/* Name */}
         <div>
-          <label>Name</label>
+          <label className='shad-form-label'>Full Name</label>
           <Input
             type='text'
             placeholder='Enter Name'
             className='text-black'
-            {...register('name', {
+            {...register('fullName', {
               required: 'Name is required',
               minLength: {
                 value: 6,
@@ -63,7 +63,7 @@ const SignupForm = () => {
         </div>
         {/* Username */}
         <div>
-          <label>Username</label>
+          <label className='shad-form-label'>Username</label>
           <Input
             type='text'
             placeholder='Enter Username'
@@ -82,7 +82,7 @@ const SignupForm = () => {
         </div>
         {/* Email */}
         <div>
-          <label>Email</label>
+          <label className='shad-form-label'>Email</label>
           <Input
             type='email'
             placeholder='Enter Email'
@@ -103,7 +103,7 @@ const SignupForm = () => {
         <div className='flex'>
           {/* Password */}
           <div className='mr-3'>
-            <label>Password</label>
+            <label className='shad-form-label'>Password</label>
             <Input
               type='password'
               placeholder='Enter Password'
@@ -124,7 +124,7 @@ const SignupForm = () => {
           </div>
           {/* Confirm Password */}
           <div>
-            <label>Confirm Password</label>
+            <label className='shad-form-label'>Confirm Password</label>
             <Input
               type='password'
               placeholder='Confirm Password'
