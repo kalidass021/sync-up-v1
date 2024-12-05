@@ -14,7 +14,7 @@ const SignupForm = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      name: '',
+      fullName: '',
       username: '',
       email: '',
       password: '',
@@ -47,7 +47,7 @@ const SignupForm = () => {
           <label className='shad-form-label'>Full Name</label>
           <Input
             type='text'
-            placeholder='Enter Name'
+            placeholder='Enter Full Name'
             className='text-black'
             {...register('fullName', {
               required: 'Name is required',
