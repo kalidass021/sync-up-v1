@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,7 +9,6 @@ import logo from '../../../assets/images/logo.svg';
 import Loader from '../../../components/shared/Loader';
 import { useSignupMutation } from '../../../redux/api/authApiSlice';
 import { setCredentials } from '../../../redux/slices/auth/authSlice';
-import { useEffect } from 'react';
 
 const SignupForm = () => {
   const {
