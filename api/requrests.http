@@ -10,3 +10,14 @@ Content-Type: application/json
     "email": "kalidass@email.com",
     "password": "password"
 }
+
+###
+
+// signin
+POST http://localhost:5000/api/v1/auth/signin
+Content-Type: application/json
+
+{
+    "email": "kalidass@email.com",
+    "password": "password"
+}
