@@ -21,3 +21,8 @@ Content-Type: application/json
     "email": "kalidass@email.com",
     "password": "password"
 }
+
+###
+
+// signout
+POST http://localhost:5000/api/v1/auth/signout
