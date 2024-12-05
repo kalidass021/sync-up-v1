@@ -1,6 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import appStore from './redux/appStore.js';
 import './index.css';
 import App from './App.jsx';
 
@@ -26,8 +28,8 @@ const appRouter = createBrowserRouter([
           {
             path: '/',
             element: <Home />,
-          }
-        ]
+          },
+        ],
       },
       {
         // public routes
@@ -50,6 +52,8 @@ const appRouter = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={appRouter} />
+    <Provider store={appStore}>
+      <RouterProvider router={appRouter} />
+    </Provider>
   </StrictMode>
 );
