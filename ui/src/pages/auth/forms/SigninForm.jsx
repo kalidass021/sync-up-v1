@@ -1,13 +1,16 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import logo from '../../../assets/images/logo.svg';
 import Loader from '../../../components/shared/Loader';
+import { useSigninMutation } from '../../../redux/api/authApiSlice';
+import { setCredentials } from '../../../redux/slices/auth/authSlice';
 
 const SigninForm = () => {
-  const isLoading = false;
-
   const {
     register,
     handleSubmit,
@@ -19,8 +22,37 @@ const SigninForm = () => {
     },
   });
 
-  const formSubmit = (userObj) => {
-    console.log(userObj);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [signin, { isLoading }] = useSigninMutation();
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const { search } = useLocation();
+  // search parameter
+  const searchParams = new URLSearchParams(search);
+  const redirect = searchParams.get('redirect') || '/';
+
+  useEffect(() => {
+    userInfo && navigate(redirect);
+  }, [navigate, redirect, userInfo]);
+
+  const formSubmit = async (userObj) => {
+    const { email, password } = userObj;
+
+    try {
+      const res = await signin({ email, password }).unwrap();
+      console.log('res', res);
+      dispatch(setCredentials({ ...res }));
+      navigate('/');
+    } catch (err) {
+      console.error(
+        `Error while submitting the signup form ${
+          err?.data?.message || err?.error
+        }`
+      );
+      toast.error(err?.data?.message || err?.error);
+    }
   };
 
   return (
@@ -55,32 +87,30 @@ const SigninForm = () => {
           )}
         </div>
 
-          {/* Password */}
-          <div>
-            <label className='shad-form-label'>Password</label>
-            <Input
-              type='password'
-              placeholder='Enter Password'
-              className='text-black'
-              {...register('password', {
-                required: 'Password is required',
-                minLength: {
-                  value: 8,
-                  message: 'Password must be at least 8 characters',
-                },
-              })}
-            />
-            {errors.password && (
-              <span className='shad-form-message'>
-                {errors.password.message}
-              </span>
-            )}
-          </div>
+        {/* Password */}
+        <div>
+          <label className='shad-form-label'>Password</label>
+          <Input
+            type='password'
+            placeholder='Enter Password'
+            className='text-black'
+            {...register('password', {
+              required: 'Password is required',
+              minLength: {
+                value: 8,
+                message: 'Password must be at least 8 characters',
+              },
+            })}
+          />
+          {errors.password && (
+            <span className='shad-form-message'>{errors.password.message}</span>
+          )}
+        </div>
 
         <Button type='submit' className='shad-button-primary'>
           {isLoading ? (
             <div className='flex-center gap-2'>
-              <Loader /> Loading...
+              <Loader /> Signing in...
             </div>
           ) : (
             'Sign in'
@@ -89,7 +119,7 @@ const SigninForm = () => {
         <p className='text-small-regular text-light-2 text-center mt-2'>
           Don&apos;t have an account?{' '}
           <Link
-            to='/signup'
+            to={redirect ? `/signup?redirect=${redirect}` : '/signup'}
             className='text-primary-500 text-small-semibold ml-1'
           >
             Sign up
