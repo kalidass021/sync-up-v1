@@ -1,13 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import logo from '../../../assets/images/logo.svg';
 import Loader from '../../../components/shared/Loader';
+import { useSignupMutation } from '../../../redux/api/authApiSlice';
+import { setCredentials } from '../../../redux/slices/auth/authSlice';
+import { useEffect } from 'react';
 
 const SignupForm = () => {
-  const isLoading = false;
-
   const {
     register,
     handleSubmit,
@@ -22,13 +25,48 @@ const SignupForm = () => {
     },
   });
 
-  const formSubmit = (userObj) => {
-    console.log(userObj);
-  };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  // function fo(values) {
-  //   console.log(values);
-  // }
+  const [signup, { isLoading }] = useSignupMutation();
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const { search } = useLocation();
+  // search parameter
+  const searchParams = new URLSearchParams(search);
+  const redirect = searchParams.get('redirect') || '/';
+
+  useEffect(() => {
+    userInfo && navigate(redirect);
+  }, [navigate, redirect, userInfo]);
+
+  const formSubmit = async (userObj) => {
+    const { fullName, username, email, password, confirmPassword } = userObj;
+
+    if (password !== confirmPassword) {
+      return toast.error('Passwords not match');
+    }
+
+    try {
+      const res = await signup({
+        fullName,
+        username,
+        email,
+        password,
+      }).unwrap();
+      // console.log('res', res);
+      dispatch(setCredentials({ ...res }));
+      navigate(redirect);
+      toast.success('User signed up successfully');
+    } catch (err) {
+      console.error(
+        `Error while submitting the signup form ${
+          err?.data?.message || err?.error
+        }`
+      );
+      return toast.error(err?.data?.message || err?.error);
+    }
+  };
 
   return (
     <div className='sm:w-420 flex-center flex-col '>
@@ -143,7 +181,7 @@ const SignupForm = () => {
         <Button type='submit' className='shad-button-primary'>
           {isLoading ? (
             <div className='flex-center gap-2'>
-              <Loader /> Loading...
+              <Loader /> Signing up...
             </div>
           ) : (
             'Sign up'
@@ -152,7 +190,7 @@ const SignupForm = () => {
         <p className='text-small-regular text-light-2 text-center mt-2'>
           Already have an account?{' '}
           <Link
-            to='/signin'
+            to={redirect ? `/signin?redirect=${redirect}` : '/signin'}
             className='text-primary-500 text-small-semibold ml-1'
           >
             Sign in
