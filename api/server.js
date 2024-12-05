@@ -12,6 +12,7 @@ import errorHandler from './src/middlewares/errorHandler.js';
 dotenv.config();
 
 // routes
+import authRoutes from './src/routes/authRoutes.js';
 
 const app = express();
 
@@ -30,6 +31,8 @@ app.use(cookieParser());
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'API is working!' });
 });
+
+app.use('/api/v1/auth', authRoutes);
 
 // middleware to handle the errors
 app.use(errorHandler);

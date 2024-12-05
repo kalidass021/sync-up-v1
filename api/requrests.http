@@ -1,0 +1,12 @@
+// auth routes
+// signup
+
+POST http://localhost:5000/api/v1/auth/signup
+Content-Type: application/json
+
+{
+    "fullName": "Kalidass",
+    "username": "kalidass123",
+    "email": "kalidass@email.com",
+    "password": "password"
+}
