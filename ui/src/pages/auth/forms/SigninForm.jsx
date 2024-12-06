@@ -60,9 +60,9 @@ const SigninForm = () => {
   return (
     <div className='sm:w-420 flex-center flex-col '>
       <img src={logo} alt='logo' />
-      <h2 className='h3-bold md:h2-bold pt-5 sm:pt-15'>Create a new account</h2>
+      <h2 className='h3-bold md:h2-bold pt-5 sm:pt-15'>Sign in to your account</h2>
       <p className='text-light-3 small-medium md:base-regular mt-8'>
-        To sync up, please enter your details
+        Welcome back! To sync up enter your credentials
       </p>
 
       <form
