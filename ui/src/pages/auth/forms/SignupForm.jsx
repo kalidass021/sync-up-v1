@@ -15,6 +15,7 @@ const SignupForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     defaultValues: {
       fullName: '',
@@ -56,6 +57,7 @@ const SignupForm = () => {
       }).unwrap();
       // console.log('res', res);
       dispatch(setCredentials({ ...res }));
+      reset(); // reset the form after successful signup
       navigate(redirect);
       toast.success('User signed up successfully');
     } catch (err) {
