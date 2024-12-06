@@ -15,6 +15,7 @@ const SigninForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     defaultValues: {
       email: '',
@@ -44,10 +45,11 @@ const SigninForm = () => {
       const res = await signin({ email, password }).unwrap();
       console.log('res', res);
       dispatch(setCredentials({ ...res }));
+      reset(); // reset the form after successful signin
       navigate('/');
     } catch (err) {
       console.error(
-        `Error while submitting the signup form ${
+        `Error while submitting the signin form ${
           err?.data?.message || err?.error
         }`
       );
