@@ -22,18 +22,19 @@ export const createPost = async (req, res, next) => {
     //   cloudinaryImgSecureUrl = uploadResponse.secure_url;
     // }
 
-    const cloudinaryImgSecureUrl =
+    const cloudinaryImgId =
       image &&
       (
         await cloudinary.uploader.upload(image, {
           folder: 'sync-up/posts',
         })
-      ).secure_url; // upload will return upload response // on upload response we're getting secure url
+      ).public_id; // upload will return upload response // on upload response we're getting secure url
+    // if we need https url we need to use .secure_url
 
     const newPost = new Post({
       creator: userId,
       caption,
-      img: cloudinaryImgSecureUrl || '',
+      imgId: cloudinaryImgId || '',
       location,
       tags,
     });
@@ -43,6 +44,34 @@ export const createPost = async (req, res, next) => {
     res.status(201).json(newPost);
   } catch (err) {
     console.error(`Error while post creation ${err.message || err.error}`);
+    next(err);
+  }
+};
+
+export const deletePost = async (req, res, next) => {
+  try {
+    const { id: postId } = req.params;
+    const { _id: userId } = req.user;
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return next(error(404, 'Post not found'));
+    }
+
+    if (post.creator.toString() !== userId.toString()) {
+      return next(error(401, "You're not authorized to delete this post"));
+    }
+
+    if (post.imgId) {
+      await cloudinary.uploader.destroy(post.imgId);
+    }
+
+    // delete post from mongo db
+    await Post.findByIdAndDelete(postId);
+    
+    res.status(200).json({ message: 'Post removed successfully' });
+  } catch (err) {
+    console.error(`Error while post deletion ${err.message || err.error}`);
     next(err);
   }
 };

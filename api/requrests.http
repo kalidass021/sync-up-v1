@@ -43,3 +43,8 @@ Content-Type: application/json
         "test2"
     ]
 }
+
+
+###
+// delete post
+DELETE http://localhost:5000/api/v1/post/67546065cda216da584de151

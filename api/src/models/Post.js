@@ -12,7 +12,7 @@ const postSchema = Schema(
       type: String,
       // required: true,
     },
-    img: {
+    imgId: {
       type: String,
     },
     location: {
