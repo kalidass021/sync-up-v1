@@ -4,13 +4,12 @@ import { Button } from '@/components/ui/button';
 import fileUpload from '../../assets/icons/file-upload.svg';
 
 const FileUploader = ({ fieldChange, mediaUrl }) => {
+  // eslint-disable-next-line no-unused-vars
   const [file, setFile] = useState([]);
   const [fileUrl, setFileUrl] = useState(mediaUrl || '');
-  console.log('file', file);
-  console.log('fileUrl', fileUrl);
+
   const onDrop = useCallback(
     (acceptedFiles) => {
-      console.log('acceptedFiles', acceptedFiles);
       setFile(acceptedFiles);
       fieldChange && fieldChange(acceptedFiles);
       acceptedFiles.length > 0 && setFileUrl(URL.createObjectURL(acceptedFiles[0]));

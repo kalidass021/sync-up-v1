@@ -12,7 +12,7 @@ const Topbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userInfo } = useSelector((state) => state.auth);
-  console.log(userInfo);
+  // console.log(userInfo);
   const [signoutApiCall] = useSignoutMutation();
 
   const signoutHandler = async () => {

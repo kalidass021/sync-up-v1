@@ -43,7 +43,7 @@ const SigninForm = () => {
 
     try {
       const res = await signin({ email, password }).unwrap();
-      console.log('res', res);
+      // console.log('res', res);
       dispatch(setCredentials({ ...res }));
       reset(); // reset the form after successful signin
       navigate('/');
