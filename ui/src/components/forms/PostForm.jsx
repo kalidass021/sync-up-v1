@@ -1,9 +1,12 @@
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import { useCreatePostMutation } from '../../redux/api/postApiSlice';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import FileUploader from '../shared/FileUploader';
+import Loader from '../shared/Loader';
 
 const PostForm = ({ post }) => {
   const {
@@ -21,14 +24,9 @@ const PostForm = ({ post }) => {
     },
   });
 
-  const formSubmit = (postData) => {
-    const post = {
-      ...postData,
-      tags: postData?.tags?.split(', '), // convert string to an array
-    };
-
-    console.log(post);
-  };
+  const navigate = useNavigate();
+  const [createPost, { isLoading: isCreatingPost, error: createPostError }] =
+    useCreatePostMutation();
 
   const handleFileChange = async (acceptedFiles) => {
     const reader = new FileReader();
@@ -43,6 +41,35 @@ const PostForm = ({ post }) => {
       toast.error(`Error reading file ${err}`);
     };
   };
+
+  const formSubmit = async (postData) => {
+    try {
+      const { caption, image } = postData;
+
+      if (!caption && !image) {
+        return toast.error('Post must have caption or image');
+      }
+
+      const post = {
+        ...postData,
+        tags: postData?.tags?.split(', '), // convert string to an array
+      };
+
+      await createPost(post);
+
+      // reset the form data
+      reset();
+      // navigate to home page
+      navigate('/');
+      toast.success('Post added to database');
+    } catch (err) {
+      console.error(`Failed to create post ${err}`);
+      toast.error(
+        `Failed to create post ${createPostError?.message || err.message}`
+      );
+    }
+  };
+
   return (
     <div className='w-[80%]'>
       <form
@@ -55,7 +82,6 @@ const PostForm = ({ post }) => {
           <Textarea
             className='shad-textarea custom-scrollbar mt-2'
             {...register('caption', {
-              required: 'Caption is required',
               minLength: {
                 value: 6,
                 message: 'Caption must be at least 6 characters',
@@ -89,7 +115,6 @@ const PostForm = ({ post }) => {
             type='text'
             className='shad-input mt-2'
             {...register('location', {
-              required: 'Location is required',
               minLength: {
                 value: 2,
                 message: 'Location must be at least 2 characters',
@@ -112,7 +137,6 @@ const PostForm = ({ post }) => {
             className='shad-input mt-2'
             placeholder='Art, Expression, Learn'
             {...register('tags', {
-              required: 'Tags are required',
               minLength: {
                 value: 2,
                 message: 'Tags must be at least 2 characters',
@@ -134,8 +158,15 @@ const PostForm = ({ post }) => {
           <Button
             type='submit'
             className='shad-button-primary whitespace-nowrap'
+            disabled={isCreatingPost}
           >
-            Create
+            {isCreatingPost ? (
+              <div className='flex-center gap-2'>
+                <Loader /> Creating...
+              </div>
+            ) : (
+              'Create'
+            )}
           </Button>
         </div>
       </form>
