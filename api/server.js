@@ -21,6 +21,7 @@ cloudinary.config({
 
 // routes
 import authRoutes from './src/routes/authRoutes.js';
+import postRoutes from './src/routes/postRoutes.js';
 
 const app = express();
 
@@ -31,8 +32,9 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// increase the payload size to handle larger base64 images
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(cookieParser());
 
 // handle base api url to show api status
@@ -41,6 +43,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/post', postRoutes);
 
 // middleware to handle the errors
 app.use(errorHandler);
