@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/post', postRoutes);
+app.use('/api/v1/posts', postRoutes);
 
 // middleware to handle the errors
 app.use(errorHandler);

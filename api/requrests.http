@@ -31,7 +31,7 @@ POST http://localhost:5000/api/v1/auth/signout
 ###
 
 // create post
-POST http://localhost:5000/api/v1/post
+POST http://localhost:5000/api/v1/posts
 Content-Type: application/json
 
 {
@@ -47,8 +47,8 @@ Content-Type: application/json
 
 ###
 // delete post
-DELETE http://localhost:5000/api/v1/post/67546065cda216da584de151
+DELETE http://localhost:5000/api/v1/posts/67546065cda216da584de151
 
 ###
 // get recent posts
-GET http://localhost:5000/api/v1/post/recent
+GET http://localhost:5000/api/v1/posts/recent
