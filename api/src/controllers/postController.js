@@ -51,7 +51,16 @@ export const createPost = async (req, res, next) => {
 export const getRecentPosts = async (req, res, next) => {
   try {
     // fetch recent posts, sorted by created at in descending order
-    const recentPosts = await Post.find().sort({ createdAt: -1 });
+    const recentPosts = await Post.find()
+      .sort({ createdAt: -1 })
+      .populate({
+        path: 'creator',
+        select: 'profileImg fullName'
+      });
+
+    // in the above code without populate method it will return posts with userId only
+    // but we  want other user details to display in the frontend, we're getting that using populate
+    // we're selecting the properties using select method
 
     res.status(200).json(recentPosts);
   } catch (err) {
