@@ -48,6 +48,18 @@ export const createPost = async (req, res, next) => {
   }
 };
 
+export const getRecentPosts = async (req, res, next) => {
+  try {
+    // fetch recent posts, sorted by created at in descending order
+    const recentPosts = await Post.find().sort({ createdAt: -1 });
+
+    res.status(200).json(recentPosts);
+  } catch (err) {
+    console.error(`Error while fetching recent posts ${err}`);
+    next(err);
+  }
+};
+
 export const deletePost = async (req, res, next) => {
   try {
     const { id: postId } = req.params;
@@ -68,7 +80,7 @@ export const deletePost = async (req, res, next) => {
 
     // delete post from mongo db
     await Post.findByIdAndDelete(postId);
-    
+
     res.status(200).json({ message: 'Post removed successfully' });
   } catch (err) {
     console.error(`Error while post deletion ${err.message || err.error}`);

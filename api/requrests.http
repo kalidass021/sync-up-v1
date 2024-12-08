@@ -48,3 +48,7 @@ Content-Type: application/json
 ###
 // delete post
 DELETE http://localhost:5000/api/v1/post/67546065cda216da584de151
+
+###
+// get recent posts
+GET http://localhost:5000/api/v1/post/recent
