@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon ./bin/www.js",
-    "start": "node ./bin/www.js",
+    "start": "nodemon ./bin/www.js",
     "ui": "cd ../ui && npm run dev",
     "api": "npm run dev",
     "app": "concurrently \"npm run api\" \"npm run ui\"",
