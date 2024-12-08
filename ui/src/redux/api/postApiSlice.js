@@ -10,7 +10,11 @@ export const postApiSlice = apiSlice.injectEndpoints({
         body: newPost,
       }),
     }),
-    
+
+    getRecentPosts: builder.query({
+      query: () => `${POST_URL}/recents`,
+    }),
+
     deletePost: builder.mutation({
       query: (id) => ({
         url: `${POST_URL}/${id}`,
@@ -20,4 +24,8 @@ export const postApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useCreatePostMutation, useDeletePostMutation } = postApiSlice;
+export const {
+  useCreatePostMutation,
+  useGetRecentPostsQuery,
+  useDeletePostMutation,
+} = postApiSlice;
