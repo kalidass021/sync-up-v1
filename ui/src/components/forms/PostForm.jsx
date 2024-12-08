@@ -50,12 +50,10 @@ const PostForm = ({ post }) => {
         return toast.error('Post must have caption or image');
       }
 
-      const post = {
+      await createPost({
         ...postData,
-        tags: postData?.tags?.split(', '), // convert string to an array
-      };
-
-      await createPost(post);
+        tags: postData?.tags?.replace(/ /g, '').split(',') || [], // convert tags into an array
+      });
 
       // reset the form data
       reset();
