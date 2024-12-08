@@ -22,7 +22,7 @@ const app = express();
 // middlewares
 app.use(
   cors({
-    origin: ['http://localhost:5173'], // Allow dev
+    origin: ['http://localhost:5173', 'https://syncup-v1.vercel.app'], // Allow dev and prod origins
     credentials: true,
   })
 );
