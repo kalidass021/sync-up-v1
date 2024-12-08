@@ -19,7 +19,7 @@ const postSchema = Schema(
       type: String,
       required: true,
     },
-    cast: [
+    tags: [
       {
         type: String,
         required: true,
