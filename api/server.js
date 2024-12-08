@@ -3,21 +3,15 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import { v2 as cloudinary } from 'cloudinary';
 
 // files
 import dbConnect from './src/config/dbConnect.js';
+import cloudinaryConfig from './src/config/cloudinaryConfig.js';
 import errorHandler from './src/middlewares/errorHandler.js';
 
 // configurations
 dotenv.config();
-
-// cloudinary config
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+cloudinaryConfig();
 
 // routes
 import authRoutes from './src/routes/authRoutes.js';
