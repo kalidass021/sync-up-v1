@@ -50,7 +50,10 @@ app.use((req, res) => {
 const serverConfig = () => {
   const port = process.env.PORT || 5000;
   const server = app.listen(port, () => {
-    const url = `http://localhost:${port}`;
+    const url =
+      process.env.NODE_ENV === 'development'
+        ? `http://localhost:${port}`
+        : process.env.API_URL;
     console.info(`Server is up and listening at ${url}`);
   });
   // connect to db
