@@ -28,6 +28,10 @@ const LeftSidebar = () => {
       toast.error(err?.data?.message);
     }
   };
+
+  if (!userInfo) {
+    return null;
+  }
   return (
     <nav className='leftsidebar'>
       <div className='flex flex-col gap-6'>

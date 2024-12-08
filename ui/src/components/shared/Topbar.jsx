@@ -26,6 +26,10 @@ const Topbar = () => {
       toast.error(err?.data?.message);
     }
   };
+
+  if (!userInfo) {
+    return null;
+  }
   return (
     <section className='topbar'>
       <div className='flex-between py-4 px-5'>
