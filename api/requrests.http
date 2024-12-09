@@ -51,4 +51,4 @@ DELETE http://localhost:5000/api/v1/posts/67546065cda216da584de151
 
 ###
 // get recent posts
-GET http://localhost:5000/api/v1/posts/recent
+GET http://localhost:5000/api/v1/posts/recents
