@@ -192,9 +192,7 @@ export const saveOrUnsavePost = async (req, res, next) => {
       // reload the post to get a updated saves
       const updatedPost = await Post.findById(postId);
       const updatedSaves = updatedPost.saves;
-
-      console.log(updatedSaves);
-
+      
       res.status(200).json(updatedSaves);
     }
   } catch (err) {
