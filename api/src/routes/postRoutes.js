@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { createPost, deletePost, getRecentPosts } from '../controllers/postController.js';
+import {
+  createPost,
+  deletePost,
+  getRecentPosts,
+  likeOrUnlikePost,
+} from '../controllers/postController.js';
 // middlewares
 import auth from '../middlewares/auth.js';
 import checkId from '../middlewares/checkId.js';
@@ -10,5 +15,5 @@ const router = Router();
 router.post('/', auth, createPost);
 router.get('/recents', auth, getRecentPosts);
 router.delete('/:id', auth, checkId, deletePost);
-
+router.post('/:id/like', auth, checkId, likeOrUnlikePost);
 export default router;

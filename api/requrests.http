@@ -53,6 +53,10 @@ DELETE http://localhost:5000/api/v1/posts/67546065cda216da584de151
 // get recent posts
 GET http://localhost:5000/api/v1/posts/recents
 
+###
+// like or unlike post
+POST http://localhost:5000/api/v1/posts/67547a6213a135b71aab79bf/like
+
 
 ###
 // notification routes
