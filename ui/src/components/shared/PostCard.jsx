@@ -47,7 +47,7 @@ const PostCard = ({ post }) => {
           </div>
         </div>
         <Link
-          to={`/posts/update/${postId}`}
+          to={`/posts/${postId}/update`}
           className={`${signedInUser._id !== creator._id && 'hidden'}`}
         >
           <img src={edit} alt='edit' width={20} height={20} />
