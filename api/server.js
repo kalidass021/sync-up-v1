@@ -18,7 +18,6 @@ import notificationRoutes from './src/routes/notificationRoutes.js';
 
 const app = express();
 
-console.log('cors', cors);
 // middlewares
 app.use(cors);
 // increase the payload size to handle larger base64 images
