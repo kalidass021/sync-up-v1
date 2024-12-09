@@ -1,16 +1,14 @@
 // packages
 import express from 'express';
-import dotenv from 'dotenv';
-import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
 // files
 import dbConnect from './src/config/dbConnect.js';
+import cors from './src/config/cors.js';
 import cloudinaryConfig from './src/config/cloudinaryConfig.js';
 import errorHandler from './src/middlewares/errorHandler.js';
 
 // configurations
-dotenv.config();
 cloudinaryConfig();
 
 // routes
@@ -20,13 +18,9 @@ import notificationRoutes from './src/routes/notificationRoutes.js';
 
 const app = express();
 
+console.log('cors', cors);
 // middlewares
-app.use(
-  cors({
-    origin: ['http://localhost:5173', 'https://syncup-v1.vercel.app'], // Allow dev and prod origins
-    credentials: true,
-  })
-);
+app.use(cors);
 // increase the payload size to handle larger base64 images
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));

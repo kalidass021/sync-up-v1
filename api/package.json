@@ -5,8 +5,8 @@
   "main": "bin ./www.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon ./bin/www.js",
-    "start": "nodemon ./bin/www.js",
+    "dev": "nodemon --env-file .env ./bin/www.js",
+    "start": "nodemon --env-file .env ./bin/www.js",
     "ui": "cd ../ui && npm run dev",
     "api": "npm run dev",
     "app": "concurrently \"npm run api\" \"npm run ui\"",
@@ -21,7 +21,6 @@
     "concurrently": "^9.1.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.3",
