@@ -1,3 +1,4 @@
+import {v2 as cloudinary} from 'cloudinary';
 import Post from '../models/Post.js';
 import User from '../models/User.js';
 import Notification from '../models/Notification.js';
@@ -107,7 +108,7 @@ export const likeOrUnlikePost = async (req, res, next) => {
       return next(error(404, 'Post not found'));
     }
 
-    // check wheather the user is already like post or not
+    // check whether the user is already like post or not
     const likedBefore = post.likes.includes(userId);
 
     if (likedBefore) {
@@ -130,7 +131,7 @@ export const likeOrUnlikePost = async (req, res, next) => {
       // push the postId into user's liked posts
       await User.updateOne({ _id: userId }, { $push: { likedPosts: postId } });
       // save the post
-      post.save();
+      await post.save();
 
       // create a notification
       const notification = new Notification({
@@ -149,6 +150,55 @@ export const likeOrUnlikePost = async (req, res, next) => {
     }
   } catch (err) {
     console.error(`Error in like or unlike post controller ${err.message}`);
+    next(err);
+  }
+};
+
+export const saveOrUnsavePost = async (req, res, next) => {
+  try {
+    const { _id: userId } = req.user;
+    const { id: postId } = req.params;
+
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return next(error(404, 'Post not found'));
+    }
+
+    //  check whether the user already saved post or not
+    const savedBefore = post.saves.includes(userId);
+
+    if (savedBefore) {
+      // user already saved the post
+      // unsave the post
+      await Post.updateOne({ _id: postId }, { $pull: { saves: userId } });
+      // remove the postId from the user's liked posts
+      await User.updateOne({ _id: userId }, { $pull: { savedPosts: postId } });
+
+      // reload the posts to get the updated likes array
+      const updatedPost = await Post.findById(postId);
+      const updatedSaves = updatedPost.saves;
+
+      res.status(200).json(updatedSaves);
+    } else {
+      // user not saved the post already
+      // save the post
+      post.saves.push(userId);
+      // push the postId into user's liked posts
+      await User.updateOne({ _id: userId }, { $push: { savedPosts: postId } });
+      // save the post
+      await post.save();
+
+      // reload the post to get a updated saves
+      const updatedPost = await Post.findById(postId);
+      const updatedSaves = updatedPost.saves;
+
+      console.log(updatedSaves);
+
+      res.status(200).json(updatedSaves);
+    }
+  } catch (err) {
+    console.error(`Error in save or unsave post controller ${err.message}`);
     next(err);
   }
 };
