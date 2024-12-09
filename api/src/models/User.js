@@ -57,7 +57,7 @@ const userSchema = new Schema({
       default: [],
     },
   ],
-  likedPosts: [
+  savedPosts: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Post',
