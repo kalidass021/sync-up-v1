@@ -117,8 +117,6 @@ export const likeOrUnlikePost = async (req, res, next) => {
       // remove the postId from the user's liked posts
       await User.updateOne({ _id: userId }, { $pull: { likedPosts: postId } });
 
-      // save the post
-      await post.save();
       // reload the posts to get the updated likes array
       const updatedPost = await Post.findById(postId);
       const updatedLikes = updatedPost.likes;
