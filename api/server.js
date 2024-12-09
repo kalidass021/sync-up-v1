@@ -16,6 +16,7 @@ cloudinaryConfig();
 // routes
 import authRoutes from './src/routes/authRoutes.js';
 import postRoutes from './src/routes/postRoutes.js';
+import notificationRoutes from './src/routes/notificationRoutes.js';
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/posts', postRoutes);
+app.use('/api/v1/notifications', notificationRoutes);
 
 // middleware to handle the errors
 app.use(errorHandler);

@@ -52,3 +52,13 @@ DELETE http://localhost:5000/api/v1/posts/67546065cda216da584de151
 ###
 // get recent posts
 GET http://localhost:5000/api/v1/posts/recents
+
+
+###
+// notification routes
+// get all notifications
+GET http://localhost:5000/api/v1/notifications
+
+###
+// delete all notifications
+DELETE http://localhost:5000/api/v1/notifications
