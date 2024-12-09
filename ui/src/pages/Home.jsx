@@ -9,11 +9,6 @@ const Home = () => {
   const navigate = useNavigate();
   const { userInfo, loading } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    if (!userInfo && !loading) {
-      navigate('/signin');
-    }
-  }, [loading, userInfo, navigate]);
   const {
     data: recentPosts,
     isLoading: isPostLoading,
@@ -21,8 +16,12 @@ const Home = () => {
   } = useGetRecentPostsQuery();
 
   console.log('recentPosts', recentPosts);
-  // const isPostLoading = true;
-  // const posts = null;
+  useEffect(() => {
+    if (!userInfo && !loading) {
+      navigate('/signin');
+    }
+  }, [loading, userInfo, navigate]);
+
   return (
     <div className='flex flex-1'>
       <div className='home-container'>

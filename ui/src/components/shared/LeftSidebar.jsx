@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
@@ -14,7 +15,7 @@ const LeftSidebar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userInfo, loading } = useSelector((state) => state.auth);
   const [signoutApiCall] = useSignoutMutation();
 
   const signoutHandler = async () => {
@@ -29,9 +30,12 @@ const LeftSidebar = () => {
     }
   };
 
-  if (!userInfo) {
-    return null;
-  }
+  useEffect(() => {
+    if (!userInfo && !loading) {
+      navigate('/signin');
+    }
+  }, [loading, userInfo, navigate]);
+  
   return (
     <nav className='leftsidebar'>
       <div className='flex flex-col gap-6'>

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
@@ -11,7 +12,7 @@ import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
 const Topbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userInfo, loading } = useSelector((state) => state.auth);
   // console.log(userInfo);
   const [signoutApiCall] = useSignoutMutation();
 
@@ -27,9 +28,12 @@ const Topbar = () => {
     }
   };
 
-  if (!userInfo) {
-    return null;
-  }
+  useEffect(() => {
+    if (!userInfo && !loading) {
+      navigate('/signin');
+    }
+  }, [loading, userInfo, navigate]);
+  
   return (
     <section className='topbar'>
       <div className='flex-between py-4 px-5'>
