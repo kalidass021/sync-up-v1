@@ -1,20 +1,29 @@
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { useLikeOrUnlikePostMutation } from '../../redux/api/postApiSlice';
+import {
+  useLikeOrUnlikePostMutation,
+  useSaveOrUnsavePostMutation,
+} from '../../redux/api/postApiSlice';
 import like from '../../assets/icons/like.svg';
 import liked from '../../assets/icons/liked.svg';
 import save from '../../assets/icons/save.svg';
 import saved from '../../assets/icons/saved.svg';
 
 const PostStats = ({ post, userId }) => {
-  const { _id: postId, likes: likesBefore } = post;
+  const { _id: postId, likes: likesBefore, saves: savesBefore } = post;
+  
   const [likes, setLikes] = useState(likesBefore);
+  const [saves, setSaves] = useState(savesBefore);
 
   const [likeOrUnlikePost, { error: likeError }] =
     useLikeOrUnlikePostMutation();
+  const [saveOrUnsavePost, { error: saveError }] =
+    useSaveOrUnsavePostMutation();
 
   // check is the post is liked by user or not
   const isLiked = likes.includes(userId);
+  // check the post is saved by user or not
+  const isSaved = saves.includes(userId);
 
   const handleLikePost = async (e) => {
     e.stopPropagation();
@@ -39,6 +48,26 @@ const PostStats = ({ post, userId }) => {
       toast.error(likeError.message || err);
     }
   };
+
+  const handleSavePost = async (e) => {
+    e.stopPropagation();
+    // optimistic update
+    const updatedSaves = isSaved
+      ? saves.filter((id) => id !== userId)
+      : [...saves, userId];
+      setSaves(updatedSaves);
+
+      try {
+        // update the saves in the server
+        const res = await saveOrUnsavePost(postId);
+        setSaves(res.data); // sync state with server response
+      } catch (err) {
+        // revert optimistic update if server request fails
+        setSaves(savesBefore);
+        console.error(`Error while save or unsave post ${saveError.message || err}`);
+        toast.error(saveError.message || err);
+      }
+  };
   return (
     <div className='flex justify-between items-center z-20'>
       {/* like */}
@@ -56,11 +85,11 @@ const PostStats = ({ post, userId }) => {
       {/* save */}
       <div className='flex gap-2'>
         <img
-          src={save}
+          src={isSaved ? saved : save}
           alt='save'
           width={20}
           height={20}
-          onClick={() => {}}
+          onClick={handleSavePost}
           className='cursor-pointer'
         />
       </div>

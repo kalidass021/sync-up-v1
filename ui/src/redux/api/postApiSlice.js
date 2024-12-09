@@ -32,6 +32,14 @@ export const postApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Post'],
     }),
+
+    saveOrUnsavePost: builder.mutation({
+      query: (id) => ({
+        url: `${POST_URL}/${id}/save`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Post'],
+    }),
   }),
 });
 
@@ -40,4 +48,5 @@ export const {
   useGetRecentPostsQuery,
   useDeletePostMutation,
   useLikeOrUnlikePostMutation,
+  useSaveOrUnsavePostMutation,
 } = postApiSlice;
