@@ -10,15 +10,17 @@ import {
 // middlewares
 import auth from '../middlewares/auth.js';
 import checkId from '../middlewares/checkId.js';
+import { MONGO_ID_REGEX } from '../utils/constants.js';
 
 const router = Router();
+const idRegex = MONGO_ID_REGEX;
 
 // private routes
 router.post('/', auth, createPost);
-router.get('/:id', auth, checkId, getSpecificPost);
+router.get(`/:id${idRegex}`, auth, checkId, getSpecificPost);
 router.get('/recents', auth, getRecentPosts);
-router.delete('/:id', auth, checkId, deletePost);
-router.post('/:id/like', auth, checkId, likeOrUnlikePost);
-router.post('/:id/save', auth, checkId, saveOrUnsavePost);
+router.delete(`/:id${idRegex}`, auth, checkId, deletePost);
+router.post(`/:id${idRegex}/like`, auth, checkId, likeOrUnlikePost);
+router.post(`/:id${idRegex}/save`, auth, checkId, saveOrUnsavePost);
 
 export default router;
