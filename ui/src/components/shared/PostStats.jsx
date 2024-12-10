@@ -80,7 +80,7 @@ const PostStats = ({ post, userId }) => {
           onClick={handleLikePost}
           className='cursor-pointer'
         />
-        <p className='small-medium lg:base-medium'>{likes.length}</p>
+        <p className='small-medium lg:base-medium'>{likes.length ? likes.length : ' '}</p>
       </div>
       {/* save */}
       <div className='flex gap-2'>
