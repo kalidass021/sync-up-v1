@@ -85,6 +85,51 @@ export const getRecentPosts = async (req, res, next) => {
   }
 };
 
+export const updatePost = async (req, res, next) => {
+  try {
+    const { _id: userId } = req.user;
+
+    const { id: postId } = req.params;
+    const { caption, image, location, tags } = req.body;
+
+    // find the post by id
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return next(error(404, 'Post not found'));
+    }
+
+    // ensure the user is creator of the post
+    if (post.creator.toString() !== userId.toString()) {
+      return next(
+        error(403, 'Forbidden. You do not have permission to delete this post')
+      );
+    }
+
+    // destroy the old image on the cloudinary, and upload the new image if provided
+    const cloudinaryImgId =
+      image &&
+      (await cloudinary.uploader.destroy(post.imgId),
+      await cloudinary.uploader.upload(image, {
+        folder: 'sync-up/posts',
+      }).public_id);
+
+    // update post fields
+    post.caption = caption || post.caption;
+    post.imgId = cloudinaryImgId || post.imgId;
+    post.location = location || post.location;
+    post.tags = tags || post.tags;
+
+    // save the updated post
+    await post.save();
+
+    res.status(200).json(post);
+  } catch (err) {
+    console.error(`Error while updating the post ${err.message}`);
+    next(err);
+  }
+};
+
 export const deletePost = async (req, res, next) => {
   try {
     const { id: postId } = req.params;
@@ -96,7 +141,9 @@ export const deletePost = async (req, res, next) => {
     }
 
     if (post.creator.toString() !== userId.toString()) {
-      return next(error(401, "You're not authorized to delete this post"));
+      return next(
+        error(403, 'Forbidden. You do not have permission to delete this post')
+      );
     }
 
     if (post.imgId) {

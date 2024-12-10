@@ -58,8 +58,23 @@ GET http://localhost:5000/api/v1/posts/67571d6400eb674012bab8a8
 GET http://localhost:5000/api/v1/posts/recents
 
 ###
+// update post
+POST http://localhost:5000/api/v1/posts/6757209000eb674012bab8ba/update
+Content-Type: application/json
+
+{
+    "caption": "update test",
+    "image": "",
+    "location": "updated location",
+    "tags": [
+        "updatetest", "updatetest"
+    ]
+}
+
+
+###
 // like or unlike post
-POST http://localhost:5000/api/v1/posts/67547a6213a135b71aab79bf/like
+PUT http://localhost:5000/api/v1/posts/67547a6213a135b71aab79bf/like
 
 ###
 POST http://localhost:5000/api/v1/posts/67547a6213a135b71aab79bf/save

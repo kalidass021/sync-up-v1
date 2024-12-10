@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {
   createPost,
+  updatePost,
   deletePost,
   getSpecificPost,
   getRecentPosts,
@@ -19,6 +20,7 @@ const idRegex = MONGO_ID_REGEX;
 router.post('/', auth, createPost);
 router.get(`/:id${idRegex}`, auth, checkId, getSpecificPost);
 router.get('/recents', auth, getRecentPosts);
+router.put(`/:id${idRegex}`, auth, checkId, updatePost);
 router.delete(`/:id${idRegex}`, auth, checkId, deletePost);
 router.post(`/:id${idRegex}/like`, auth, checkId, likeOrUnlikePost);
 router.post(`/:id${idRegex}/save`, auth, checkId, saveOrUnsavePost);
