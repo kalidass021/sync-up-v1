@@ -121,9 +121,9 @@ export const updatePost = async (req, res, next) => {
     post.tags = tags || post.tags;
 
     // save the updated post
-    await post.save();
+    const updatedPost = await post.save();
 
-    res.status(200).json(post);
+    res.status(200).json(updatedPost);
   } catch (err) {
     console.error(`Error while updating the post ${err.message}`);
     next(err);
