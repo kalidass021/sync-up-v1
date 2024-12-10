@@ -110,9 +110,11 @@ export const updatePost = async (req, res, next) => {
     const cloudinaryImgId =
       image &&
       (await cloudinary.uploader.destroy(post.imgId),
-      await cloudinary.uploader.upload(image, {
-        folder: 'sync-up/posts',
-      }).public_id);
+      (
+        await cloudinary.uploader.upload(image, {
+          folder: 'sync-up/posts',
+        })
+      ).public_id);
 
     // update post fields
     post.caption = caption || post.caption;
