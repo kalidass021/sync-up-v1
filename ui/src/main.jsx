@@ -59,7 +59,7 @@ const appRouter = createBrowserRouter([
             element: <CreatePost />,
           },
           {
-            path: '/posts/edit/:id',
+            path: '/posts/:id/edit',
             element: <EditPost />,
           },
           {

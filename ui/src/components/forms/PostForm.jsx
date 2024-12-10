@@ -1,14 +1,18 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import { useCreatePostMutation } from '../../redux/api/postApiSlice';
+import {
+  useCreatePostMutation,
+  useUpdatePostMutation,
+} from '../../redux/api/postApiSlice';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
+import { CLOUDINARY_URL } from '../../config/constants';
 import FileUploader from '../shared/FileUploader';
 import Loader from '../shared/Loader';
 
-const PostForm = ({ post }) => {
+const PostForm = ({ post, action }) => {
   const {
     register,
     handleSubmit,
@@ -28,6 +32,10 @@ const PostForm = ({ post }) => {
   const [createPost, { isLoading: isCreatingPost, error: createPostError }] =
     useCreatePostMutation();
 
+  const { _id: postId } = post;
+  const [updatePost, {isLoading: isUpdatingPost, error: updatePostError }] =
+    useUpdatePostMutation();
+
   const handleFileChange = async (acceptedFiles) => {
     const reader = new FileReader();
     reader.readAsDataURL(acceptedFiles[0]); // read file as a base64 string
@@ -42,29 +50,54 @@ const PostForm = ({ post }) => {
     };
   };
 
+
   const formSubmit = async (postData) => {
-    try {
-      const { caption, image } = postData;
+    const { caption, image } = postData;
 
-      if (!caption && !image) {
-        return toast.error('Post must have caption or image');
+    if (!caption && !image) {
+      return toast.error('Post must have caption or image');
+    }
+    if (post && action === 'Update') {
+      try {
+        const res = await updatePost({
+          id: postId,
+          updatedPost: {
+            ...postData,
+          },
+        });
+
+        if (res.error) {
+          console.error(res?.error);
+        }
+
+        if (res.data) {
+          toast.success('Post updated');
+          return navigate(`/posts/${postId}`);
+        }
+      } catch (err) {
+        console.error(`Failed to update post ${err}`);
+        toast.error(
+          `Failed to update post ${updatePostError.message || err.message}`
+        );
       }
+    } else {
+      try {
+        await createPost({
+          ...postData,
+          tags: postData?.tags?.replace(/ /g, '').split(',') || [], // convert tags into an array
+        });
 
-      await createPost({
-        ...postData,
-        tags: postData?.tags?.replace(/ /g, '').split(',') || [], // convert tags into an array
-      });
-
-      // reset the form data
-      reset();
-      // navigate to home page
-      navigate('/');
-      toast.success('Post added to database');
-    } catch (err) {
-      console.error(`Failed to create post ${err}`);
-      toast.error(
-        `Failed to create post ${createPostError?.message || err.message}`
-      );
+        // reset the form data
+        reset();
+        // navigate to home page
+        navigate('/');
+        toast.success('Post added to database');
+      } catch (err) {
+        console.error(`Failed to create post ${err}`);
+        toast.error(
+          `Failed to create post ${createPostError?.message || err.message}`
+        );
+      }
     }
   };
 
@@ -99,7 +132,7 @@ const PostForm = ({ post }) => {
           <label className='shad-form-label'>Add Photos</label>
           <FileUploader
             fieldChange={handleFileChange}
-            mediaUrl={post?.imageUrl}
+            mediaUrl={`${CLOUDINARY_URL}/${post?.imgId}`}
             // register happened in handleFileChange using setValue
           />
           {errors.file && (

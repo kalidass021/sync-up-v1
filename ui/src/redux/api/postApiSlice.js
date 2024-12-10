@@ -12,14 +12,28 @@ export const postApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ['Post'],
     }),
 
+    getSpecificPost: builder.query({
+      query: (id) => `${POST_URL}/${id}`,
+      providesTags: ['Post'],
+    }),
+
     getRecentPosts: builder.query({
       query: () => `${POST_URL}/recents`,
       providesTags: ['Post'],
     }),
 
+    updatePost: builder.mutation({
+      query: ({ id, updatedPost }) => ({
+        url: `${POST_URL}/${id}`,
+        method: 'PUT',
+        body: updatedPost,
+      }),
+      invalidatesTags: ['Post'],
+    }),
+
     deletePost: builder.mutation({
       query: (id) => ({
-        url: `${POST_URL}/${id}/like`,
+        url: `${POST_URL}/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Post'],
@@ -45,7 +59,9 @@ export const postApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useCreatePostMutation,
+  useGetSpecificPostQuery,
   useGetRecentPostsQuery,
+  useUpdatePostMutation,
   useDeletePostMutation,
   useLikeOrUnlikePostMutation,
   useSaveOrUnsavePostMutation,
