@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
   createPost,
   deletePost,
+  getSpecificPost,
   getRecentPosts,
   likeOrUnlikePost,
   saveOrUnsavePost,
@@ -14,6 +15,7 @@ const router = Router();
 
 // private routes
 router.post('/', auth, createPost);
+router.get('/:id', auth, checkId, getSpecificPost);
 router.get('/recents', auth, getRecentPosts);
 router.delete('/:id', auth, checkId, deletePost);
 router.post('/:id/like', auth, checkId, likeOrUnlikePost);

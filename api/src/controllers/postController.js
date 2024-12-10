@@ -1,4 +1,4 @@
-import {v2 as cloudinary} from 'cloudinary';
+import { v2 as cloudinary } from 'cloudinary';
 import Post from '../models/Post.js';
 import User from '../models/User.js';
 import Notification from '../models/Notification.js';
@@ -46,6 +46,22 @@ export const createPost = async (req, res, next) => {
     res.status(201).json(newPost);
   } catch (err) {
     console.error(`Error while post creation ${err.message || err.error}`);
+    next(err);
+  }
+};
+
+export const getSpecificPost = async (req, res, next) => {
+  try {
+    const { id: postId } = req.params;
+    const specificPost = await Post.findById(postId);
+
+    if (!specificPost) {
+      return next(error(404, 'Post not found'));
+    }
+
+    res.status(200).json(specificPost);
+  } catch (err) {
+    console.error(`Error while fetching specific post ${err.message}`);
     next(err);
   }
 };
@@ -192,7 +208,7 @@ export const saveOrUnsavePost = async (req, res, next) => {
       // reload the post to get a updated saves
       const updatedPost = await Post.findById(postId);
       const updatedSaves = updatedPost.saves;
-      
+
       res.status(200).json(updatedSaves);
     }
   } catch (err) {
