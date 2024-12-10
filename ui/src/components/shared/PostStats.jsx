@@ -45,7 +45,7 @@ const PostStats = ({ post, userId }) => {
       console.error(
         `Error while like or unlike the post ${likeError.message || err}`
       );
-      toast.error(likeError.message || err);
+      toast.error(`Error while like or unlike ${likeError.message || err}`);
     }
   };
 
@@ -65,7 +65,7 @@ const PostStats = ({ post, userId }) => {
         // revert optimistic update if server request fails
         setSaves(savesBefore);
         console.error(`Error while save or unsave post ${saveError.message || err}`);
-        toast.error(saveError.message || err);
+        toast.error(`Error while save or unsave ${saveError.message || err}`);
       }
   };
   return (
