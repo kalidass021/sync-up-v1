@@ -28,7 +28,7 @@ const PostStats = ({ post, userId }) => {
   const handleLikePost = async (e) => {
     e.stopPropagation();
     // optimistic update for better ux
-    // in updated likes code we're only updating the ui state not
+    // in updated likes code we're only updating the ui state not in server
     // without this code also like functionality will work
     // but it make interactions feel faster
     const updatedLikes = isLiked
