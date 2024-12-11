@@ -53,7 +53,10 @@ export const createPost = async (req, res, next) => {
 export const getSpecificPost = async (req, res, next) => {
   try {
     const { id: postId } = req.params;
-    const specificPost = await Post.findById(postId);
+    const specificPost = await Post.findById(postId).populate({
+      path: 'creator',
+      select: 'profileImg fullName',
+    });
 
     if (!specificPost) {
       return next(error(404, 'Post not found'));
