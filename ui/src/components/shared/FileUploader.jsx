@@ -6,13 +6,15 @@ import fileUpload from '../../assets/icons/file-upload.svg';
 const FileUploader = ({ fieldChange, mediaUrl }) => {
   // eslint-disable-next-line no-unused-vars
   const [file, setFile] = useState([]);
+  // we're receiving the mediaUrl from PostForm only action === Update
   const [fileUrl, setFileUrl] = useState(mediaUrl || '');
-
+  
   const onDrop = useCallback(
     (acceptedFiles) => {
       setFile(acceptedFiles);
       fieldChange && fieldChange(acceptedFiles);
-      acceptedFiles.length > 0 && setFileUrl(URL.createObjectURL(acceptedFiles[0]));
+      acceptedFiles.length > 0 &&
+        setFileUrl(URL.createObjectURL(acceptedFiles[0]));
     },
     [fieldChange]
   );

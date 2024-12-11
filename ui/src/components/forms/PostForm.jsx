@@ -29,12 +29,9 @@ const PostForm = ({ post, action }) => {
   });
 
   const navigate = useNavigate();
-  const [createPost, { isLoading: isCreatingPost, error: createPostError }] =
-    useCreatePostMutation();
+  const [createPost, { isLoading: isCreatingPost }] = useCreatePostMutation();
 
-  const { _id: postId } = post;
-  const [updatePost, {isLoading: isUpdatingPost, error: updatePostError }] =
-    useUpdatePostMutation();
+  const [updatePost, { isLoading: isUpdatingPost }] = useUpdatePostMutation();
 
   const handleFileChange = async (acceptedFiles) => {
     const reader = new FileReader();
@@ -50,54 +47,41 @@ const PostForm = ({ post, action }) => {
     };
   };
 
-
   const formSubmit = async (postData) => {
     const { caption, image } = postData;
 
     if (!caption && !image) {
       return toast.error('Post must have caption or image');
     }
-    if (post && action === 'Update') {
-      try {
-        const res = await updatePost({
-          id: postId,
-          updatedPost: {
+
+    const mutation = action === 'Update' ? updatePost : createPost;
+    const payload =
+      action === 'Update'
+        ? {
+            id: post._id,
+            updatedPost: {
+              ...postData,
+            },
+          }
+        : {
             ...postData,
-          },
-        });
+          };
 
-        if (res.error) {
-          console.error(res?.error);
-        }
+    try {
+      const res = await mutation(payload);
 
-        if (res.data) {
-          toast.success('Post updated');
-          return navigate(`/posts/${postId}`);
-        }
-      } catch (err) {
-        console.error(`Failed to update post ${err}`);
-        toast.error(
-          `Failed to update post ${updatePostError.message || err.message}`
-        );
+      if (res.error) {
+        throw new Error(res?.error);
       }
-    } else {
-      try {
-        await createPost({
-          ...postData,
-          tags: postData?.tags?.replace(/ /g, '').split(',') || [], // convert tags into an array
-        });
 
-        // reset the form data
-        reset();
-        // navigate to home page
-        navigate('/');
-        toast.success('Post added to database');
-      } catch (err) {
-        console.error(`Failed to create post ${err}`);
-        toast.error(
-          `Failed to create post ${createPostError?.message || err.message}`
-        );
-      }
+      toast.success(`Post ${action === 'Update' ? 'updated' : 'created'}`);
+      reset();
+      navigate(action === 'Update' ? `/posts/${post._id}` : '/');
+    } catch (err) {
+      console.error(
+        `Failed to ${action === 'Update' ? 'update' : 'create'} post: ${err}`
+      );
+      toast.error(`Failed to ${action === 'Update' ? 'update' : 'create'}`);
     }
   };
 
@@ -132,7 +116,7 @@ const PostForm = ({ post, action }) => {
           <label className='shad-form-label'>Add Photos</label>
           <FileUploader
             fieldChange={handleFileChange}
-            mediaUrl={`${CLOUDINARY_URL}/${post?.imgId}`}
+            mediaUrl={action === 'Update' && `${CLOUDINARY_URL}/${post?.imgId}`}
             // register happened in handleFileChange using setValue
           />
           {errors.file && (
@@ -176,6 +160,10 @@ const PostForm = ({ post, action }) => {
                 value: 100,
                 message: 'Tags not contain more than 100 characters',
               },
+              setValueAs: (value) =>
+                typeof value === 'string'
+                  ? value?.replace(/ /g, '').split(',') // transform the tags into an array
+                  : value, // ensure the value is string before transformation
             })}
           />
           {errors.tags && (
@@ -189,14 +177,14 @@ const PostForm = ({ post, action }) => {
           <Button
             type='submit'
             className='shad-button-primary whitespace-nowrap'
-            disabled={isCreatingPost}
+            disabled={isCreatingPost || isUpdatingPost}
           >
-            {isCreatingPost ? (
+            {isCreatingPost || isUpdatingPost ? (
               <div className='flex-center gap-2'>
-                <Loader /> Creating...
+                <Loader /> {action === 'Update' ? 'Updating...' : 'Creating...'}
               </div>
             ) : (
-              'Create'
+              action
             )}
           </Button>
         </div>

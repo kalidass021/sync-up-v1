@@ -1,4 +1,4 @@
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PostForm from '../../components/forms/PostForm';
 import { useGetSpecificPostQuery } from '../../redux/api/postApiSlice.js';
 import Loader from '../../components/shared/Loader.jsx';
