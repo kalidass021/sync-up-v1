@@ -12,20 +12,20 @@ import { Button } from '@/components/ui/button';
 
 const PostDetails = () => {
   const { id: postId } = useParams();
+  const { userInfo } = useSelector((state) => state.auth);
   const {
     data: post,
     isLoading: isPostLoading,
     error: postError,
   } = useGetSpecificPostQuery(postId);
 
-  const { creator, caption, imgId, location, tags, createdAt } = post || {};
-  const { userInfo } = useSelector((state) => state.auth);
-
-  const handleDeletePost = () => {};
-
   if (isPostLoading) {
     return <Loader />;
   }
+
+  const { creator, caption, imgId, location, tags, createdAt } = post || {};
+
+  const handleDeletePost = () => {};
 
   return (
     <div className='post-details-container'>
@@ -90,7 +90,7 @@ const PostDetails = () => {
             </ul>
           </div>
           <div className='w-full'>
-              <PostStats post={post} userId={userInfo?._id}/>
+            <PostStats post={post} userId={userInfo?._id} />
           </div>
         </div>
       </div>
