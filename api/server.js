@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 // files
 import dbConnect from './src/config/dbConnect.js';
 import cors from './src/config/cors.js';
-import cloudinaryConfig from './src/config/cloudinaryConfig.js';
+import cloudinaryConfig from './src/config/cloudinary.js';
 import notFound from './src/middlewares/notFound.js';
 import errorHandler from './src/middlewares/errorHandler.js';
 
