@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import User from '../models/User.js';
 import generateToken from '../utils/generateToken.js';
 import error from '../utils/error.js';
+import { EMAIL_REGEX as emailRegex } from '../utils/constants.js';
 
 export const signup = async (req, res, next) => {
   try {
@@ -10,8 +11,6 @@ export const signup = async (req, res, next) => {
     if (!fullName || !username || !email || !password) {
       return next(error(400, 'All fields are required'));
     }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(email)) {
       return next(error(400, 'Invalid email format'));
