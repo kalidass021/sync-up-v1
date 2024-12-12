@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import dbConnect from './src/config/dbConnect.js';
 import cors from './src/config/cors.js';
 import cloudinaryConfig from './src/config/cloudinaryConfig.js';
+import notFound from './src/middlewares/notFound.js';
 import errorHandler from './src/middlewares/errorHandler.js';
 
 // configurations
@@ -34,13 +35,10 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/posts', postRoutes);
 app.use('/api/v1/notifications', notificationRoutes);
 
+// middleware to handle undefined routes
+app.use(notFound);
 // middleware to handle the errors
 app.use(errorHandler);
-
-// middleware to handle undefined routes
-app.use((req, res) => {
-  res.status(404).json({ error: 'Not found' });
-});
 
 const serverConfig = () => {
   const port = process.env.PORT || 5000;
