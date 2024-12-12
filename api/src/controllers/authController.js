@@ -114,7 +114,7 @@ export const signin = async (req, res, next) => {
 
 export const signout = async (req, res, next) => {
   try {
-    res.cookie('jwt', '', {
+    res.cookie('jwt', null, {
       httpOnly: true,
       maxAge: 0,
     });
