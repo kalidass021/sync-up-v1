@@ -11,10 +11,9 @@ import {
 // middlewares
 import auth from '../middlewares/auth.js';
 import checkId from '../middlewares/checkId.js';
-import { MONGO_ID_REGEX } from '../utils/constants.js';
+import { MONGO_ID_REGEX as idRegex } from '../utils/constants.js';
 
 const router = Router();
-const idRegex = MONGO_ID_REGEX;
 
 // private routes
 router.post('/', auth, createPost);
