@@ -1,14 +1,14 @@
-// middleware to handle the errors
 const errorHandler = (err, req, res, next) => {
-  const stack = err.stack ? console.error(err.stack) && err.stack : null;
+  // middleware to handle the erros
   const statusCode = err.statusCode || 500;
-  const message = err.message || err.error || 'Internal Server Error';
-  res.status(statusCode).json({
+  const errorResponse = {
     success: false,
     statusCode,
-    message,
-    stack,
-  });
+    message: err.message || err.error || 'Internal server error',
+    ...(err.stack && { stack: (console.error(err.stack), err.stack) }),
+  };
+
+  res.status(statusCode).json(errorResponse);
 };
 
 export default errorHandler;
