@@ -20,9 +20,6 @@ const PostDetails = () => {
 
   const { creator, caption, imgId, location, tags, createdAt } = post || {};
   const { userInfo } = useSelector((state) => state.auth);
-  console.log(post);
-  console.log(userInfo);
-  console.log(creator?._id === userInfo?._id);
 
   const handleDeletePost = () => {};
 
@@ -41,7 +38,7 @@ const PostDetails = () => {
         <div className='post-details-info'>
           <div className='flex-between w-full'>
             <Link
-              to={`/profile/${creator._id}`}
+              to={`/profile/${creator?._id}`}
               className='flex items-center gap-3'
             >
               <img
@@ -66,7 +63,7 @@ const PostDetails = () => {
             <div className='flex-center gap-4'>
               <Link
                 to={`/posts/${postId}/edit`}
-                className={creator._id !== userInfo._id && 'hidden'}
+                className={creator?._id !== userInfo._id && 'hidden'}
               >
                 <img src={editIcon} width={24} height={24} alt='edit' />
               </Link>
@@ -74,7 +71,7 @@ const PostDetails = () => {
                 onClick={handleDeletePost}
                 variant='ghost'
                 className={`ghost-details-delete-btn ${
-                  creator._id !== userInfo._id && 'hidden'
+                  creator?._id !== userInfo?._id && 'hidden'
                 }`}
               >
                 <img src={deleteIcon} alt='delete' width={24} height={24} />
