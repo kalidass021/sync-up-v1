@@ -42,14 +42,14 @@ const PostDetails = () => {
               className='flex items-center gap-3'
             >
               <img
-                src={creator.profileImg || profilePlaceholder}
+                src={creator?.profileImg || profilePlaceholder}
                 alt='creator'
                 className='rounded-full  w-9 h-9 lg:w-11 lg:h-11'
               />
 
               <div className='flex flex-col '>
                 <p className='base-medium lg:body-bold text-light-1'>
-                  {creator.fullName}
+                  {creator?.fullName}
                 </p>
                 <div className='flex-center gap-2 text-light-3'>
                   <p className='subtle-semibold lg:small-regular'>
