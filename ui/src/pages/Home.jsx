@@ -1,13 +1,8 @@
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { useGetRecentPostsQuery } from '../redux/api/postApiSlice';
 import PostCard from '../components/shared/PostCard';
 import Loader from '../components/shared/Loader';
 
 const Home = () => {
-  const navigate = useNavigate();
-  const { userInfo, loading } = useSelector((state) => state.auth);
 
   const {
     data: recentPosts,
@@ -16,11 +11,6 @@ const Home = () => {
   } = useGetRecentPostsQuery();
 
   console.log('recentPosts', recentPosts);
-  useEffect(() => {
-    if (!userInfo && !loading) {
-      navigate('/signin');
-    }
-  }, [loading, userInfo, navigate]);
 
   return (
     <div className='flex flex-1'>

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
@@ -15,7 +14,7 @@ const LeftSidebar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const { userInfo, loading } = useSelector((state) => state.auth);
+  const { userInfo } = useSelector((state) => state.auth);
   const [signoutApiCall] = useSignoutMutation();
 
   const signoutHandler = async () => {
@@ -30,12 +29,6 @@ const LeftSidebar = () => {
     }
   };
 
-  useEffect(() => {
-    if (!userInfo && !loading) {
-      navigate('/signin');
-    }
-  }, [loading, userInfo, navigate]);
-  
   return (
     <nav className='leftsidebar'>
       <div className='flex flex-col gap-6'>
@@ -43,17 +36,17 @@ const LeftSidebar = () => {
           <img src={logo} alt='logo' width={170} height={36} />
         </Link>
         <Link
-          to={`/profile/${userInfo._id}`}
+          to={`/profile/${userInfo?._id}`}
           className='flex gap-3 items-center'
         >
           <img
-            src={userInfo.profileImg || profilePlaceholder}
+            src={userInfo?.profileImg || profilePlaceholder}
             alt='profile'
             className='h-14 w-14 rounded-full'
           />
           <div className='flex flex-col '>
-            <p className='body-bold '>{userInfo.fullName}</p>
-            <p className='small-regular text-light-3'>@{userInfo.username}</p>
+            <p className='body-bold '>{userInfo?.fullName}</p>
+            <p className='small-regular text-light-3'>@{userInfo?.username}</p>
           </div>
         </Link>
         <ul className='flex flex-col gap-2'>
