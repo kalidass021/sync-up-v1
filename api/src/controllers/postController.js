@@ -100,7 +100,7 @@ export const getInfinitePosts = async (req, res, next) => {
         path: 'creator',
         select: 'profileImg, fullName', // select specific fields from the creator
       });
-    
+
     // if posts.length === 0
     if (!posts.length) {
       return next(error(404, 'No posts found'));
@@ -112,11 +112,50 @@ export const getInfinitePosts = async (req, res, next) => {
     res.status(200).json({
       success: true,
       posts,
-      totalPages: Math.ceil(total/limit), // calculate total pages
+      totalPages: Math.ceil(total / limit), // calculate total pages
       currentPage: parseInt(page), // current page
-    })
+    });
   } catch (err) {
     console.error(`Error while fetching inifinite posts ${err.message}`);
+    next(err);
+  }
+};
+
+export const searchPosts = async (req, res, next) => {
+  try {
+    const { query: searchText } = req.query;
+
+    if (!searchText) {
+      return next(error(400, 'Search text is required'));
+    }
+
+    // helper function to create a case-insensitive regular expression
+    const containsString = (searchText) => {
+      return new RegExp(searchText, 'i'); // i flag for case-insensitive matching
+    };
+
+    // create the regex for the search text
+    const searchTextRegex = containsString(searchText);
+    // perform search using mongo db's regex search
+    const posts = await Post.find({
+      // $text: { $search: searchText },
+      $or: [
+        { caption: { $regex: searchTextRegex } },
+        { location: { $regex: searchTextRegex } },
+        { tags: { $regex: searchTextRegex } },
+      ],
+    }).populate({
+      path: 'creator',
+      select: 'profileImg fullName',
+    });
+
+    if (!posts.length) {
+      return next(error(404, 'No posts found'));
+    }
+
+    res.status(200).json(posts);
+  } catch (err) {
+    console.error(`Error while searching posts ${err.message}`);
     next(err);
   }
 };

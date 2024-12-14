@@ -63,6 +63,11 @@ GET http://localhost:5000/api/v1/posts/recents
 GET http://localhost:5000/api/v1/posts/infinite?page=1&limit=10
 
 ###
+
+// search posts
+GET http://localhost:5000/api/v1/posts/search?query=magic
+
+###
 // update post
 POST http://localhost:5000/api/v1/posts/6757209000eb674012bab8ba/update
 Content-Type: application/json

@@ -6,6 +6,7 @@ import {
   getSpecificPost,
   getRecentPosts,
   getInfinitePosts,
+  searchPosts,
   likeOrUnlikePost,
   saveOrUnsavePost,
 } from '../controllers/postController.js';
@@ -21,6 +22,7 @@ router.post('/', auth, createPost);
 router.get(`/:id${idRegex}`, auth, checkId, getSpecificPost);
 router.get('/recents', auth, getRecentPosts);
 router.get('/infinite', auth, getInfinitePosts);
+router.get('/search', auth, searchPosts);
 router.put(`/:id${idRegex}`, auth, checkId, updatePost);
 router.delete(`/:id${idRegex}`, auth, checkId, deletePost);
 router.post(`/:id${idRegex}/like`, auth, checkId, likeOrUnlikePost);
