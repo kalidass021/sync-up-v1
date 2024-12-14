@@ -88,6 +88,39 @@ export const getRecentPosts = async (req, res, next) => {
   }
 };
 
+export const getInfinitePosts = async (req, res, next) => {
+  try {
+    const { page = 1, limit = 10 } = req.query;
+
+    const posts = await Post.find()
+      .skip((page - 1) * limit) // skip the number of posts based on current page
+      .limit(parseInt(limit)) // limit the number of posts returned
+      .sort({ createdAt: -1 })
+      .populate({
+        path: 'creator',
+        select: 'profileImg, fullName', // select specific fields from the creator
+      });
+    
+    // if posts.length === 0
+    if (!posts.length) {
+      return next(error(404, 'No posts found'));
+    }
+
+    // count the number of posts for pagination calculation
+    const total = await Post.countDocuments();
+    // send the paginated posts along with pagination info
+    res.status(200).json({
+      success: true,
+      posts,
+      totalPages: Math.ceil(total/limit), // calculate total pages
+      currentPage: parseInt(page), // current page
+    })
+  } catch (err) {
+    console.error(`Error while fetching inifinite posts ${err.message}`);
+    next(err);
+  }
+};
+
 export const updatePost = async (req, res, next) => {
   try {
     const { _id: userId } = req.user;
