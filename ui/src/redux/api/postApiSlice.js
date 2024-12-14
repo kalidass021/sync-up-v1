@@ -22,6 +22,11 @@ export const postApiSlice = apiSlice.injectEndpoints({
       providesTags: ['Post'],
     }),
 
+    getInfinitePosts: builder.query({
+      query: ({page, limit}) => `${POST_URL}/infinite?page=${page}&limit=${limit}`,
+      provideTags: ['Post'],
+    }),
+
     updatePost: builder.mutation({
       query: ({ id, updatedPost }) => ({
         url: `${POST_URL}/${id}`,
@@ -61,6 +66,7 @@ export const {
   useCreatePostMutation,
   useGetSpecificPostQuery,
   useGetRecentPostsQuery,
+  useGetInfinitePostsQuery,
   useUpdatePostMutation,
   useDeletePostMutation,
   useLikeOrUnlikePostMutation,
