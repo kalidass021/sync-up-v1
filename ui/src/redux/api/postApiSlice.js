@@ -27,6 +27,11 @@ export const postApiSlice = apiSlice.injectEndpoints({
       provideTags: ['Post'],
     }),
 
+    searchPosts: builder.query({
+      query: (searchText) => `${POST_URL}/search?query=${searchText}`,
+      providesTags: ['Post'],
+    }),
+
     updatePost: builder.mutation({
       query: ({ id, updatedPost }) => ({
         url: `${POST_URL}/${id}`,
