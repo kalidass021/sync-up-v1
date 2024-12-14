@@ -3,12 +3,12 @@ import { useSelector } from 'react-redux';
 import { useGetSpecificPostQuery } from '../../redux/api/postApiSlice';
 import PostStats from '../../components/shared/PostStats';
 import Loader from '../../components/shared/Loader';
+import { Button } from '@/components/ui/button';
 import formatDate from '../../utils/formatDate';
 import { CLOUDINARY_URL } from '../../config/constants';
 import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
 import editIcon from '../../assets/icons/edit.svg';
 import deleteIcon from '../../assets/icons/delete.svg';
-import { Button } from '@/components/ui/button';
 
 const PostDetails = () => {
   const { id: postId } = useParams();
@@ -30,11 +30,14 @@ const PostDetails = () => {
   return (
     <div className='post-details-container'>
       <div className='post-details-card'>
-        <img
-          src={`${CLOUDINARY_URL}/${imgId}`}
-          alt='post'
-          className='post-details-img'
-        />
+        {imgId && (
+          <img
+            src={`${CLOUDINARY_URL}/${imgId}`}
+            alt='post'
+            className='post-details-img'
+          />
+        )}
+
         <div className='post-details-info'>
           <div className='flex-between w-full'>
             <Link
