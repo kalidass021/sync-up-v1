@@ -72,6 +72,7 @@ export const {
   useGetSpecificPostQuery,
   useGetRecentPostsQuery,
   useGetInfinitePostsQuery,
+  useSearchPostsQuery,
   useUpdatePostMutation,
   useDeletePostMutation,
   useLikeOrUnlikePostMutation,
