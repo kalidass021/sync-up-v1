@@ -34,11 +34,11 @@ const userSchema = new Schema({
       default: [],
     },
   ],
-  profileImg: {
+  profileImgId: {
     type: String,
     default: '',
   },
-  coverImg: {
+  coverImgId: {
     type: String,
     default: '',
   },
