@@ -27,9 +27,8 @@ const Explore = () => {
     data: { posts: infinitePosts = [], currentPage = 1, totalPages = 1 } = {},
     isLoading: isFetchingInfinitePosts,
     error: infinitePostsError,
-    refetch,
   } = useGetInfinitePostsQuery(
-    { page, limit: 6 },
+    { page, limit: 10 },
     { skip: !!debouncedSearchText }
   ); // Skip query when debouncedSearchText is not empty
 
@@ -40,28 +39,22 @@ const Explore = () => {
   // Infinite scroll logic using scroll event handler
   useEffect(() => {
     const handleScroll = () => {
-      console.log('handle scroll called');
-      console.log('innerHeight', window.innerHeight);
-      console.log('scrollY', window.scrollY);
-      console.log('scrollHeight', document.body.scrollHeight);
       // Check if user has scrolled to the bottom of the page and not currently fetching
       if (
-        window.innerHeight + window.scrollY >= document.body.scrollHeight - 70 &&
+        window.innerHeight + window.scrollY >= document.body.scrollHeight - 2 &&
         !isFetchingInfinitePosts &&
         page < totalPages
       ) {
         setPage((prevPage) => prevPage + 1); // Increment the page number to fetch more posts
-        console.log(page);
-        refetch(); // refetch the data with new page number
       }
     };
 
     window.addEventListener('scroll', handleScroll); // Add scroll event listener
 
-    // return () => {
-    //   window.removeEventListener('scroll', handleScroll); // Clean up the event listener on component unmount
-    // };
-  }, [isFetchingInfinitePosts, page, totalPages, refetch]); // Re-run effect when isFetchingInfinitePosts, page, or totalPages changes
+    return () => {
+      window.removeEventListener('scroll', handleScroll); // Clean up the event listener on component unmount
+    };
+  }, [isFetchingInfinitePosts, page, totalPages]); // Re-run effect when isFetchingInfinitePosts, page, or totalPages changes
 
   // Handle search input change
   const handleSearchChange = (e) => {
