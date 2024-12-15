@@ -14,6 +14,7 @@ cloudinaryConfig();
 
 // routes
 import authRoutes from './src/routes/authRoutes.js';
+import userRoutes from './src/routes/userRoutes.js';
 import postRoutes from './src/routes/postRoutes.js';
 import notificationRoutes from './src/routes/notificationRoutes.js';
 
@@ -32,6 +33,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/posts', postRoutes);
 app.use('/api/v1/notifications', notificationRoutes);
 

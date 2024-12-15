@@ -30,6 +30,11 @@ POST http://localhost:5000/api/v1/auth/signout
 
 ###
 
+// user routes
+GET http://localhost:5000/api/v1/users/testuser12
+
+###
+
 // create post
 POST http://localhost:5000/api/v1/posts
 Content-Type: application/json
