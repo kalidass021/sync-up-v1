@@ -31,7 +31,14 @@ POST http://localhost:5000/api/v1/auth/signout
 ###
 
 // user routes
+
+// get user profile
 GET http://localhost:5000/api/v1/users/testuser12
+
+###
+
+// follow or unfollow uer
+POST http://localhost:5000/api/v1/users/6751812d02b24fc1269f5738/follow
 
 ###
 
