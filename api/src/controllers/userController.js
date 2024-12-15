@@ -78,3 +78,36 @@ export const followOrUnfollowUser = async (req, res, next) => {
     next(err);
   }
 };
+
+export const getSuggestedUsers = async (req, res, next) => {
+  try {
+    // current userId
+    const { _id: userId } = req.user;
+    // users followed by current user
+    const followedByCurrentUser = await User.findById(userId).select(
+      'following'
+    );
+
+    // exclude the current user from the suggested users arr
+    // get some users excluding the current user
+    const users = await User.aggregate([
+      {
+        $match: {
+          _id: { $ne: userId },
+        },
+      },
+      { $sample: { size: 10 } },
+      { $project: { password: 0 } }, // exclude the password field
+    ]);
+
+    // exclude the users already followed by current user
+    const suggestedUsers = users.filter(
+      (user) => !followedByCurrentUser.following.includes(user._id)
+    );
+
+    res.status(200).json(suggestedUsers);
+  } catch (err) {
+    console.error(`Error while fetching suggested users ${err.messge}`);
+    next(err);
+  }
+};
