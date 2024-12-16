@@ -1,6 +1,9 @@
+import bcrypt from 'bcryptjs';
+import { v2 as cloudinary } from 'cloudinary';
 import User from '../models/User.js';
 import Notification from '../models/Notification.js';
 import error from '../utils/error.js';
+import { EMAIL_REGEX as emailRegex } from '../utils/constants.js';
 
 export const getUserProfile = async (req, res, next) => {
   try {
@@ -108,6 +111,119 @@ export const getSuggestedUsers = async (req, res, next) => {
     res.status(200).json(suggestedUsers);
   } catch (err) {
     console.error(`Error while fetching suggested users ${err.messge}`);
+    next(err);
+  }
+};
+
+export const updateUserProfile = async (req, res, next) => {
+  try {
+    const { _id: userId } = req.user;
+    const { username } = req.params;
+    const {
+      fullName,
+      username: updatedUsername,
+      email,
+      profileImg,
+      bio,
+      currentPassword,
+      newPassword,
+    } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return next(error(404, 'User not found'));
+    }
+
+    if (user.username !== username) {
+      return next(error(400, 'You can only update your own profile'));
+    }
+
+    if (updatedUsername) {
+      if (updatedUsername === username) {
+        return next(
+          error(
+            400,
+            'The new username must be different from the current username'
+          )
+        );
+      }
+      // ensure updated username is unique
+      const usernameExists = await User.findOne({ username: updatedUsername });
+      if (usernameExists) {
+        return next(error(400, 'Username already taken'));
+      }
+    }
+
+    if (email) {
+      if (!emailRegex.test(email)) {
+        return next(error(400, 'Invalid email format'));
+      }
+
+      // ensure updated email is unique
+      const emailExists = await User.findOne({ email });
+      if (emailExists) {
+        return next(error(400, 'Email already taken'));
+      }
+    }
+
+    if (
+      (currentPassword && !newPassword) ||
+      (!currentPassword && newPassword)
+    ) {
+      return next(
+        error(400, 'Please provide both current password and new password')
+      );
+    }
+
+    if (currentPassword && newPassword) {
+      const isMatch = await bcrypt.compare(currentPassword, user.password);
+      if (!isMatch) {
+        return next(error(400, 'Current password is incorrect'));
+      }
+
+      if (newPassword.length < 6) {
+        return next(400, 'Password must be at least 6 characters long');
+      }
+
+      if (newPassword === currentPassword) {
+        return next(
+          400,
+          'Your new password must be different from current password'
+        );
+      }
+
+      // hash the new password
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(newPassword, salt);
+      // update the password
+      user.password = hashedPassword;
+    }
+
+    // destroy the old profile image on the cloudinary and upload the new image
+    // at this point our app only have profileImg, we may add cover img later
+    const cloudinaryImgId =
+      profileImg &&
+      (user.profileImgId &&
+        (await cloudinary.uploader.destroy(user.profileImgId)),
+      await cloudinary.uploader.upload(profileImg, {
+        folder: 'sync-up/users/profileImages',
+      })).public_id;
+
+    // update the user profile details
+    user.fullName = fullName || user.fullName;
+    user.username = username || user.username;
+    user.email = email || user.email;
+    user.bio = bio || user.bio;
+    // user.link = link || user.link; // at this point we don't have link in our app
+    user.profileImgId = cloudinaryImgId || user.profileImgId;
+
+    const updatedUser = await user.save();
+    // password should be null in response
+    updatedUser.password = null;
+
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    console.error(`Error while updating the user details ${err.message}`);
     next(err);
   }
 };

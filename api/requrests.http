@@ -37,8 +37,23 @@ GET http://localhost:5000/api/v1/users/testuser12/profile
 
 ###
 
-// follow or unfollow uer
+// follow or unfollow user
 POST http://localhost:5000/api/v1/users/6751812d02b24fc1269f5738/follow
+
+###
+
+// get suggested users
+GET http://localhost:5000/api/v1/users/suggested
+###
+
+PUT http://localhost:5000/api/v1/users/testuser/profile
+Content-Type: application/json
+
+{
+    "username": "testuser",
+    "email": "testuse@email.com"
+}
+
 
 ###
 
