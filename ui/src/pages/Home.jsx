@@ -1,9 +1,10 @@
 import { useGetRecentPostsQuery } from '../redux/api/postApiSlice';
+import { useGetSuggestedUsersQuery } from '../redux/api/userApiSlice';
 import PostCard from '../components/shared/PostCard';
+import UserCard from '../components/shared/UserCard';
 import Loader from '../components/shared/Loader';
 
 const Home = () => {
-
   const {
     data: recentPosts,
     isLoading: isPostLoading,
@@ -11,6 +12,14 @@ const Home = () => {
   } = useGetRecentPostsQuery();
 
   console.log('recentPosts', recentPosts);
+
+  const {
+    data: creators,
+    isLoading: isUsersLoading,
+    // error: usersError,
+  } = useGetSuggestedUsersQuery();
+
+  // console.log('creators', creators);
 
   return (
     <div className='flex flex-1'>
@@ -27,6 +36,21 @@ const Home = () => {
             </ul>
           )}
         </div>
+      </div>
+      {/* top creators */}
+      <div className='home-creators'>
+        <h3 className='h3-bold text-light-1'>Top Creators</h3>
+          {
+            isUsersLoading && !creators ? (
+              <Loader />
+            ) : (
+              <ul className='grid 2xl:grid-cols-2 gap-6'>
+                {creators.map((creator) => (
+                  <li key={creator._id}><UserCard user={creator} /></li>
+                ))}
+              </ul>
+            )
+          }
       </div>
     </div>
   );

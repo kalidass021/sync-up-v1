@@ -18,11 +18,17 @@ const authSlice = createSlice({
       localStorage.setItem('expirationTime', expirationTime);
     },
     signout: (state) => {
-        state.userInfo = null;
-        localStorage.clear();
-    }
+      state.userInfo = null;
+      localStorage.clear();
+    },
+    // update user info in local storage, after follow, like or save actions
+    updateUserInfo: (state, action) => {
+      state.userInfo = action.payload;
+      localStorage.setItem('userInfo', JSON.stringify(action.payload));
+    },
   },
 });
 
-export const {setCredentials, signout} = authSlice.actions;
+export const { setCredentials, signout, updateUserInfo } =
+  authSlice.actions;
 export default authSlice.reducer;
