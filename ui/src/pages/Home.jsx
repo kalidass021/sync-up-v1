@@ -8,7 +8,7 @@ const Home = () => {
   const {
     data: recentPosts,
     isLoading: isPostLoading,
-    // error: postError,
+    error: postError,
   } = useGetRecentPostsQuery();
 
   console.log('recentPosts', recentPosts);
@@ -16,10 +16,23 @@ const Home = () => {
   const {
     data: creators,
     isLoading: isUsersLoading,
-    // error: usersError,
+    error: usersError,
   } = useGetSuggestedUsersQuery();
 
   // console.log('creators', creators);
+
+  if (postError || usersError) {
+    return (
+      <div className='flex flex-1'>
+        <div className='home-container'>
+          <p className='body-medium text-light-1'>Something went wrong</p>
+        </div>
+        <div className='home-creators'>
+          <p className='body-medium text-light-1'>Something went wrong</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className='flex flex-1'>
@@ -40,17 +53,17 @@ const Home = () => {
       {/* top creators */}
       <div className='home-creators'>
         <h3 className='h3-bold text-light-1'>Top Creators</h3>
-          {
-            isUsersLoading && !creators ? (
-              <Loader />
-            ) : (
-              <ul className='grid 2xl:grid-cols-2 gap-6'>
-                {creators.map((creator) => (
-                  <li key={creator._id}><UserCard user={creator} /></li>
-                ))}
-              </ul>
-            )
-          }
+        {isUsersLoading && !creators ? (
+          <Loader />
+        ) : (
+          <ul className='grid 2xl:grid-cols-2 gap-6'>
+            {creators.map((creator) => (
+              <li key={creator._id}>
+                <UserCard user={creator} />
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
