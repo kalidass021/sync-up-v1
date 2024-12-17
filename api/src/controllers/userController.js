@@ -99,14 +99,13 @@ export const getSuggestedUsers = async (req, res, next) => {
           _id: { $ne: userId },
         },
       },
-      { $sample: { size: 10 } },
       { $project: { password: 0 } }, // exclude the password field
     ]);
 
     // exclude the users already followed by current user
     const suggestedUsers = users.filter(
       (user) => !followedByCurrentUser.following.includes(user._id)
-    );
+    ).splice(0, 10); // send only 10 users
 
     res.status(200).json(suggestedUsers);
   } catch (err) {
