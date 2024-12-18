@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import {
+  useGetCurrentUserProfileQuery,
+  useLazyGetCurrentUserProfileQuery,
   useFollowOrUnfollowUserMutation,
-  useLazyGetUserProfileQuery,
 } from '../../redux/api/userApiSlice';
 import { updateUserInfo } from '../../redux/slices/auth/authSlice';
 import { Button } from '@/components/ui/button';
@@ -13,19 +14,15 @@ import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
 
 const UserCard = ({ user }) => {
   const dispatch = useDispatch();
-  const { userInfo: signedInUser } = useSelector((state) => state.auth);
+  const { data: signedInUser } = useGetCurrentUserProfileQuery();
   const [followOrUnfollowUser, { isLoading, error: followError }] =
     useFollowOrUnfollowUserMutation();
 
-  const [fetchUserProfile] = useLazyGetUserProfileQuery();
+  const [fetchCurrentUserProfile] = useLazyGetCurrentUserProfileQuery();
 
   const [isFollowing, setIsFollowing] = useState(
-    signedInUser.following.includes(user._id)
+    signedInUser?.following?.includes(user._id)
   );
-
-  useEffect(() => {
-    setIsFollowing(signedInUser.following.includes(user._id));
-  }, [signedInUser.following, user._id]);
 
   const handleFollowClick = async () => {
     // optimistic update
@@ -37,9 +34,9 @@ const UserCard = ({ user }) => {
         res.message === 'User followed' ||
         res.message === 'User unfollowed'
       ) {
-        const { data: updatedUserInfo } = await fetchUserProfile(
-          signedInUser.username
-        );
+        // conditionally fetch the updated profile for current user
+        const { data: updatedUserInfo } = await fetchCurrentUserProfile();
+        // update user info in the local storage - optional
         dispatch(updateUserInfo(updatedUserInfo));
       }
     } catch (err) {

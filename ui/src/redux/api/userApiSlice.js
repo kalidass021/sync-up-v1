@@ -35,6 +35,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetCurrentUserProfileQuery,
+  useLazyGetCurrentUserProfileQuery,
   useGetUserProfileQuery,
   useLazyGetUserProfileQuery,
   useFollowOrUnfollowUserMutation,
