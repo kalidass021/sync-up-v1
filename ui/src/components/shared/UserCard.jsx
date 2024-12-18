@@ -5,8 +5,8 @@ import { toast } from 'react-hot-toast';
 import {
   useGetCurrentUserProfileQuery,
   useLazyGetCurrentUserProfileQuery,
-  useFollowOrUnfollowUserMutation,
-} from '../../redux/api/userApiSlice';
+} from '../../redux/api/authApiSlice';
+import { useFollowOrUnfollowUserMutation } from '../../redux/api/userApiSlice';
 import { updateUserInfo } from '../../redux/slices/auth/authSlice';
 import { Button } from '@/components/ui/button';
 import { CLOUDINARY_URL } from '../../config/constants';

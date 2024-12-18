@@ -15,7 +15,7 @@ import SigninForm from './pages/auth/forms/SigninForm.jsx';
 import PageLayout from './pages/PageLayout.jsx';
 import Home from './pages/Home.jsx';
 import Explore from './pages/posts/Explore.jsx';
-import Saved from './pages/posts/Saved.jsx';
+import SavedPosts from './pages/posts/SavedPosts.jsx';
 import LikedPosts from './pages/posts/LikedPosts.jsx'
 import AllUsers from './pages/user/AllUsers.jsx';
 import CreatePost from './pages/posts/CreatePost.jsx';
@@ -44,7 +44,7 @@ const appRouter = createBrowserRouter([
           },
           {
             path: '/posts/saved',
-            element: <Saved />,
+            element: <SavedPosts />,
           },
           {
             path: '/posts/liked',
