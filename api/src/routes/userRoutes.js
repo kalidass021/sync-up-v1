@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import {
+  getCurrentUserProfile,
   getUserProfile,
   followOrUnfollowUser,
   getSuggestedUsers,
@@ -12,6 +13,7 @@ import { MONGO_ID_REGEX as idRegex } from '../utils/constants.js';
 const router = Router();
 
 // private routes
+router.get('/current/profile', auth, getCurrentUserProfile);
 router.get('/:username/profile', auth, getUserProfile);
 router.post(`/:id${idRegex}/follow`, auth, checkId, followOrUnfollowUser);
 router.get('/suggested', auth, getSuggestedUsers);

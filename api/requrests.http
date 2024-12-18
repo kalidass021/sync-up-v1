@@ -32,6 +32,9 @@ POST http://localhost:5000/api/v1/auth/signout
 
 // user routes
 
+// get current user profile
+GET http://localhost:5000/api/v1/users/current/profile
+
 // get user profile
 GET http://localhost:5000/api/v1/users/testuser12/profile
 

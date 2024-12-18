@@ -5,6 +5,18 @@ import Notification from '../models/Notification.js';
 import error from '../utils/error.js';
 import { EMAIL_REGEX as emailRegex } from '../utils/constants.js';
 
+export const getCurrentUserProfile = async (req, res, next) => {
+  try {
+    const { _id: userId } = req.user;
+    const user = await User.findById(userId).select('-password');
+
+    res.status(200).json(user);
+  } catch (err) {
+    console.error(`Error while fetching current user profile: ${err.message}`);
+    next(err);
+  }
+};
+
 export const getUserProfile = async (req, res, next) => {
   try {
     const { username } = req.params;
@@ -103,9 +115,9 @@ export const getSuggestedUsers = async (req, res, next) => {
     ]);
 
     // exclude the users already followed by current user
-    const suggestedUsers = users.filter(
-      (user) => !followedByCurrentUser.following.includes(user._id)
-    ).splice(0, 10); // send only 10 users
+    const suggestedUsers = users
+      .filter((user) => !followedByCurrentUser.following.includes(user._id))
+      .splice(0, 10); // send only 10 users
 
     res.status(200).json(suggestedUsers);
   } catch (err) {
