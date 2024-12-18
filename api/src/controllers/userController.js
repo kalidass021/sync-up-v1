@@ -5,18 +5,6 @@ import Notification from '../models/Notification.js';
 import error from '../utils/error.js';
 import { EMAIL_REGEX as emailRegex } from '../utils/constants.js';
 
-export const getCurrentUserProfile = async (req, res, next) => {
-  try {
-    const { _id: userId } = req.user;
-    const user = await User.findById(userId).select('-password');
-
-    res.status(200).json(user);
-  } catch (err) {
-    console.error(`Error while fetching current user profile: ${err.message}`);
-    next(err);
-  }
-};
-
 export const getUserProfile = async (req, res, next) => {
   try {
     const { username } = req.params;

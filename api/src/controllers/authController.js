@@ -118,9 +118,21 @@ export const signout = async (req, res, next) => {
       maxAge: 0,
     });
 
-    res.status(200).json({message: 'Signed out'});
+    res.status(200).json({ message: 'Signed out' });
   } catch (err) {
     console.error(`Error in signout controller ${err.message}`);
+    next(err);
+  }
+};
+
+export const getCurrentUserProfile = async (req, res, next) => {
+  try {
+    const { _id: userId } = req.user;
+    const user = await User.findById(userId).select('-password');
+
+    res.status(200).json(user);
+  } catch (err) {
+    console.error(`Error while fetching current user profile: ${err.message}`);
     next(err);
   }
 };
