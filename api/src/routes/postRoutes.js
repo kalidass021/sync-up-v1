@@ -5,6 +5,7 @@ import {
   deletePost,
   getSpecificPost,
   getRecentPosts,
+  getPostsByIds,
   getInfinitePosts,
   searchPosts,
   likeOrUnlikePost,
@@ -21,6 +22,7 @@ const router = Router();
 router.post('/', auth, createPost);
 router.get(`/:id${idRegex}`, auth, checkId, getSpecificPost);
 router.get('/recents', auth, getRecentPosts);
+router.get('/', auth, getPostsByIds);
 router.get('/infinite', auth, getInfinitePosts);
 router.get('/search', auth, searchPosts);
 router.put(`/:id${idRegex}`, auth, checkId, updatePost);

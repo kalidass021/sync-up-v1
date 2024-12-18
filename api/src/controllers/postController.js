@@ -88,6 +88,26 @@ export const getRecentPosts = async (req, res, next) => {
   }
 };
 
+export const getPostsByIds = async (req, res, next) => {
+  try {
+    const { postIds } = req.body;
+
+    if (!Array.isArray(postIds)) {
+      return next(error(400, 'PostIds must be an array'));
+    }
+
+    if (!postIds.length) {
+      return next(error(400, 'PostIds must be an non-empty array'));
+    }
+    const posts = await Post.find({ _id: { $in: postIds } });
+
+    res.status(200).json(posts);
+  } catch (err) {
+    console.error(`Error while fetching posts by ids: ${err.message}`);
+    next(err);
+  }
+};
+
 export const getInfinitePosts = async (req, res, next) => {
   try {
     const { page = 1, limit = 10 } = req.query;

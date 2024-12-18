@@ -91,6 +91,18 @@ GET http://localhost:5000/api/v1/posts/recents
 
 ###
 
+GET http://localhost:5000/api/v1/posts
+Content-Type: application/json
+
+{
+    "postIds": [
+    "67547a6213a135b71aab79bf",
+    "6757209000eb674012bab8ba",
+    "6757204100eb674012bab8b4"
+    ]
+}
+###
+
 // get infinite posts
 GET http://localhost:5000/api/v1/posts/infinite?page=1&limit=10
 
