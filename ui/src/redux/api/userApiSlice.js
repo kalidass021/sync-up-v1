@@ -3,6 +3,10 @@ import { USER_URL } from '../../config/constants';
 
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    getCurrentUserProfile: builder.query({
+      query: () => `${USER_URL}/current/profile`,
+    }),
+
     getUserProfile: builder.query({
       query: (username) => `${USER_URL}/${username}/profile`,
     }),
@@ -30,6 +34,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetCurrentUserProfileQuery,
   useGetUserProfileQuery,
   useLazyGetUserProfileQuery,
   useFollowOrUnfollowUserMutation,
