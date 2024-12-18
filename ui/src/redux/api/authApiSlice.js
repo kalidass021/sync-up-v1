@@ -25,8 +25,17 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
       }),
     }),
+
+    getCurrentUserProfile: builder.query({
+      query: () => `${AUTH_URL}/profile`,
+    }),
   }),
 });
 
-export const { useSignupMutation, useSigninMutation, useSignoutMutation } =
-  authApiSlice;
+export const {
+  useSignupMutation,
+  useSigninMutation,
+  useSignoutMutation,
+  useGetCurrentUserProfileQuery,
+  useLazyGetCurrentUserProfileQuery,
+} = authApiSlice;
