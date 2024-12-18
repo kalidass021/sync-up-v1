@@ -51,7 +51,7 @@ const appRouter = createBrowserRouter([
             element: <LikedPosts />,
           },
           {
-            path: '/users/all',
+            path: '/users',
             element: <AllUsers />,
           },
           {

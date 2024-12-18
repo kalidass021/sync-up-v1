@@ -17,7 +17,7 @@ const sidebarLinks = [
   },
   {
     imgURL: people,
-    route: '/users/all',
+    route: '/users',
     label: 'People',
   },
   {
