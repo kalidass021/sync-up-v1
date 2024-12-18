@@ -12,8 +12,6 @@ const AllUsers = () => {
     isError: creatorError,
   } = useGetSuggestedUsersQuery();
 
-  console.log(creatorError)
-
   if (creatorError) {
     return toast.error('Something went wrong');
   }
