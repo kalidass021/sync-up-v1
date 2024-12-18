@@ -90,8 +90,8 @@ export const getRecentPosts = async (req, res, next) => {
 
 export const getPostsByIds = async (req, res, next) => {
   try {
-    const { postIds } = req.body;
-
+    const postIds = req.query?.ids.split(',') || [];
+    
     if (!Array.isArray(postIds)) {
       return next(error(400, 'PostIds must be an array'));
     }
