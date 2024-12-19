@@ -1,5 +1,5 @@
-// auth routes
-// signup
+#  auth routes
+#  signup
 
 POST http://localhost:5000/api/v1/auth/signup
 Content-Type: application/json
@@ -13,7 +13,7 @@ Content-Type: application/json
 
 ###
 
-// signin
+#  signin
 POST http://localhost:5000/api/v1/auth/signin
 Content-Type: application/json
 
@@ -24,30 +24,30 @@ Content-Type: application/json
 
 ###
 
-// signout
+#  signout
 POST http://localhost:5000/api/v1/auth/signout
 
 
 ###
 
-// get current user profile
+#  get current user profile
 GET http://localhost:5000/api/v1/users/current/profile
 
 ###
 
-// user routes
+#  user routes
 
-// get user profile
+#  get user profile
 GET http://localhost:5000/api/v1/users/testuser12/profile
 
 ###
 
-// follow or unfollow user
+#  follow or unfollow user
 POST http://localhost:5000/api/v1/users/6751812d02b24fc1269f5738/follow
 
 ###
 
-// get suggested users
+#  get suggested users
 GET http://localhost:5000/api/v1/users/suggested
 ###
 
@@ -62,7 +62,7 @@ Content-Type: application/json
 
 ###
 
-// create post
+#  create post
 POST http://localhost:5000/api/v1/posts
 Content-Type: application/json
 
@@ -78,34 +78,34 @@ Content-Type: application/json
 
 
 ###
-// delete post
+# delete post
 DELETE http://localhost:5000/api/v1/posts/67546065cda216da584de151
 
 ###
-// get specific post
+# get specific post
 GET http://localhost:5000/api/v1/posts/67571d6400eb674012bab8a8
 
 ###
-// get recent posts
+# get recent posts
 GET http://localhost:5000/api/v1/posts/recents
 
 ###
 
-// get posts by ids
+# get posts by ids
 GET http://localhost:5000/api/v1/posts/?ids=6757204100eb674012bab8b4,6757209000eb674012bab8ba,6759320061ca176a98d37b32
 
 ###
 
-// get infinite posts
+# get infinite posts
 GET http://localhost:5000/api/v1/posts/infinite?page=1&limit=10
 
 ###
 
-// search posts
+# search posts
 GET http://localhost:5000/api/v1/posts/search?query=magic
 
 ###
-// update post
+# update post
 POST http://localhost:5000/api/v1/posts/6757209000eb674012bab8ba/update
 Content-Type: application/json
 
@@ -120,7 +120,7 @@ Content-Type: application/json
 
 
 ###
-// like or unlike post
+# like or unlike post
 PUT http://localhost:5000/api/v1/posts/67547a6213a135b71aab79bf/like
 
 ###
@@ -128,10 +128,10 @@ POST http://localhost:5000/api/v1/posts/67547a6213a135b71aab79bf/save
 
 
 ###
-// notification routes
-// get all notifications
+# notification routes
+# get all notifications
 GET http://localhost:5000/api/v1/notifications
 
 ###
-// delete all notifications
+# delete all notifications
 DELETE http://localhost:5000/api/v1/notifications
