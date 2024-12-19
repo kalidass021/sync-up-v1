@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import { useSignoutMutation } from '../../redux/api/authApiSlice';
-import { signout } from '../../redux/slices/auth/authSlice';
+import { signout } from '../../redux/features/auth/authSlice';
 import { Button } from '@/components/ui/button';
 import logo from '../../assets/images/logo.svg';
 import logout from '../../assets/icons/logout.svg';

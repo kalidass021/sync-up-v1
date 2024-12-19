@@ -2,7 +2,7 @@ import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import { useSignoutMutation } from '../../redux/api/authApiSlice';
-import { signout } from '../../redux/slices/auth/authSlice';
+import { signout } from '../../redux/features/auth/authSlice';
 import { Button } from '@/components/ui/button';
 import sidebarLinks from '../../config/sidebarLinks';
 import logo from '../../assets/images/logo.svg';

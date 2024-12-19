@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import logo from '../../../assets/images/logo.svg';
 import Loader from '../../../components/shared/Loader';
 import { useSignupMutation } from '../../../redux/api/authApiSlice';
-import { setCredentials } from '../../../redux/slices/auth/authSlice';
+import { setCredentials } from '../../../redux/features/auth/authSlice';
 
 const SignupForm = () => {
   const {
