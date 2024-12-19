@@ -1,6 +1,10 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useGetSpecificPostQuery } from '../../redux/api/postApiSlice';
+import { toast } from 'react-hot-toast';
+import {
+  useGetSpecificPostQuery,
+  useDeletePostMutation,
+} from '../../redux/api/postApiSlice';
 import PostStats from '../../components/shared/PostStats';
 import Loader from '../../components/shared/Loader';
 import { Button } from '@/components/ui/button';
@@ -11,13 +15,17 @@ import editIcon from '../../assets/icons/edit.svg';
 import deleteIcon from '../../assets/icons/delete.svg';
 
 const PostDetails = () => {
+  const navigate = useNavigate();
   const { id: postId } = useParams();
   const { userInfo } = useSelector((state) => state.auth);
   const {
     data: post,
     isLoading: isPostLoading,
-    error: postError,
+    // error: postError,
   } = useGetSpecificPostQuery(postId);
+
+  const [deletePost, { isLoading: deletingPost, error: deletePostError }] =
+    useDeletePostMutation();
 
   if (isPostLoading) {
     return <Loader />;
@@ -25,7 +33,22 @@ const PostDetails = () => {
 
   const { creator, caption, imgId, location, tags, createdAt } = post || {};
 
-  const handleDeletePost = () => {};
+  const handleDeletePost = async () => {
+    try {
+      const res = await deletePost(postId);
+      if (res.data.message === 'Post removed successfully') {
+        toast.success('Post removed');
+        navigate('/');
+      }
+    } catch (err) {
+      console.error(
+        `Error while deleting the post: ${
+          deletePostError?.message || err.message
+        }`
+      );
+      toast.error('Failed to delete post');
+    }
+  };
 
   return (
     <div className='post-details-container'>
@@ -76,8 +99,13 @@ const PostDetails = () => {
                 className={`ghost-details-delete-btn ${
                   creator?._id !== userInfo?._id && 'hidden'
                 }`}
+                disabled={deletingPost}
               >
-                <img src={deleteIcon} alt='delete' width={24} height={24} />
+                {deletingPost ? (
+                  <Loader />
+                ) : (
+                  <img src={deleteIcon} alt='delete' width={24} height={24} />
+                )}
               </Button>
             </div>
           </div>
