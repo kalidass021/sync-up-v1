@@ -99,9 +99,14 @@ export const getPostsByIds = async (req, res, next) => {
     if (!postIds.length) {
       return next(error(400, 'PostIds must be an non-empty array'));
     }
-    const posts = await Post.find({ _id: { $in: postIds } }).sort({
-      createdAt: -1,
-    });
+    const posts = await Post.find({ _id: { $in: postIds } })
+      .sort({
+        createdAt: -1,
+      })
+      .populate({
+        path: 'creator',
+        select: 'profileImg, fullName',
+      });
 
     res.status(200).json(posts);
   } catch (err) {
