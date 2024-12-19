@@ -1,4 +1,5 @@
 import { useGetCurrentUserProfileQuery } from '../../redux/api/authApiSlice';
+import { useGetPostsByIdsQuery } from '../../redux/api/postApiSlice';
 import GridPostList from '../../components/shared/GridPostList';
 import Loader from '../../components/shared/Loader';
 import save from '../../assets/icons/save.svg';
@@ -7,10 +8,19 @@ const SavedPosts = () => {
   const { data: currentUser, isLoading: userLoading } =
     useGetCurrentUserProfileQuery();
 
-  if (!currentUser && !userLoading) {
+  const { data: savedPosts, isLoading: postsLoading } = useGetPostsByIdsQuery(
+    currentUser?.savedPosts,
+    {
+      skip: !currentUser || userLoading || !currentUser.savedPosts.length,
+    }
+  );
+
+  if (userLoading || postsLoading) {
     return <Loader />;
   }
-  console.log('currentUser', currentUser);
+
+  // console.log('savedPosts', savedPosts);
+
   return (
     <div className='saved-container'>
       <div className='flex gap-2 w-full max-w-5xl'>
@@ -24,10 +34,10 @@ const SavedPosts = () => {
         <h2 className='h3-bold md:h2-bold text-left w-full'>Saved Posts</h2>
       </div>
       <ul className='w-full flex justify-center max-w-5xl gap-9'>
-        {!currentUser?.savedPosts?.length ? (
-          <p className='text-light-4'>No posts available</p>
+        {!savedPosts && !postsLoading ? (
+          <p className='text-light-4'>No saved posts</p>
         ) : (
-          <GridPostList posts={currentUser?.savedPosts} showUser={false} showStats={false} />
+          <GridPostList posts={savedPosts} showStats={false} />
         )}
       </ul>
     </div>

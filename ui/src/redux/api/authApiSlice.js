@@ -28,6 +28,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
 
     getCurrentUserProfile: builder.query({
       query: () => `${AUTH_URL}/profile`,
+      providesTags: ['User'],
     }),
   }),
 });

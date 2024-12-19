@@ -9,7 +9,7 @@ export const postApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: newPost,
       }),
-      invalidatesTags: ['Post'],
+      invalidatesTags: ['Post', 'User'],
     }),
 
     getSpecificPost: builder.query({
@@ -22,8 +22,20 @@ export const postApiSlice = apiSlice.injectEndpoints({
       providesTags: ['Post'],
     }),
 
+    getPostsByIds: builder.query({
+      query: (postIds) => {
+        const query = postIds.join(',');
+        return {
+          url: `${POST_URL}?ids=${query}`,
+          method: 'GET',
+        };
+      },
+      provideTags: ['Post'],
+    }),
+
     getInfinitePosts: builder.query({
-      query: ({page, limit}) => `${POST_URL}/infinite?page=${page}&limit=${limit}`,
+      query: ({ page, limit }) =>
+        `${POST_URL}/infinite?page=${page}&limit=${limit}`,
       provideTags: ['Post'],
     }),
 
@@ -62,7 +74,7 @@ export const postApiSlice = apiSlice.injectEndpoints({
         url: `${POST_URL}/${id}/save`,
         method: 'POST',
       }),
-      invalidatesTags: ['Post'],
+      invalidatesTags: ['User', 'Post'],
     }),
   }),
 });
@@ -71,6 +83,7 @@ export const {
   useCreatePostMutation,
   useGetSpecificPostQuery,
   useGetRecentPostsQuery,
+  useGetPostsByIdsQuery,
   useGetInfinitePostsQuery,
   useSearchPostsQuery,
   useUpdatePostMutation,
