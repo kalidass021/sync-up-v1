@@ -41,7 +41,7 @@ const Topbar = () => {
           >
             <img src={logout} alt='logout' />
           </Button>
-          <Link to={`/profile/${userInfo?._id}`} className='flex-center gap-3'>
+          <Link to={`/profile/${userInfo?.username}`} className='flex-center gap-3'>
             <img
               src={userInfo?.profileImg || profilePlaceholder}
               alt='profile'

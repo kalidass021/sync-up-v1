@@ -70,11 +70,11 @@ const appRouter = createBrowserRouter([
             element: <PostDetails />,
           },
           {
-            path: '/profile/:id',
+            path: '/:username/profile',
             element: <Profile />,
           },
           {
-            path: '/profile/edit/:id',
+            path: '/:username/profile/edit',
             element: <EditProfile />,
           },
         ],

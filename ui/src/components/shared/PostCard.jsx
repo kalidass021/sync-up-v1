@@ -27,7 +27,7 @@ const PostCard = ({ post }) => {
     <div className='post-card'>
       <div className='flex-between'>
         <div className='flex items-center gap-3'>
-          <Link to={`/profile/${creator._id}`}>
+          <Link to={`/${creator?.username}/profile`}>
             <img
               src={creator.profileImg || profilePlaceholder}
               alt='creator'

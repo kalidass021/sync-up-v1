@@ -36,7 +36,7 @@ const LeftSidebar = () => {
           <img src={logo} alt='logo' width={170} height={36} />
         </Link>
         <Link
-          to={`/profile/${userInfo?._id}`}
+          to={`/profile/${userInfo?.username}`}
           className='flex gap-3 items-center'
         >
           <img
