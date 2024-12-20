@@ -16,13 +16,16 @@ import PageLayout from './pages/PageLayout.jsx';
 import Home from './pages/Home.jsx';
 import Explore from './pages/posts/Explore.jsx';
 import SavedPosts from './pages/posts/SavedPosts.jsx';
-import LikedPosts from './pages/posts/LikedPosts.jsx'
+import LikedPosts from './pages/posts/LikedPosts.jsx';
 import AllUsers from './pages/user/AllUsers.jsx';
 import CreatePost from './pages/posts/CreatePost.jsx';
 import EditPost from './pages/posts/EditPost.jsx';
 import PostDetails from './pages/posts/PostDetails.jsx';
 import Profile from './pages/user/Profile.jsx';
 import EditProfile from './pages/user/EditProfile.jsx';
+
+// error page
+import ErrorDisplay from './components/ErrorDisplay.jsx';
 
 const appRouter = createBrowserRouter([
   {
@@ -92,6 +95,7 @@ const appRouter = createBrowserRouter([
         ],
       },
     ],
+    errorElement: <ErrorDisplay />,
   },
 ]);
 
