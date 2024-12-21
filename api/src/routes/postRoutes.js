@@ -1,13 +1,14 @@
 import { Router } from 'express';
 import {
   createPost,
-  updatePost,
-  deletePost,
   getSpecificPost,
   getRecentPosts,
+  getUserPosts,
   getPostsByIds,
   getInfinitePosts,
   searchPosts,
+  updatePost,
+  deletePost,
   likeOrUnlikePost,
   saveOrUnsavePost,
 } from '../controllers/postController.js';
@@ -22,6 +23,7 @@ const router = Router();
 router.post('/', auth, createPost);
 router.get(`/:id${idRegex}`, auth, checkId, getSpecificPost);
 router.get('/recents', auth, getRecentPosts);
+router.get('/:username', auth, getUserPosts);
 router.get('/', auth, getPostsByIds);
 router.get('/infinite', auth, getInfinitePosts);
 router.get('/search', auth, searchPosts);

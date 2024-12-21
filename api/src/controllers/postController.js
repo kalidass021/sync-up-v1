@@ -88,6 +88,25 @@ export const getRecentPosts = async (req, res, next) => {
   }
 };
 
+export const getUserPosts = async (req, res, next) => {
+  try {
+    const { username } = req.params;
+    const user = await User.findOne({ username });
+    if (!user) {
+      return next(error(404, 'User not found'));
+    }
+
+    const posts = await Post.find({ creator: user._id }).sort({
+      createdAt: -1,
+    });
+
+    res.status(200).json(posts);
+  } catch (err) {
+    console.error(`Error while fetching user posts: ${err.message}`);
+    next(err);
+  }
+};
+
 export const getPostsByIds = async (req, res, next) => {
   try {
     const postIds = req.query?.ids.split(',') || [];
