@@ -1,25 +1,42 @@
-import { useParams, useLocation } from 'react-router-dom';
-import { useGetCurrentUserProfileQuery } from '../../redux/api/authApiSlice';
+import { useParams, useLocation, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useGetUserProfileQuery } from '../../redux/api/userApiSlice';
+import { useGetUserPostsQuery } from '../../redux/api/postApiSlice';
 import Loader from '../../components/shared/Loader';
 import { CLOUDINARY_URL } from '../../config/constants';
 import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
+import edit from '../../assets/icons/edit.svg';
+
+const StatBlock = ({ value, label }) => (
+  <div className='flex-center gap-2'>
+    <p className='small-semibold lg:body-bold text-primary-500'>{value}</p>
+    <p className='small-medium lg:base-medium text-light-2'>{label}</p>
+  </div>
+);
 
 const Profile = () => {
+  const { userInfo: currentUser } = useSelector((state) => state.auth);
   const { username } = useParams();
   console.log({ username });
   const {
-    data: currentUser,
-    isLoading: userLoading,
+    data: profileUser,
+    isLoading: userProfileLoading,
     // error: userError,
-  } = useGetCurrentUserProfileQuery(username, { skip: !username });
+  } = useGetUserProfileQuery(username, { skip: !username });
 
-  if (!currentUser || userLoading) {
+  const {
+    data: userPosts,
+    isLoading: userPostsLoading,
+    // error: userPostsError,
+  } = useGetUserPostsQuery(username, { skip: !username });
+
+  if (!profileUser || userProfileLoading) {
     return <Loader />;
   }
 
-  const { profileImgId, fullName } = currentUser;
+  const { profileImgId, fullName, followers, following, bio } = profileUser;
 
-  console.log(currentUser);
+  console.log(profileUser);
   return (
     <div className='profile-container'>
       <div className='profile-inner-container'>
@@ -42,7 +59,32 @@ const Profile = () => {
                 @{username}
               </p>
             </div>
-            
+
+            {/* bio */}
+            <p className='small-medium md:base-medium text-center xl:text-left mt-2 mb-5 max-w-screen-sm'>
+              {bio}
+            </p>
+            {/* stats */}
+            <div className='flex gap-8 items-center justify-center xl:justify-start flex-wrap z-20'>
+              <StatBlock value={userPosts?.length} label='Posts' />
+              <StatBlock value={followers?.length} label='Followers' />
+              <StatBlock value={following?.length} label='Following' />
+            </div>
+          </div>
+
+          {/* edit profile */}
+          <div className='flex justify-center gap-4'>
+            <div className={`${currentUser.username !== username && 'hidden'}`}>
+              <Link
+                to={`/${username}/profile/edit`}
+                className={`h-12 bg-dark-4 px-5 text-light-1 flex-center gap-2 rounded-lg ${
+                  currentUser.username !== username && 'hidden'
+                }`}
+              >
+                <img src={edit} alt="edit" width={20} height={20}/>
+                <p className='flex whitespace-nowrap small-medium'>Edit Profile</p>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

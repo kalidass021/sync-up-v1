@@ -88,6 +88,7 @@ export const {
   useCreatePostMutation,
   useGetSpecificPostQuery,
   useGetRecentPostsQuery,
+  useGetUserPostsQuery,
   useGetPostsByIdsQuery,
   useGetInfinitePostsQuery,
   useSearchPostsQuery,
