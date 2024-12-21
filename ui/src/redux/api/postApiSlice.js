@@ -22,6 +22,11 @@ export const postApiSlice = apiSlice.injectEndpoints({
       providesTags: ['Post'],
     }),
 
+    getUserPosts: builder.query({
+      query: (username) => `${POST_URL}/${username}`,
+      providesTags: ['Post'],
+    }),
+
     getPostsByIds: builder.query({
       query: (postIds) => {
         const query = postIds.join(',');
@@ -30,13 +35,13 @@ export const postApiSlice = apiSlice.injectEndpoints({
           method: 'GET',
         };
       },
-      provideTags: ['Post'],
+      providesTags: ['Post'],
     }),
 
     getInfinitePosts: builder.query({
       query: ({ page, limit }) =>
         `${POST_URL}/infinite?page=${page}&limit=${limit}`,
-      provideTags: ['Post'],
+      providesTags: ['Post'],
     }),
 
     searchPosts: builder.query({
