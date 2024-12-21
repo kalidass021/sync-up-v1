@@ -1,11 +1,29 @@
+import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PostStats from './PostStats';
 import { CLOUDINARY_URL } from '../../config/constants';
 import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
 
-const GridPostList = ({ posts, showUser = true, showStats = true }) => {
+const GridPostList = ({ posts, showUser, showStats }) => {
+  const location = useLocation();
+  // receiving props sent via link and navigate
+  const {
+    posts: statePosts,
+    showUser: stateShowUser,
+    showStats: stateShowStats,
+  } = location.state || {};
   const { userInfo } = useSelector((state) => state.auth);
+
+  posts = posts ?? statePosts;
+  showUser = showUser ?? stateShowUser ?? true;
+  showStats = showStats ?? stateShowStats ?? true;
+
+  console.log('posts', posts);
+
+  if (!posts || !posts.length) {
+    return <div>No posts available</div>;
+  }
 
   return (
     <ul className='grid-container'>

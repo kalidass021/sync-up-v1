@@ -23,6 +23,7 @@ import EditPost from './pages/posts/EditPost.jsx';
 import PostDetails from './pages/posts/PostDetails.jsx';
 import Profile from './pages/user/Profile.jsx';
 import EditProfile from './pages/user/EditProfile.jsx';
+import GridPostList from './components/shared/GridPostList.jsx';
 
 // error page
 import ErrorDisplay from './components/ErrorDisplay.jsx';
@@ -72,6 +73,21 @@ const appRouter = createBrowserRouter([
           {
             path: '/:username/profile',
             element: <Profile />,
+            children: [
+              {
+                path: '',
+                index: true,
+                element: <GridPostList />,
+              },
+              {
+                path: 'posts/liked',
+                element: <GridPostList />,
+              },
+              {
+                path: 'posts/saved',
+                element: <GridPostList />,
+              },
+            ],
           },
           {
             path: '/:username/profile/edit',
