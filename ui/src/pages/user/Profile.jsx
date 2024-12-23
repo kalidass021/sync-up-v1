@@ -138,7 +138,7 @@ const Profile = () => {
             }`}
           >
             <img src={like} alt='like' width={20} height={20} />
-            Liked Posts
+            Liked
           </Link>
           <Link
             to={`/${username}/profile/posts/saved`}
@@ -148,7 +148,7 @@ const Profile = () => {
             }`}
           >
             <img src={save} alt='save' width={20} height={20} />
-            Saved Posts
+            Saved
           </Link>
         </div>
       )}
