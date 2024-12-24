@@ -128,6 +128,10 @@ export const updateUserProfile = async (req, res, next) => {
       newPassword,
     } = req.body;
 
+    if (updatedUsername && email) {
+      return next(error(400, "You can't update username and email together"));
+    }
+
     const user = await User.findById(userId);
     if (!user) {
       return next(error(404, 'User not found'));
