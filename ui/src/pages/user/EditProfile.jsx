@@ -1,21 +1,106 @@
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import { useGetCurrentUserProfileQuery } from '../../redux/api/authApiSlice';
+import { useUpdateUserProfileMutation } from '../../redux/api/userApiSlice';
+import ProfileUploader from '../../components/shared/ProfileUploader';
+import Loader from '../../components/shared/Loader';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
+import { CLOUDINARY_URL } from '../../config/constants';
+import validateUpdateProfileForm from '../../utils/form/formValidation/validateUpdateProfileForm';
+import getUpdatedValues from '../../utils/form/getUpdatedValues';
+import { setCredentials } from '../../redux/features/auth/authSlice';
 import edit from '../../assets/icons/edit.svg';
+import { useEffect } from 'react';
 
 const EditProfile = () => {
-  const { username } = useParams();
+  // const { username } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { data: currentUser, isLoading: userLoading } =
+    useGetCurrentUserProfileQuery();
+
+  const [updateUserProfile, { isLoading: updatingUserProfile }] =
+    useUpdateUserProfileMutation();
 
   const {
     register,
     handleSubmit,
+    setValue,
+    setError,
     formState: { errors },
-  } = useForm();
+    reset,
+  } = useForm({
+    defaultValues: {
+      profileImg: '',
+      fullName: '',
+      username: '',
+      email: '',
+      currentPassword: '',
+      newPassword: '',
+      confirmNewPassword: '',
+    },
+  });
+
+  // set default values after current user data fetched
+  useEffect(() => {
+    if (currentUser) {
+      reset({
+        fullName: currentUser?.fullName,
+        username: currentUser?.username,
+        email: currentUser?.email,
+        bio: currentUser?.bio,
+      });
+    }
+  }, [currentUser, reset]);
+
+  if (!currentUser || userLoading) {
+    return <Loader />;
+  }
+
+  const handleFileChange = async (acceptedFiles) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(acceptedFiles[0]); // read file as a base64 string
+    reader.onload = () => {
+      setValue('profileImg', reader.result); // set image as a base64 string
+    };
+
+    // handle error
+    reader.onerror = (err) => {
+      console.error(`Error reading file ${err}`);
+      toast.error(`Error reading file ${err}`);
+    };
+  };
+
+  // handle the form submission
+  const handleUpdate = async (updatedUserData) => {
+    // get the data from updated fields
+    const updatedValues = getUpdatedValues(currentUser, updatedUserData);
+
+    if (!validateUpdateProfileForm(updatedValues, setError)) {
+      return;
+    }
+
+    // update user data
+
+    try {
+      const res = await updateUserProfile({
+        username: currentUser.username,
+        updatedUser: { ...updatedValues },
+      }).unwrap();
+      // dispatch the updated user data to the store in local storage
+      console.log(res);
+      dispatch(setCredentials({ ...res }));
+      navigate(`/${currentUser.username}/profile`);
+      toast.success('Profile updated successfully');
+    } catch (err) {
+      console.error(`Error while updating the user profile ${err}`);
+      toast.error(err?.data?.message || err.error || 'Failed to update');
+    }
+  };
 
   return (
     <div className='flex flex-1'>
@@ -33,10 +118,20 @@ const EditProfile = () => {
         {/* form */}
         <div className='w-[90%]'>
           <form
-            // onSubmit={}
+            onSubmit={handleSubmit(handleUpdate)}
             className='flex flex-col gap-7 w-full mt-4 max-w-5xl'
           >
             {/* profile image */}
+            <div className='flex'>
+              <ProfileUploader
+                fieldChange={handleFileChange}
+                mediaUrl={
+                  currentUser?.profileImgId &&
+                  `${CLOUDINARY_URL}/${currentUser?.profileImgId}`
+                }
+                // register happened in handleFileChange using setValue
+              />
+            </div>
             {/* fullName */}
             <div>
               <label className='shad-form-label'>Full Name</label>
@@ -50,11 +145,9 @@ const EditProfile = () => {
                   },
                 })}
               />
-              {errors.fullName && (
-                <span className='shad-form-message'>
-                  {errors.fullName.message}
-                </span>
-              )}
+              <span className='shad-form-message'>
+                {errors?.fullName?.message}
+              </span>
             </div>
             {/* username */}
             <div>
@@ -69,11 +162,9 @@ const EditProfile = () => {
                   },
                 })}
               />
-              {errors.username && (
-                <span className='shad-form-message'>
-                  {errors.username.message}
-                </span>
-              )}
+              <span className='shad-form-message'>
+                {errors?.username?.message}
+              </span>
             </div>
             {/* email */}
             <div>
@@ -88,9 +179,9 @@ const EditProfile = () => {
                   },
                 })}
               />
-              {errors.email && (
-                <span className='shad-form-messge'>{errors.email.message}</span>
-              )}
+              <span className='shad-form-message'>
+                {errors?.email?.message}
+              </span>
             </div>
             {/* bio */}
             <div>
@@ -104,9 +195,7 @@ const EditProfile = () => {
                   },
                 })}
               />
-              {errors.email && (
-                <span className='shad-form-message'>{errors.bio.message}</span>
-              )}
+              <span className='shad-form-message'>{errors?.bio?.message}</span>
             </div>
             {/* current password */}
             <div>
@@ -116,6 +205,9 @@ const EditProfile = () => {
                 className='shad-input mt-2'
                 {...register('currentPassword')}
               />
+              <span className='shad-form-message'>
+                {errors?.currentPassword?.message}
+              </span>
             </div>
             {/* new password */}
             <div className='flex gap-4'>
@@ -132,11 +224,9 @@ const EditProfile = () => {
                     },
                   })}
                 />
-                {errors.newPassword && (
-                  <span className='shad-form-message'>
-                    {errors.newPassword.message}
-                  </span>
-                )}
+                <span className='shad-form-message'>
+                  {errors?.newPassword?.message}
+                </span>
               </div>
               {/* confirm password */}
               <div className='w-[50%]'>
@@ -149,11 +239,9 @@ const EditProfile = () => {
                     message: 'Password must be at least  8 characters',
                   })}
                 />
-                {errors.confirmNewPassword && (
-                  <span className='shad-form-message'>
-                    {errors.confirmNewPassword.message}
-                  </span>
-                )}
+                <span className='shad-form-message'>
+                  {errors?.confirmNewPassword?.message}
+                </span>
               </div>
             </div>
             {/* button */}
@@ -167,10 +255,15 @@ const EditProfile = () => {
               <Button
                 type='submit'
                 className='shad-button-primary whitespace-nowrap'
-                // disabled={}
+                disabled={updatingUserProfile}
               >
-                {/* todo: add is loading */}
-                Update Profile
+                {updatingUserProfile ? (
+                  <>
+                    <Loader /> Updating
+                  </>
+                ) : (
+                  'Update Profile'
+                )}
               </Button>
             </div>
           </form>
