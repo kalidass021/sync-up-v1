@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { CLOUDINARY_URL } from '../../config/constants';
 import FileUploader from '../shared/FileUploader';
 import getUpdatedValues from '../../utils/form/getUpdatedValues';
-import validatePostForm from '../../utils/form/formValidation/validatePostForm';
+import { validatePostForm } from '../../utils/form/formValidation';
 import Loader from '../shared/Loader';
 
 const PostForm = ({ post, action }) => {

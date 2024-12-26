@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { CLOUDINARY_URL } from '../../config/constants';
-import validateUpdateProfileForm from '../../utils/form/formValidation/validateUpdateProfileForm';
+import { validateUpdateProfileForm } from '../../utils/form/formValidation';
 import getUpdatedValues from '../../utils/form/getUpdatedValues';
 import { setCredentials } from '../../redux/features/auth/authSlice';
 import edit from '../../assets/icons/edit.svg';

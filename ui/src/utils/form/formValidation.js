@@ -1,5 +1,19 @@
+export const validateSignupForm = (userData, setError) => {
+  const { password, confirmPassword } = userData;
+
+  if (password !== confirmPassword) {
+    setError('password', { type: 'manual', message: 'Passwords mismatch' });
+    setError('confirmPassword', {
+      type: 'manual',
+      message: 'Passwords mismatch',
+    });
+    return false;
+  }
+  return true;
+};
+
 // edit profile form validation
-const validateUpdateProfileForm = (userData, setError) => {
+export const validateUpdateProfileForm = (userData, setError) => {
   const { username, email, currentPassword, newPassword, confirmNewPassword } =
     userData;
 
@@ -60,4 +74,22 @@ const validateUpdateProfileForm = (userData, setError) => {
   return true;
 };
 
-export default validateUpdateProfileForm;
+// post form validation create post and update post
+export const validatePostForm = (postData, setError) => {
+  const { caption, image } = postData;
+
+  if (!caption && !image) {
+    setError('caption', {
+      type: 'manual',
+      message: 'Post must have caption or image',
+    });
+    setError('image', {
+      type: 'manual',
+      message: 'Post must have caption or image',
+    });
+
+    return false;
+  }
+
+  return true;
+};
