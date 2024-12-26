@@ -248,7 +248,8 @@ const EditProfile = () => {
             <div className='flex gap-4 items-center justify-end'>
               <Button
                 type='button'
-                className='shad-button-dark-4 onClick={() => navigate(-1)}'
+                className='shad-button-dark-4'
+                onClick={() => navigate(-1)}
               >
                 Cancel
               </Button>
