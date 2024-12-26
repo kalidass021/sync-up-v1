@@ -8,12 +8,14 @@ import { Input } from '@/components/ui/input';
 import logo from '../../../assets/images/logo.svg';
 import Loader from '../../../components/shared/Loader';
 import { useSignupMutation } from '../../../redux/api/authApiSlice';
+import validateSignupForm from '../../../utils/form/formValidation/validateSignupForm';
 import { setCredentials } from '../../../redux/features/auth/authSlice';
 
 const SignupForm = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
     reset,
   } = useForm({
@@ -41,11 +43,11 @@ const SignupForm = () => {
     userInfo && navigate(redirect);
   }, [navigate, redirect, userInfo]);
 
-  const formSubmit = async (userObj) => {
-    const { fullName, username, email, password, confirmPassword } = userObj;
+  const formSubmit = async (userData) => {
+    const { fullName, username, email, password } = userData;
 
-    if (password !== confirmPassword) {
-      return toast.error('Passwords not match');
+    if (!validateSignupForm(userData, setError)) {
+      return;
     }
 
     try {
@@ -97,9 +99,7 @@ const SignupForm = () => {
               },
             })}
           />
-          {errors.name && (
-            <span className='shad-form-message'>{errors.name.message}</span>
-          )}
+          <span className='shad-form-message'>{errors?.fullName?.message}</span>
         </div>
         {/* Username */}
         <div>
@@ -116,9 +116,7 @@ const SignupForm = () => {
               },
             })}
           />
-          {errors.username && (
-            <span className='shad-form-message'>{errors.username.message}</span>
-          )}
+          <span className='shad-form-message'>{errors?.username?.message}</span>
         </div>
         {/* Email */}
         <div>
@@ -135,9 +133,7 @@ const SignupForm = () => {
               },
             })}
           />
-          {errors.email && (
-            <span className='shad-form-message'>{errors.email.message}</span>
-          )}
+          <span className='shad-form-message'>{errors?.email?.message}</span>
         </div>
 
         <div className='flex'>
@@ -156,11 +152,9 @@ const SignupForm = () => {
                 },
               })}
             />
-            {errors.password && (
-              <span className='shad-form-message'>
-                {errors.password.message}
-              </span>
-            )}
+            <span className='shad-form-message'>
+              {errors?.password?.message}
+            </span>
           </div>
           {/* Confirm Password */}
           <div>
@@ -173,11 +167,9 @@ const SignupForm = () => {
                 required: 'Confirm Password is required',
               })}
             />
-            {errors.confirmPassword && (
               <span className='shad-form-message'>
-                {errors.confirmPassword.message}
+                {errors?.confirmPassword?.message}
               </span>
-            )}
           </div>
         </div>
         <Button type='submit' className='shad-button-primary'>
