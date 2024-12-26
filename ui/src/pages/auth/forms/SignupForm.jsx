@@ -136,9 +136,9 @@ const SignupForm = () => {
           <span className='shad-form-message'>{errors?.email?.message}</span>
         </div>
 
-        <div className='flex'>
+        <div className='flex justify-evenly gap-2'>
           {/* Password */}
-          <div className='mr-3'>
+          <div>
             <label className='shad-form-label'>Password</label>
             <Input
               type='password'
