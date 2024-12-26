@@ -51,7 +51,6 @@ const PostForm = ({ post, action }) => {
   };
 
   const formSubmit = async (postData) => {
-
     // validate post
     if (!validatePostForm(postData, setError)) {
       return;
@@ -175,7 +174,11 @@ const PostForm = ({ post, action }) => {
           )}
         </div>
         <div className='flex gap-4 items-center justify-end'>
-          <Button type='button' className='shad-button-dark-4'>
+          <Button
+            type='button'
+            className='shad-button-dark-4'
+            onClick={() => navigate(-1)}
+          >
             Cancel
           </Button>
           <Button
