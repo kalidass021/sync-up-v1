@@ -10,6 +10,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { CLOUDINARY_URL } from '../../config/constants';
 import FileUploader from '../shared/FileUploader';
+import getUpdatedValues from '../../utils/form/getUpdatedValues';
+import validatePostForm from '../../utils/form/formValidation/validatePostForm';
 import Loader from '../shared/Loader';
 
 const PostForm = ({ post, action }) => {
@@ -17,6 +19,7 @@ const PostForm = ({ post, action }) => {
     register,
     handleSubmit,
     setValue,
+    setError,
     formState: { errors },
     reset,
   } = useForm({
@@ -48,20 +51,21 @@ const PostForm = ({ post, action }) => {
   };
 
   const formSubmit = async (postData) => {
-    const { caption, image } = postData;
 
-    if (!caption && !image) {
-      return toast.error('Post must have caption or image');
+    // validate post
+    if (!validatePostForm(postData, setError)) {
+      return;
     }
 
     const mutation = action === 'Update' ? updatePost : createPost;
+    const updatedPost = action === 'Update' && getUpdatedValues(post, postData);
+    // in the above code post is original data and postData is updated data
+
     const payload =
       action === 'Update'
         ? {
             id: post._id,
-            updatedPost: {
-              ...postData,
-            },
+            updatedPost,
           }
         : {
             ...postData,
@@ -119,8 +123,8 @@ const PostForm = ({ post, action }) => {
             mediaUrl={action === 'Update' && `${CLOUDINARY_URL}/${post?.imgId}`}
             // register happened in handleFileChange using setValue
           />
-          {errors.file && (
-            <span className='shad-form-message'>{errors.file.message}</span>
+          {errors.image && (
+            <span className='shad-form-message'>{errors.image.message}</span>
           )}
         </div>
         {/* location */}
