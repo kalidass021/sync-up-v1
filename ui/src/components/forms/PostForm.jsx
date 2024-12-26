@@ -110,9 +110,7 @@ const PostForm = ({ post, action }) => {
               },
             })}
           />
-          {errors.caption && (
-            <span className='shad-form-message'>{errors.caption.message}</span>
-          )}
+            <span className='shad-form-message'>{errors?.caption?.message}</span>
         </div>
         {/* image */}
         <div>
@@ -122,9 +120,7 @@ const PostForm = ({ post, action }) => {
             mediaUrl={action === 'Update' && `${CLOUDINARY_URL}/${post?.imgId}`}
             // register happened in handleFileChange using setValue
           />
-          {errors.image && (
-            <span className='shad-form-message'>{errors.image.message}</span>
-          )}
+            <span className='shad-form-message'>{errors?.image?.message}</span>
         </div>
         {/* location */}
         <div>
@@ -143,9 +139,7 @@ const PostForm = ({ post, action }) => {
               },
             })}
           />
-          {errors.location && (
-            <span className='shad-form-message'>{errors.location.message}</span>
-          )}
+            <span className='shad-form-message'>{errors?.location?.message}</span>
         </div>
         {/* tags */}
         <div>
@@ -169,9 +163,7 @@ const PostForm = ({ post, action }) => {
                   : value, // ensure the value is string before transformation
             })}
           />
-          {errors.tags && (
-            <span className='shad-form-message'>{errors.tags.message}</span>
-          )}
+            <span className='shad-form-message'>{errors?.tags?.message}</span>
         </div>
         <div className='flex gap-4 items-center justify-end'>
           <Button
