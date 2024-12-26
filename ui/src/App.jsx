@@ -1,14 +1,14 @@
 import { Outlet } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "@/components/ui/toaster"
 import './index.css';
 
 const App = () => {
   return (
     <>
-      <Toaster position='top-right' reverseOrder={false} />
       <main className='flex h-screen'>
         <Outlet />
       </main>
+      <Toaster />
     </>
   );
 };
