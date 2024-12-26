@@ -25,7 +25,7 @@ const ErrorDisplay = () => {
           marginBottom: '1rem',
         }}
       >
-        Oops!
+        Uh oh!
       </h1>
       <p
         style={{
