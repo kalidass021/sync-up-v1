@@ -1,9 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
-import { useSignoutMutation } from '../../redux/api/authApiSlice';
+import {
+  useGetCurrentUserProfileQuery,
+  useSignoutMutation,
+} from '../../redux/api/authApiSlice';
 import { signout } from '../../redux/features/auth/authSlice';
 import { Button } from '@/components/ui/button';
+import { CLOUDINARY_URL } from '../../config/constants';
 import logo from '../../assets/images/logo.svg';
 import logout from '../../assets/icons/logout.svg';
 import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
@@ -11,8 +15,9 @@ import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
 const Topbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { userInfo } = useSelector((state) => state.auth);
-  // console.log(userInfo);
+  // const { userInfo } = useSelector((state) => state.auth);
+  const { data: userInfo, isLoading: userLoading } =
+    useGetCurrentUserProfileQuery();
   const [signoutApiCall] = useSignoutMutation();
 
   const signoutHandler = async () => {
@@ -41,9 +46,16 @@ const Topbar = () => {
           >
             <img src={logout} alt='logout' />
           </Button>
-          <Link to={`/${userInfo?.username}/profile`} className='flex-center gap-3'>
+          <Link
+            to={`/${userInfo?.username}/profile`}
+            className='flex-center gap-3'
+          >
             <img
-              src={userInfo?.profileImg || profilePlaceholder}
+              src={
+                userInfo?.profileImgId
+                  ? `${CLOUDINARY_URL}/${userInfo?.profileImgId}`
+                  : profilePlaceholder
+              }
               alt='profile'
               className='h-8 w-8 rounded-full'
             />
