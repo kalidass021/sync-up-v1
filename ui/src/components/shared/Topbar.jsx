@@ -16,8 +16,7 @@ const Topbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const { userInfo } = useSelector((state) => state.auth);
-  const { data: userInfo, isLoading: userLoading } =
-    useGetCurrentUserProfileQuery();
+  const { data: userInfo } = useGetCurrentUserProfileQuery();
   const [signoutApiCall] = useSignoutMutation();
 
   const signoutHandler = async () => {
