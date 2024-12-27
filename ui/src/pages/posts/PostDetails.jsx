@@ -1,6 +1,6 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 import {
   useGetSpecificPostQuery,
   useDeletePostMutation,

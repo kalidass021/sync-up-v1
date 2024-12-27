@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import toast from 'react-hot-toast';
+import toast from 'sonner';
 import {
   useGetCurrentUserProfileQuery,
   useSignoutMutation,

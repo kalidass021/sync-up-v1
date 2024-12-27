@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 import {
   useGetCurrentUserProfileQuery,
   useLazyGetCurrentUserProfileQuery,

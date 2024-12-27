@@ -1,4 +1,4 @@
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 import UserCard from '../../components/shared/UserCard';
 import Loader from '../../components/shared/Loader';
 import { useGetSuggestedUsersQuery } from '../../redux/api/userApiSlice';
