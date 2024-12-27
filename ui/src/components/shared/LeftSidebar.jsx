@@ -47,7 +47,9 @@ const LeftSidebar = () => {
           className='flex gap-3 items-center'
         >
           {userLoading ? (
-            <Loader />
+            <div className='mx-auto my-[16.5px]'>
+              <Loader />
+            </div>
           ) : (
             <>
               <img
