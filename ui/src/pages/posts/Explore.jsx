@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import useDebounce from '../../hooks/useDebounce';
 import {
   useGetInfinitePostsQuery,
-  useSearchPostsQuery,
+  // useLazyGetInfinitePostsQuery,
+  useLazySearchPostsQuery,
 } from '../../redux/api/postApiSlice';
 import Loader from '../../components/shared/Loader';
 import GridPostList from '../../components/shared/GridPostList';
@@ -11,68 +12,113 @@ import search from '../../assets/icons/search.svg';
 import filter from '../../assets/icons/filter.svg';
 
 const Explore = () => {
-  const [searchText, setSearchText] = useState(''); // State to hold the search text
-  const debouncedSearchText = useDebounce(searchText, 500); // Debounced search text
-  const [page, setPage] = useState(1); // State to hold the current page number
+  const [searchText, setSearchText] = useState('');
+  const debouncedSearchText = useDebounce(searchText, 500);
+  const [page, setPage] = useState(1);
+  const [allPosts, setAllPosts] = useState([]);
 
-  // Fetch posts based on debounced search text
-  const {
-    data: searchedPosts = [],
-    isLoading: isSearching,
-    error: searchError,
-  } = useSearchPostsQuery(debouncedSearchText, { skip: !debouncedSearchText }); // Skip query when debouncedSearchText is empty
+  const [
+    searchPosts,
+    { data: searchedPosts = [], isLoading: isSearching, error: searchError },
+  ] = useLazySearchPostsQuery();
+  // const [
+  //   getInfinitePosts,
+  //   {
+  //     data: infinitePostsData = {},
+  //     isLoading: isFetchingInfinitePosts,
+  //     error: infinitePostsError,
+  //   },
+  // ] = useLazyGetInfinitePostsQuery();
 
-  // Fetch infinite posts if debouncedSearchText is empty
   const {
-    data: { posts: infinitePosts = [], currentPage = 1, totalPages = 1 } = {},
+    data: infinitePostsData = {},
     isLoading: isFetchingInfinitePosts,
     error: infinitePostsError,
   } = useGetInfinitePostsQuery(
-    { page, limit: 10 },
+    { page, limit: 9 },
     { skip: !!debouncedSearchText }
   ); // Skip query when debouncedSearchText is not empty
 
-  // Determine whether to show search results or paginated posts
-  const shouldShowSearchResults = !!debouncedSearchText; // Check if there is a debounced search text
-  const posts = shouldShowSearchResults ? searchedPosts : infinitePosts; // Use searched posts or infinite posts based on search state
+  const {
+    posts: infinitePosts = [],
+    currentPage = 1,
+    totalPages = 1,
+  } = infinitePostsData;
 
-  // Infinite scroll logic using scroll event handler
+  const containerRef = useRef(null); // ref to the scrollable container
+  const observerRef = useRef(null); // ref to the intersection observer target
+
   useEffect(() => {
-    const handleScroll = () => {
-      // Check if user has scrolled to the bottom of the page and not currently fetching
+    if (debouncedSearchText) {
+      searchPosts(debouncedSearchText);
+      setAllPosts([]);
+    } else {
+      setAllPosts([]);
+      setPage(1);
+    }
+  }, [debouncedSearchText, searchPosts]);
+
+  // useEffect(() => {
+  //   if (!debouncedSearchText || !searchText) {
+  //     setPage(1);
+  //     getInfinitePosts({page, limit: 9});
+  //   }
+  // }, [searchText, debouncedSearchText, getInfinitePosts, page]);
+
+  // append new posts to the existing posts, when infinite posts are fetched
+  useEffect(() => {
+    if (infinitePosts?.length > 0) {
+      setAllPosts((prevPosts) => [...prevPosts, ...infinitePosts]);
+    }
+  }, [infinitePosts]);
+
+  const shouldShowSearchResults = !!debouncedSearchText; // check if there is a debounced search text
+  const posts = shouldShowSearchResults ? searchedPosts : allPosts;
+
+  useEffect(() => {
+    const handleObserver = (entries) => {
+      const target = entries[0];
       if (
-        window.innerHeight + window.scrollY >= document.body.scrollHeight - 2 &&
+        target.isIntersecting &&
         !isFetchingInfinitePosts &&
         page < totalPages
       ) {
-        setPage((prevPage) => prevPage + 1); // Increment the page number to fetch more posts
+        setPage((prevPage) => prevPage + 1); // increment the page number to fetch more posts
       }
     };
 
-    window.addEventListener('scroll', handleScroll); // Add scroll event listener
+    const observer = new IntersectionObserver(handleObserver, {
+      threshold: 1,
+    });
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
 
     return () => {
-      window.removeEventListener('scroll', handleScroll); // Clean up the event listener on component unmount
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
+      }
     };
-  }, [isFetchingInfinitePosts, page, totalPages]); // Re-run effect when isFetchingInfinitePosts, page, or totalPages changes
+  }, [page, totalPages, isFetchingInfinitePosts]);
 
-  // Handle search input change
-  const handleSearchChange = (e) => {
-    setSearchText(e.target.value); // Update search text state
-    setPage(1); // Reset to the first page when performing a new search
+  const handleSearch = (e) => {
+    setSearchText(e.target.value); // update search text state
+    setPage(1); // reset to the first page when performing a new search
+    setAllPosts([]); // reset all posts when performing new serach
   };
 
   return (
-    <div className='explore-container'>
+    <div ref={containerRef} className='explore-container'>
       <div className='explore-inner-container'>
         <h2 className='h3-bold md:h2-bold w-full'>Search Posts</h2>
         <div className='flex gap-1 px-4 w-full rounded-lg bg-dark-4'>
           <img src={search} width={24} height={24} alt='search' />
           <Input
-            placeholder='Search'
+            placeholder='search'
             className='explore-search'
             value={searchText}
-            onChange={handleSearchChange}
+            onChange={handleSearch}
           />
         </div>
       </div>
@@ -87,24 +133,27 @@ const Explore = () => {
         {isSearching || isFetchingInfinitePosts ? (
           <Loader />
         ) : searchError || infinitePostsError ? (
-          <p className=''>
-            {searchError?.message || infinitePostsError?.message}
+          <p>
+            {searchError?.message ||
+              infinitePostsError?.message ||
+              'Something went wrong'}
           </p>
         ) : (
           <>
-            {posts.length > 0 ? (
+            {posts?.length > 0 ? (
               <GridPostList posts={posts} />
-            ) : shouldShowSearchResults ? (
-              <p className='text-light-4 mt-10 text-center w-full'>
-                No results found.
-              </p>
             ) : (
-              <p className='text-light-4 mt-10 text-center w-full'>
-                End of posts...
-              </p>
+              shouldShowSearchResults && (
+                <p className='text-light-4 mt-10 text-center w-full'>
+                  No results found.
+                </p>
+              )
             )}
           </>
         )}
+        <div ref={observerRef} className=''>
+          Fetching...
+        </div>
       </div>
     </div>
   );
