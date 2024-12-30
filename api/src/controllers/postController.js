@@ -195,9 +195,9 @@ export const searchPosts = async (req, res, next) => {
       select: 'profileImg fullName username',
     });
 
-    if (!posts.length) {
-      return next(error(404, 'No posts found'));
-    }
+    // if (!posts.length) {
+    //   return next(error(404, 'No posts found'));
+    // }
 
     res.status(200).json(posts);
   } catch (err) {
