@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import useDebounce from '../../hooks/useDebounce';
 import {
   useGetInfinitePostsQuery,
-  // useLazyGetInfinitePostsQuery,
   useLazySearchPostsQuery,
 } from '../../redux/api/postApiSlice';
 import Loader from '../../components/shared/Loader';
@@ -16,19 +15,12 @@ const Explore = () => {
   const debouncedSearchText = useDebounce(searchText, 500);
   const [page, setPage] = useState(1);
   const [allPosts, setAllPosts] = useState([]);
+  const [isObserverInitialized, setIsObserverInitialized] = useState(false);
 
   const [
     searchPosts,
     { data: searchedPosts = [], isLoading: isSearching, error: searchError },
   ] = useLazySearchPostsQuery();
-  // const [
-  //   getInfinitePosts,
-  //   {
-  //     data: infinitePostsData = {},
-  //     isLoading: isFetchingInfinitePosts,
-  //     error: infinitePostsError,
-  //   },
-  // ] = useLazyGetInfinitePostsQuery();
 
   const {
     data: infinitePostsData = {},
@@ -37,45 +29,53 @@ const Explore = () => {
   } = useGetInfinitePostsQuery(
     { page, limit: 9 },
     { skip: !!debouncedSearchText }
-  ); // Skip query when debouncedSearchText is not empty
+  );
 
-  const {
-    posts: infinitePosts = [],
-    currentPage = 1,
-    totalPages = 1,
-  } = infinitePostsData;
+  console.log('fetchingInfinitePosts', isFetchingInfinitePosts);
+
+  const { posts: infinitePosts = [], totalPages = 1 } = infinitePostsData;
 
   const containerRef = useRef(null); // ref to the scrollable container
   const observerRef = useRef(null); // ref to the intersection observer target
 
+  // Handle search text debouncing and initial fetching
   useEffect(() => {
     if (debouncedSearchText) {
       searchPosts(debouncedSearchText);
-      setAllPosts([]);
+      setAllPosts([]); // Clear existing posts
+      setPage(1); // Reset to first page
+      setIsObserverInitialized(false); // Reset observer initialization
     } else {
-      setAllPosts([]);
-      setPage(1);
+      setAllPosts([]); // clear existing posts
+      setPage(1); // reset to the first page
+      setIsObserverInitialized(false); // reset observer
     }
   }, [debouncedSearchText, searchPosts]);
 
-  // useEffect(() => {
-  //   if (!debouncedSearchText || !searchText) {
-  //     setPage(1);
-  //     getInfinitePosts({page, limit: 9});
-  //   }
-  // }, [searchText, debouncedSearchText, getInfinitePosts, page]);
-
-  // append new posts to the existing posts, when infinite posts are fetched
+  // Append new posts to the existing posts, when infinite posts are fetched
   useEffect(() => {
     if (infinitePosts?.length > 0) {
-      setAllPosts((prevPosts) => [...prevPosts, ...infinitePosts]);
+      setAllPosts((prevPosts) => {
+        const newPosts = infinitePosts.filter(
+          (post) =>
+            !prevPosts.some((existingPost) => existingPost._id === post._id)
+        );
+        return [...prevPosts, ...newPosts];
+      });
+      if (!isObserverInitialized) {
+        setIsObserverInitialized(true); // Set observer initialized once posts are appended
+      }
     }
-  }, [infinitePosts]);
+  }, [infinitePosts, isObserverInitialized]);
 
-  const shouldShowSearchResults = !!debouncedSearchText; // check if there is a debounced search text
+  const shouldShowSearchResults = !!debouncedSearchText; // Check if there is a debounced search text
   const posts = shouldShowSearchResults ? searchedPosts : allPosts;
 
+  // Set up IntersectionObserver to load more posts when scrolled to the bottom
   useEffect(() => {
+    if (!isObserverInitialized || debouncedSearchText) {
+      return;
+    }
     const handleObserver = (entries) => {
       const target = entries[0];
       if (
@@ -83,7 +83,7 @@ const Explore = () => {
         !isFetchingInfinitePosts &&
         page < totalPages
       ) {
-        setPage((prevPage) => prevPage + 1); // increment the page number to fetch more posts
+        setPage((prevPage) => prevPage + 1); // Increment the page number to fetch more posts
       }
     };
 
@@ -91,21 +91,36 @@ const Explore = () => {
       threshold: 1,
     });
 
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
+    const currentObserverRef = observerRef.current;
+
+    if (currentObserverRef) {
+      observer.observe(currentObserverRef);
     }
 
     return () => {
-      if (observerRef.current) {
-        observer.unobserve(observerRef.current);
+      if (currentObserverRef) {
+        observer.unobserve(currentObserverRef);
       }
     };
-  }, [page, totalPages, isFetchingInfinitePosts]);
+  }, [
+    isObserverInitialized,
+    page,
+    totalPages,
+    debouncedSearchText,
+    isFetchingInfinitePosts,
+  ]);
 
+  // Handle search input change
   const handleSearch = (e) => {
-    setSearchText(e.target.value); // update search text state
-    setPage(1); // reset to the first page when performing a new search
-    setAllPosts([]); // reset all posts when performing new serach
+    const { value } = e.target;
+    setSearchText(value); // Update search text state
+    if (!value.trim()) {
+      // if search text is empty fetch initial posts
+      console.log('value trim block executed');
+      setPage(1);
+      setAllPosts([]);
+      setIsObserverInitialized(false); //
+    }
   };
 
   return (
@@ -134,8 +149,8 @@ const Explore = () => {
           <Loader />
         ) : searchError || infinitePostsError ? (
           <p>
-            {searchError?.message ||
-              infinitePostsError?.message ||
+            {searchError?.data?.message ||
+              infinitePostsError?.data?.message ||
               'Something went wrong'}
           </p>
         ) : (
@@ -152,7 +167,7 @@ const Explore = () => {
           </>
         )}
         <div ref={observerRef} className=''>
-          Fetching...
+          {isFetchingInfinitePosts && <div>Fetching...</div>}
         </div>
       </div>
     </div>
