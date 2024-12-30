@@ -7,8 +7,8 @@ import {
 } from '../../redux/api/authApiSlice';
 import { signout } from '../../redux/features/auth/authSlice';
 import { Button } from '@/components/ui/button';
+import Logo from './Logo';
 import { CLOUDINARY_URL } from '../../config/constants';
-import logo from '../../assets/images/logo.svg';
 import logout from '../../assets/icons/logout.svg';
 import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
 
@@ -35,7 +35,7 @@ const Topbar = () => {
     <section className='topbar'>
       <div className='flex-between py-4 px-5'>
         <Link to='/' className='flex gap-3 items-center'>
-          <img src={logo} alt='logo' width={130} height={325} />
+          <Logo />
         </Link>
         <div className='flex gap-4'>
           <Button

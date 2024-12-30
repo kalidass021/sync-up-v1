@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import logo from '../../../assets/images/logo.svg';
+import Logo from '../../../components/shared/Logo';
 import Loader from '../../../components/shared/Loader';
 import { useSigninMutation } from '../../../redux/api/authApiSlice';
 import { setCredentials } from '../../../redux/features/auth/authSlice';
@@ -59,8 +59,10 @@ const SigninForm = () => {
 
   return (
     <div className='sm:w-420 flex-center flex-col '>
-      <img src={logo} alt='logo' />
-      <h2 className='h3-bold md:h2-bold pt-5 sm:pt-15'>Sign in to your account</h2>
+      <Logo />
+      <h2 className='h3-bold md:h2-bold pt-5 sm:pt-15'>
+        Sign in to your account
+      </h2>
       <p className='text-light-3 small-medium md:base-regular mt-8'>
         Welcome back! To sync up enter your credentials
       </p>

@@ -7,10 +7,10 @@ import {
 } from '../../redux/api/authApiSlice';
 import { signout } from '../../redux/features/auth/authSlice';
 import { Button } from '@/components/ui/button';
+import Logo from './Logo';
 import Loader from '../shared/Loader';
 import sidebarLinks from '../../config/sidebarLinks';
 import { CLOUDINARY_URL } from '../../config/constants';
-import logo from '../../assets/images/logo.svg';
 import logout from '../../assets/icons/logout.svg';
 import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
 
@@ -40,7 +40,7 @@ const LeftSidebar = () => {
     <nav className='leftsidebar'>
       <div className='flex flex-col gap-6'>
         <Link to='/' className='flex gap-3 items-center'>
-          <img src={logo} alt='logo' width={170} height={36} />
+          <Logo />
         </Link>
         <Link
           to={`/${userInfo?.username}/profile`}

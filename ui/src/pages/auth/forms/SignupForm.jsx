@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import logo from '../../../assets/images/logo.svg';
+import Logo from '../../../components/shared/Logo';
 import Loader from '../../../components/shared/Loader';
 import { useSignupMutation } from '../../../redux/api/authApiSlice';
 import { validateSignupForm } from '../../../utils/form/formValidation';
@@ -74,7 +74,7 @@ const SignupForm = () => {
 
   return (
     <div className='sm:w-420 flex-center flex-col '>
-      <img src={logo} alt='logo' />
+      <Logo />
       <h2 className='h3-bold md:h2-bold pt-5 sm:pt-15'>Create a new account</h2>
       <p className='text-light-3 small-medium md:base-regular mt-8'>
         To sync up, please enter your details
