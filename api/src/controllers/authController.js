@@ -59,8 +59,7 @@ export const signup = async (req, res, next) => {
       email: newUser.email,
       followers: newUser.followers,
       following: newUser.following,
-      profileImg: newUser.profileImg,
-      converImg: newUser.coverImg,
+      profileImgId: newUser.profileImgId,
     });
   } catch (err) {
     console.error(`Error in signup controller ${err.message}`);
@@ -102,8 +101,7 @@ export const signin = async (req, res, next) => {
       email: user.email,
       followers: user.followers,
       following: user.following,
-      profileImg: user.profileImg,
-      coverImg: user.coverImg,
+      profileImgId: user.profileImgId,
     });
   } catch (err) {
     console.error(`Error in signin controller ${err.message}`);
