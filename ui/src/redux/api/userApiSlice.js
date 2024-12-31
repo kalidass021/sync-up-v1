@@ -14,12 +14,17 @@ export const userApiSlice = apiSlice.injectEndpoints({
         url: `${USER_URL}/${id}/follow`,
         method: 'POST',
       }),
-      invalidatesTags: ['UserProfile'],
+      invalidatesTags: ['UserProfile', 'SuggestedUsers', 'AllUsers'],
     }),
 
     getSuggestedUsers: builder.query({
       query: () => `${USER_URL}/suggested`,
       providesTags: ['SuggestedUsers'],
+    }),
+
+    fetchAllUsers: builder.query({
+      query: () => `${USER_URL}/all`,
+      providesTags: ['AllUsers'],
     }),
 
     updateUserProfile: builder.mutation({
@@ -38,5 +43,6 @@ export const {
   useLazyGetUserProfileQuery,
   useFollowOrUnfollowUserMutation,
   useGetSuggestedUsersQuery,
+  useFetchAllUsersQuery,
   useUpdateUserProfileMutation,
 } = userApiSlice;
