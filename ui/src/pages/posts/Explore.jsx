@@ -16,6 +16,7 @@ const Explore = () => {
   const [page, setPage] = useState(1);
   const [allPosts, setAllPosts] = useState([]);
   const [isObserverInitialized, setIsObserverInitialized] = useState(false);
+  const [isFetchingNewPosts, setIsFetchingNewPosts] = useState(false);
 
   const [
     searchPosts,
@@ -66,6 +67,8 @@ const Explore = () => {
         setIsObserverInitialized(true); // Set observer initialized once posts are appended
       }
     }
+    // set is fetching posts to false once posts are appended
+    setIsFetchingNewPosts(false);
   }, [infinitePosts, isObserverInitialized]);
 
   const shouldShowSearchResults = !!debouncedSearchText; // Check if there is a debounced search text
@@ -83,6 +86,7 @@ const Explore = () => {
         !isFetchingInfinitePosts &&
         page < totalPages
       ) {
+        setIsFetchingNewPosts(true); // set fetching posts true when starting to fetch new posts
         setPage((prevPage) => prevPage + 1); // Increment the page number to fetch more posts
       }
     };
@@ -166,8 +170,8 @@ const Explore = () => {
             )}
           </>
         )}
-        <div ref={observerRef} className=''>
-          {isFetchingInfinitePosts && <div>Fetching...</div>}
+        <div ref={observerRef} className='mx-auto mt-4'>
+          {isFetchingNewPosts && <Loader />}
         </div>
       </div>
     </div>
