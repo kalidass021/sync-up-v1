@@ -175,13 +175,8 @@ export const searchPosts = async (req, res, next) => {
       return next(error(400, 'Search text is required'));
     }
 
-    // helper function to create a case-insensitive regular expression
-    const containsString = (searchText) => {
-      return new RegExp(searchText, 'i'); // i flag for case-insensitive matching
-    };
-
-    // create the regex for the search text
-    const searchTextRegex = containsString(searchText);
+    // create the case-insensitive regex for the search text
+    const searchTextRegex = new RegExp(searchText, 'i'); // i flag for case-insensitive matching
     // perform search using mongo db's regex search
     const posts = await Post.find({
       // $text: { $search: searchText },
