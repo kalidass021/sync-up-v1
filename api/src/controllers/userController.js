@@ -127,6 +127,29 @@ export const fetchAllUsers = async (req, res, next) => {
   }
 }
 
+export const searchUsers = async (req, res, next) => {
+  try {
+    const {query: searchText} = req.query;
+    if (!searchText) {
+      return next(error(400, 'Search text is required'));
+    }
+    // create case insensitive regex
+    const searchTextRegex = new RegExp(searchText, 'i'); // i flag for case insentivity
+    // perform search using mongo db's regex search
+    const users = await User.find({
+      $or: [
+        {fullName: {$regex: searchTextRegex}},
+        {username: {$regex: searchTextRegex}},
+      ]
+    });
+    
+    res.status(200).json(users);
+  } catch (err) {
+    console.error(`Error while searching users: ${err.message}`);
+    next(err);
+  }
+}
+
 export const updateUserProfile = async (req, res, next) => {
   try {
     const { _id: userId } = req.user;

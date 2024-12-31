@@ -51,6 +51,13 @@ POST http://localhost:5000/api/v1/users/6751812d02b24fc1269f5738/follow
 GET http://localhost:5000/api/v1/users/suggested
 ###
 
+// fetch all users
+GET http://localhost:5000/api/v1/users/all
+
+###
+// search users
+GET http://localhost:5000/api/v1/users/search?query=kalidass
+
 PUT http://localhost:5000/api/v1/users/testuser/profile
 Content-Type: application/json
 
