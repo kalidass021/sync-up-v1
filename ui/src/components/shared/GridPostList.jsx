@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PostStats from './PostStats';
 import { CLOUDINARY_URL } from '../../config/constants';
+import postPlaceholder from '../../assets/images/post-placeholder.jpg';
 import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
 
 const GridPostList = ({ posts, showUser, showStats }) => {
@@ -31,7 +32,7 @@ const GridPostList = ({ posts, showUser, showStats }) => {
         <li key={post._id} className='relative w-80 h-80'>
           <Link to={`/posts/${post._id}`} className='grid-post-link'>
             <img
-              src={`${CLOUDINARY_URL}/${post.imgId}`}
+              src={post.imgId ? `${CLOUDINARY_URL}/${post.imgId}` : postPlaceholder}
               alt='post'
               className='h-full w-full object-cover'
             />
