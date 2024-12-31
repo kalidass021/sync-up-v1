@@ -27,6 +27,11 @@ export const userApiSlice = apiSlice.injectEndpoints({
       providesTags: ['AllUsers'],
     }),
 
+    searchUsers: builder.query({
+      query: (searchText) => `${USER_URL}/search?query=${searchText}`,
+      providesTags: ['User'],
+    }),
+
     updateUserProfile: builder.mutation({
       query: ({ username, updatedUser }) => ({
         url: `${USER_URL}/${username}/profile`,
@@ -44,5 +49,6 @@ export const {
   useFollowOrUnfollowUserMutation,
   useGetSuggestedUsersQuery,
   useFetchAllUsersQuery,
+  useLazySearchUsersQuery,
   useUpdateUserProfileMutation,
 } = userApiSlice;
