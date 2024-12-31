@@ -114,6 +114,19 @@ export const getSuggestedUsers = async (req, res, next) => {
   }
 };
 
+export const fetchAllUsers = async (req, res, next) => {
+  try {
+    // current userId
+    const {_id: userId} = req.user;
+    // fetch the users from the mongo db except the current user
+    const users = await User.find({_id: {$ne: userId}});
+    res.status(200).json(users);
+  } catch (err) {
+    console.error(`Error while fetching all users: ${err.message}`);
+    next(err);
+  }
+}
+
 export const updateUserProfile = async (req, res, next) => {
   try {
     const { _id: userId } = req.user;

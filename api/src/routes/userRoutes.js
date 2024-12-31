@@ -3,6 +3,7 @@ import {
   getUserProfile,
   followOrUnfollowUser,
   getSuggestedUsers,
+  fetchAllUsers,
   updateUserProfile,
 } from '../controllers/userController.js';
 import auth from '../middlewares/auth.js';
@@ -15,6 +16,7 @@ const router = Router();
 router.get('/:username/profile', auth, getUserProfile);
 router.post(`/:id${idRegex}/follow`, auth, checkId, followOrUnfollowUser);
 router.get('/suggested', auth, getSuggestedUsers);
+router.get('/all', auth, fetchAllUsers);
 router.put('/:username/profile', auth, updateUserProfile);
 
 export default router;
