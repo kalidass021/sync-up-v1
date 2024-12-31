@@ -20,7 +20,7 @@ const GridPostList = ({ posts, showUser, showStats }) => {
   showUser = showUser ?? stateShowUser ?? true;
   showStats = showStats ?? stateShowStats ?? true;
 
-  console.log('posts', posts);
+  console.log('grid page posts', posts);
 
   if (!posts || !posts.length) {
     return <div>No posts available</div>;
@@ -32,7 +32,9 @@ const GridPostList = ({ posts, showUser, showStats }) => {
         <li key={post._id} className='relative w-80 h-80'>
           <Link to={`/posts/${post._id}`} className='grid-post-link'>
             <img
-              src={post.imgId ? `${CLOUDINARY_URL}/${post.imgId}` : postPlaceholder}
+              src={
+                post.imgId ? `${CLOUDINARY_URL}/${post.imgId}` : postPlaceholder
+              }
               alt='post'
               className='h-full w-full object-cover'
             />
@@ -41,7 +43,11 @@ const GridPostList = ({ posts, showUser, showStats }) => {
             {showUser && (
               <div className='flex items-center justify-start gap-2 flex-1'>
                 <img
-                  src={post.creator.profileImg || profilePlaceholder}
+                  src={
+                    post.creator.profileImgId
+                      ? `${CLOUDINARY_URL}/${post.creator.profileImgId}`
+                      : profilePlaceholder
+                  }
                   alt='creator'
                   className='h-8 w-8 rounded-full '
                 />

@@ -29,7 +29,7 @@ const PostCard = ({ post }) => {
         <div className='flex items-center gap-3'>
           <Link to={`/${creator?.username}/profile`}>
             <img
-              src={creator.profileImg || profilePlaceholder}
+              src={creator.profileImgId ? `${CLOUDINARY_URL}/${creator.profileImgId}` : profilePlaceholder}
               alt='creator'
               className='rounded-full w-12 lg:h-12'
             />

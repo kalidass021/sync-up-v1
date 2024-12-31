@@ -55,7 +55,7 @@ export const getSpecificPost = async (req, res, next) => {
     const { id: postId } = req.params;
     const specificPost = await Post.findById(postId).populate({
       path: 'creator',
-      select: 'profileImg fullName username',
+      select: 'profileImgId fullName username',
     });
 
     if (!specificPost) {
@@ -74,7 +74,7 @@ export const getRecentPosts = async (req, res, next) => {
     // fetch recent posts, sorted by created at in descending order
     const recentPosts = await Post.find().sort({ createdAt: -1 }).populate({
       path: 'creator',
-      select: 'profileImg fullName username',
+      select: 'profileImgId fullName username',
     });
 
     // in the above code without populate method it will return posts with userId only
@@ -124,7 +124,7 @@ export const getPostsByIds = async (req, res, next) => {
       })
       .populate({
         path: 'creator',
-        select: 'profileImg fullName username',
+        select: 'profileImgId fullName username',
       });
 
     res.status(200).json(posts);
@@ -144,7 +144,7 @@ export const getInfinitePosts = async (req, res, next) => {
       .sort({ createdAt: -1 })
       .populate({
         path: 'creator',
-        select: 'profileImg fullName username', // select specific fields from the creator
+        select: 'profileImgId fullName username', // select specific fields from the creator
       });
 
     // if posts.length === 0
@@ -192,7 +192,7 @@ export const searchPosts = async (req, res, next) => {
       ],
     }).populate({
       path: 'creator',
-      select: 'profileImg fullName username',
+      select: 'profileImgId fullName username',
     });
 
     // if (!posts.length) {
