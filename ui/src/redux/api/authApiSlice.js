@@ -9,6 +9,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
+      invalidatesTags: ['User'],
     }),
 
     signin: builder.mutation({
@@ -17,6 +18,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
+      invalidatesTags: ['User'],
     }),
 
     signout: builder.mutation({
@@ -24,6 +26,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         url: `${AUTH_URL}/signout`,
         method: 'POST',
       }),
+      invalidatesTags: ['User'],
     }),
 
     getCurrentUserProfile: builder.query({
