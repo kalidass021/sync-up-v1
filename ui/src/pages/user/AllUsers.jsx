@@ -1,16 +1,16 @@
 import { toast } from 'sonner';
 import UserCard from '../../components/shared/UserCard';
 import Loader from '../../components/shared/Loader';
-import { useGetSuggestedUsersQuery } from '../../redux/api/userApiSlice';
+import { useFetchAllUsersQuery } from '../../redux/api/userApiSlice';
 
 const AllUsers = () => {
-  // todo: instead of using getSuggestedUsers develop and api called getInfiniteUsers
+  // todo: add search user functionality
 
   const {
     data: creators,
     isLoading,
     isError: creatorError,
-  } = useGetSuggestedUsersQuery();
+  } = useFetchAllUsersQuery();
 
   if (creatorError) {
     return toast.error('Something went wrong');
