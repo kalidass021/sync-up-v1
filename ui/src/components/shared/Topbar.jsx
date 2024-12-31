@@ -1,8 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import {
-  useGetCurrentUserProfileQuery,
   useSignoutMutation,
 } from '../../redux/api/authApiSlice';
 import { signout } from '../../redux/features/auth/authSlice';
@@ -15,8 +14,7 @@ import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
 const Topbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const { userInfo } = useSelector((state) => state.auth);
-  const { data: userInfo } = useGetCurrentUserProfileQuery();
+  const { userInfo } = useSelector((state) => state.auth);
   const [signoutApiCall] = useSignoutMutation();
 
   const signoutHandler = async () => {

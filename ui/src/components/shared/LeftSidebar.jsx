@@ -1,14 +1,10 @@
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
-import {
-  useGetCurrentUserProfileQuery,
-  useSignoutMutation,
-} from '../../redux/api/authApiSlice';
+import { useSignoutMutation } from '../../redux/api/authApiSlice';
 import { signout } from '../../redux/features/auth/authSlice';
 import { Button } from '@/components/ui/button';
 import Logo from './Logo';
-import Loader from '../shared/Loader';
 import sidebarLinks from '../../config/sidebarLinks';
 import { CLOUDINARY_URL } from '../../config/constants';
 import logout from '../../assets/icons/logout.svg';
@@ -19,9 +15,7 @@ const LeftSidebar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  // const { userInfo } = useSelector((state) => state.auth);
-  const { data: userInfo, isLoading: userLoading } =
-    useGetCurrentUserProfileQuery();
+  const { userInfo } = useSelector((state) => state.auth);
   const [signoutApiCall] = useSignoutMutation();
 
   const signoutHandler = async () => {
@@ -46,29 +40,23 @@ const LeftSidebar = () => {
           to={`/${userInfo?.username}/profile`}
           className='flex gap-3 items-center'
         >
-          {userLoading ? (
-            <div className='mx-auto my-[16.5px]'>
-              <Loader />
+          <>
+            <img
+              src={
+                userInfo?.profileImgId
+                  ? `${CLOUDINARY_URL}/${userInfo?.profileImgId}`
+                  : profilePlaceholder
+              }
+              alt='profile'
+              className='h-14 w-14 rounded-full'
+            />
+            <div className='flex flex-col '>
+              <p className='body-bold '>{userInfo?.fullName}</p>
+              <p className='small-regular text-light-3'>
+                @{userInfo?.username}
+              </p>
             </div>
-          ) : (
-            <>
-              <img
-                src={
-                  userInfo?.profileImgId
-                    ? `${CLOUDINARY_URL}/${userInfo?.profileImgId}`
-                    : profilePlaceholder
-                }
-                alt='profile'
-                className='h-14 w-14 rounded-full'
-              />
-              <div className='flex flex-col '>
-                <p className='body-bold '>{userInfo?.fullName}</p>
-                <p className='small-regular text-light-3'>
-                  @{userInfo?.username}
-                </p>
-              </div>
-            </>
-          )}
+          </>
         </Link>
         <ul className='flex flex-col gap-2'>
           {sidebarLinks.map((link) => {
