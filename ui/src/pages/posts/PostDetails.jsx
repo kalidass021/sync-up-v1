@@ -68,7 +68,7 @@ const PostDetails = () => {
               className='flex items-center gap-3'
             >
               <img
-                src={creator?.profileImg || profilePlaceholder}
+                src={creator.profileImgId && `${CLOUDINARY_URL}/${creator.profileImgId}` || profilePlaceholder}
                 alt='creator'
                 className='rounded-full  w-9 h-9 lg:w-11 lg:h-11'
               />
