@@ -11,7 +11,7 @@ const generateToken = (userId, res) => {
   res.cookie('jwt', token, {
     httpOnly: true, // prevent XSS attacks and cross-site scripting attacks
     secure: true,
-    sameSite: 'None', // prevent CSRF attacks and cross-site request forgery attacks if it set to strict
+    sameSite: 'strict', // prevent CSRF attacks and cross-site request forgery attacks if it set to strict
     maxAge: 30 * 24 * 60 * 60 * 1000, // milli seconds
   });
 
