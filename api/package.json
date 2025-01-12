@@ -5,6 +5,7 @@
   "main": "bin ./www.js",
   "type": "module",
   "scripts": {
+    "build": "npm install",
     "dev": "nodemon --env-file .env ./bin/www.js",
     "start": "nodemon ./bin/www.js",
     "ui": "cd ../ui && npm run dev",
