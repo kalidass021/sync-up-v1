@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import useDebounce from '../../hooks/useDebounce';
 import {
   useLazyGetInfinitePostsQuery,
@@ -75,12 +75,8 @@ const Explore = () => {
   const shouldShowSearchResults = !!debouncedSearchText; // Check if there is a debounced search text
   const posts = shouldShowSearchResults ? searchedPosts : allPosts;
 
-  // Set up IntersectionObserver to load more posts when scrolled to the bottom
-  useEffect(() => {
-    if (!isObserverInitialized || debouncedSearchText) {
-      return;
-    }
-    const handleObserver = (entries) => {
+  const handleObserver = useCallback(
+    (entries) => {
       const target = entries[0];
       if (
         target.isIntersecting &&
@@ -91,22 +87,33 @@ const Explore = () => {
         setIsFetchingNewPosts(true); // set fetching posts true when starting to fetch new posts
         setPage((prevPage) => {
           const nextPage = prevPage + 1; // increment the page number to fetch more posts
-          fetchInfinitePosts({page: nextPage, limit: 9}); // make api call to fetch next page
+          fetchInfinitePosts({ page: nextPage, limit: 9 }); // make api call to fetch next page
           return nextPage; // set the nextPage as page
-        })
+        });
       }
-    };
+    },
+    [
+      fetchInfinitePosts,
+      isFetchingInfinitePosts,
+      isFetchingNewPosts,
+      page,
+      totalPages,
+    ]
+  );
 
+  // Set up IntersectionObserver to load more posts when scrolled to the bottom
+  useEffect(() => {
+    if (!isObserverInitialized || debouncedSearchText) {
+      return;
+    }
     const observer = new IntersectionObserver(handleObserver, {
       threshold: 1,
     });
 
     const currentObserverRef = observerRef.current;
-
     if (currentObserverRef) {
       observer.observe(currentObserverRef);
     }
-
     return () => {
       if (currentObserverRef) {
         observer.unobserve(currentObserverRef);
@@ -114,9 +121,10 @@ const Explore = () => {
     };
   }, [
     isObserverInitialized,
+    debouncedSearchText,
+    handleObserver,
     page,
     totalPages,
-    debouncedSearchText,
     isFetchingInfinitePosts,
     isFetchingNewPosts,
     fetchInfinitePosts,
