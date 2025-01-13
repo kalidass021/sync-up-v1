@@ -52,7 +52,7 @@ const UserCard = ({ user }) => {
 
   return (
     <div className='user-card'>
-      <Link to={`profile/${user._id}`} className='user-card-link'>
+      <Link to={`/${user.username}/profile`} className='user-card-link'>
         <img
           src={
             user.profileImgId
