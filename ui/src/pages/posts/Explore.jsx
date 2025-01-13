@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import useDebounce from '../../hooks/useDebounce';
 import {
-  useGetInfinitePostsQuery,
+  useLazyGetInfinitePostsQuery,
   useLazySearchPostsQuery,
 } from '../../redux/api/postApiSlice';
 import Loader from '../../components/shared/Loader';
@@ -23,14 +23,14 @@ const Explore = () => {
     { data: searchedPosts = [], isLoading: isSearching, error: searchError },
   ] = useLazySearchPostsQuery();
 
-  const {
-    data: infinitePostsData = {},
-    isLoading: isFetchingInfinitePosts,
-    error: infinitePostsError,
-  } = useGetInfinitePostsQuery(
-    { page, limit: 9 },
-    { skip: !!debouncedSearchText }
-  );
+  const [
+    fetchInfinitePosts,
+    {
+      data: infinitePostsData = {},
+      isLoading: isFetchingInfinitePosts,
+      error: infinitePostsError,
+    },
+  ] = useLazyGetInfinitePostsQuery();
 
   console.log('fetchingInfinitePosts', isFetchingInfinitePosts);
 
@@ -50,8 +50,9 @@ const Explore = () => {
       setAllPosts([]); // clear existing posts
       setPage(1); // reset to the first page
       setIsObserverInitialized(false); // reset observer
+      fetchInfinitePosts({ page: 1, limit: 9 }); // fetch the first page
     }
-  }, [debouncedSearchText, searchPosts]);
+  }, [debouncedSearchText, searchPosts, fetchInfinitePosts]);
 
   // Append new posts to the existing posts, when infinite posts are fetched
   useEffect(() => {
@@ -83,11 +84,16 @@ const Explore = () => {
       const target = entries[0];
       if (
         target.isIntersecting &&
+        !isFetchingNewPosts &&
         !isFetchingInfinitePosts &&
         page < totalPages
       ) {
         setIsFetchingNewPosts(true); // set fetching posts true when starting to fetch new posts
-        setPage((prevPage) => prevPage + 1); // Increment the page number to fetch more posts
+        setPage((prevPage) => {
+          const nextPage = prevPage + 1; // increment the page number to fetch more posts
+          fetchInfinitePosts({page: nextPage, limit: 9}); // make api call to fetch next page
+          return nextPage; // set the nextPage as page
+        })
       }
     };
 
@@ -112,6 +118,8 @@ const Explore = () => {
     totalPages,
     debouncedSearchText,
     isFetchingInfinitePosts,
+    isFetchingNewPosts,
+    fetchInfinitePosts,
   ]);
 
   // Handle search input change
