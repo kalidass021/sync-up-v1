@@ -91,7 +91,6 @@ export const {
   useGetUserPostsQuery,
   useGetPostsByIdsQuery,
   useLazyGetInfinitePostsQuery,
-  useGetInfinitePostsQuery,
   useLazySearchPostsQuery,
   useSearchPostsQuery,
   useUpdatePostMutation,
