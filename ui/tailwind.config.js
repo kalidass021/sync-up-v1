@@ -41,6 +41,7 @@ export default  {
         '465': '465px',
       },
       fontFamily: {
+        dancing_script: ['Dancing Script', 'serif'],
         inter: ['Inter', 'sans-serif'],
 
       },
