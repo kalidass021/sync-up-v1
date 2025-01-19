@@ -48,6 +48,10 @@
     @apply text-[18px] font-bold leading-[140%];
   }
 
+  .body-semibold {
+    @apply text-[18px] font-semibold leading-[140%];
+  }
+
   .body-medium {
     @apply text-[18px] font-medium leading-[140%];
   }

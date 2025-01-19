@@ -48,17 +48,17 @@ const LeftSidebar = () => {
                   : profilePlaceholder
               }
               alt='profile'
-              className='h-14 w-14 rounded-full'
+              className='h-12 w-12 rounded-full'
             />
             <div className='flex flex-col '>
-              <p className='body-bold '>{userInfo?.fullName}</p>
+              <p className='body-semibold'>{userInfo?.fullName}</p>
               <p className='small-regular text-light-3'>
                 @{userInfo?.username}
               </p>
             </div>
           </>
         </Link>
-        <ul className='flex flex-col gap-2'>
+        <ul className='flex flex-col gap-1'>
           {sidebarLinks.map((link) => {
             const isActive = pathname === link.route;
             return (
@@ -79,7 +79,7 @@ const LeftSidebar = () => {
                       isActive && 'invert-white'
                     }`}
                   />
-                  {link.label}
+                  <p className='small-regular'>{link.label}</p>
                 </NavLink>
               </li>
             );
@@ -92,7 +92,7 @@ const LeftSidebar = () => {
         onClick={signoutHandler}
       >
         <img src={logout} alt='logout' />
-        <p className='small-medium lg:base-medium'>Sign out</p>
+        <p className='small-regular'>Sign out</p>
       </Button>
     </nav>
   );
