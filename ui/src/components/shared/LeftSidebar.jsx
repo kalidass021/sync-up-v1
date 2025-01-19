@@ -52,7 +52,7 @@ const LeftSidebar = () => {
             />
             <div className='flex flex-col '>
               <p className='body-semibold'>{userInfo?.fullName}</p>
-              <p className='small-regular text-light-3'>
+              <p className='small-regular italic text-light-3'>
                 @{userInfo?.username}
               </p>
             </div>
