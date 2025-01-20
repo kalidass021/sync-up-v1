@@ -1,4 +1,4 @@
-import { StrictMode } from 'react';
+import { StrictMode, lazy, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -18,12 +18,16 @@ import Explore from './pages/posts/Explore.jsx';
 import SavedPosts from './pages/posts/SavedPosts.jsx';
 import LikedPosts from './pages/posts/LikedPosts.jsx';
 import AllUsers from './pages/user/AllUsers.jsx';
-import CreatePost from './pages/posts/CreatePost.jsx';
-import EditPost from './pages/posts/EditPost.jsx';
-import PostDetails from './pages/posts/PostDetails.jsx';
-import Profile from './pages/user/Profile.jsx';
-import EditProfile from './pages/user/EditProfile.jsx';
 import GridPostList from './components/shared/GridPostList.jsx';
+// lazy
+const LazyCreatePost = lazy(() => import('./pages/posts/CreatePost.jsx'));
+const LazyPostDetails = lazy(() => import('./pages/posts/PostDetails.jsx'));
+const LazyEditPost = lazy(() => import('./pages/posts/EditPost.jsx'));
+const LazyProfile = lazy(() => import('./pages/user/Profile.jsx'));
+const LazyEditProfile = lazy(() => import('./pages/user/EditProfile.jsx'));
+
+// loader
+import Loader from './components/shared/Loader.jsx';
 
 // error page
 import ErrorDisplay from './components/ErrorDisplay.jsx';
@@ -60,19 +64,35 @@ const appRouter = createBrowserRouter([
           },
           {
             path: '/posts/create',
-            element: <CreatePost />,
+            element: (
+              <Suspense fallback={<Loader />}>
+                <LazyCreatePost />
+              </Suspense>
+            ),
           },
           {
             path: '/posts/:id/edit',
-            element: <EditPost />,
+            element: (
+              <Suspense fallback={<Loader />}>
+                <LazyEditPost />
+              </Suspense>
+            ),
           },
           {
             path: '/posts/:id',
-            element: <PostDetails />,
+            element: (
+              <Suspense fallback={<Loader />}>
+                <LazyPostDetails />
+              </Suspense>
+            ),
           },
           {
             path: '/:username/profile',
-            element: <Profile />,
+            element: (
+              <Suspense fallback={<Loader />}>
+                <LazyProfile />
+              </Suspense>
+            ),
             children: [
               {
                 path: '',
@@ -91,7 +111,11 @@ const appRouter = createBrowserRouter([
           },
           {
             path: '/:username/profile/edit',
-            element: <EditProfile />,
+            element: (
+              <Suspense fallback={<Loader />}>
+                <LazyEditProfile />
+              </Suspense>
+            ),
           },
         ],
       },
