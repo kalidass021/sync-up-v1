@@ -10,8 +10,9 @@ const generateToken = (userId, res) => {
   // below jwt is variable name for the token
   res.cookie('jwt', token, {
     httpOnly: true, // prevent XSS attacks and cross-site scripting attacks
-    secure: true, // ensure cookie is sent over HTTPS
+    secure: process.env.NODE_ENV === 'production', // ensure cookie is sent over HTTPS
     sameSite: 'strict', // prevent CSRF attacks and cross-site request forgery attacks if it set to strict
+    domain: process.env.NODE_ENV === 'production' ? '.vercel.app' : undefined,
     maxAge: 30 * 24 * 60 * 60 * 1000, // milli seconds
   });
 
