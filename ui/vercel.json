@@ -1,6 +1,9 @@
 {
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "${VITE_API_URL_PROD}/$1" },
+    {
+      "source": "/api/(.*)",
+      "destination": "https://sync-up-v1.onrender.com//$1"
+    },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
