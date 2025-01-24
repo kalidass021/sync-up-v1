@@ -32,10 +32,10 @@ app.get('/', (req, res) => {
   res.status(200).json({ message: 'API is working!' });
 });
 
-app.use('/v1/auth', authRoutes);
-app.use('/v1/users', userRoutes);
-app.use('/v1/posts', postRoutes);
-app.use('/v1/notifications', notificationRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/posts', postRoutes);
+app.use('/api/v1/notifications', notificationRoutes);
 
 // middleware to handle undefined routes
 app.use(notFound);
