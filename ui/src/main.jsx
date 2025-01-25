@@ -15,7 +15,6 @@ import SigninForm from './pages/auth/forms/SigninForm.jsx';
 import PageLayout from './pages/PageLayout.jsx';
 import Home from './pages/Home.jsx';
 import Explore from './pages/posts/Explore.jsx';
-import LikedPosts from './pages/posts/LikedPosts.jsx';
 import AllUsers from './pages/user/AllUsers.jsx';
 import GridPostList from './components/shared/GridPostList.jsx';
 // lazy
@@ -57,10 +56,6 @@ const appRouter = createBrowserRouter([
                 <LazySavedPosts />
               </Suspense>
             ),
-          },
-          {
-            path: '/posts/liked',
-            element: <LikedPosts />,
           },
           {
             path: '/users',
