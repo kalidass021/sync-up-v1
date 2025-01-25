@@ -24,7 +24,7 @@ const regex = /^[a-zA-Z0-9_]+$/;
 // private routes
 router.post('/', auth, createPost);
 router.get(`/:id${idRegex}`, auth, checkId, getSpecificPost);
-router.get('/recents', getRecentPosts);
+router.get('/recents', auth, getRecentPosts);
 router.get('/', auth, getPostsByIds);
 router.get('/infinite', auth, getInfinitePosts);
 router.get('/search', auth, searchPosts);
