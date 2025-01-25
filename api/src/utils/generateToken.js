@@ -12,7 +12,10 @@ const generateToken = (userId, res) => {
     httpOnly: true, // prevent XSS attacks and cross-site scripting attacks
     secure: process.env.NODE_ENV === 'production', // ensure cookie is sent over HTTPS
     sameSite: 'None', // prevent CSRF attacks and cross-site request forgery attacks if it set to strict
-    domain: process.env.NODE_ENV === 'production' ? '.vercel.app' : undefined,
+    domain:
+      process.env.NODE_ENV === 'production'
+        ? process.env.CLIENT_URL_PROD
+        : undefined,
     maxAge: 30 * 24 * 60 * 60 * 1000, // milli seconds
   });
 
