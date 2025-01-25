@@ -14,7 +14,7 @@ const generateToken = (userId, res) => {
     sameSite: 'None', // prevent CSRF attacks and cross-site request forgery attacks if it set to strict
     domain:
       process.env.NODE_ENV === 'production'
-        ? process.env.CLIENT_URL_PROD
+        ? new URL(process.env.CLIENT_URL_PROD).hostname
         : undefined,
     maxAge: 30 * 24 * 60 * 60 * 1000, // milli seconds
   });
