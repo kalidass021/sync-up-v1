@@ -1,6 +1,6 @@
 import home from '../assets/icons/home.svg';
 import wallpaper from '../assets/icons/wallpaper.svg';
-import bookmark from '../assets/icons/bookmark.svg';
+import people from '../assets/icons/people.svg';
 import galleryAdd from '../assets/icons/gallery-add.svg';
 
 const bottombarLinks = [
@@ -15,9 +15,9 @@ const bottombarLinks = [
     label: 'Explore',
   },
   {
-    imgURL: bookmark,
-    route: '/posts/saved',
-    label: 'Saved',
+    imgURL: people,
+    route: '/users',
+    label: 'People',
   },
   {
     imgURL: galleryAdd,
