@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "npm install",
-    "dev": "nodemon --env-file .env ./bin/www.js",
+    "dev": "nodemon --env-file=.env ./bin/www.js",
     "start": "nodemon ./bin/www.js",
     "ui": "cd ../ui && npm run dev",
     "api": "npm run dev",
