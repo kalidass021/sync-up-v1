@@ -111,6 +111,7 @@ const Profile = () => {
               </Link>
             </div>
             <div className={`${currentUser.username === username && 'hidden'}`}>
+              {/* Todo: show follow/following */}
               <Button type='button' className='shad-button-primary px-8'>
                 Follow
               </Button>
