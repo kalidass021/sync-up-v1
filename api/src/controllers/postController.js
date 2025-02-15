@@ -136,7 +136,7 @@ export const getPostsByIds = async (req, res, next) => {
 
 export const getInfinitePosts = async (req, res, next) => {
   try {
-    const { page = 1, limit = 10 } = req.query;
+    const { page = 1, limit = 9 } = req.query;
 
     const posts = await Post.find()
       .skip((page - 1) * limit) // skip the number of posts based on current page
