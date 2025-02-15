@@ -28,7 +28,7 @@ app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(cookieParser());
 
 // handle api base url to show api status
-app.use('/', apiStatus);
+app.get('/', apiStatus);
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
