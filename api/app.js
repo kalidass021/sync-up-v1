@@ -3,14 +3,10 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 
 // files
-import dbConnect from './src/config/dbConnect.js';
 import cors from './src/config/cors.js';
 import cloudinaryConfig from './src/config/cloudinary.js';
 import notFound from './src/middlewares/notFound.js';
 import errorHandler from './src/middlewares/errorHandler.js';
-
-// configurations
-cloudinaryConfig();
 
 // routes
 import authRoutes from './src/routes/authRoutes.js';
@@ -19,6 +15,9 @@ import postRoutes from './src/routes/postRoutes.js';
 import notificationRoutes from './src/routes/notificationRoutes.js';
 
 const app = express();
+
+// configurations
+cloudinaryConfig();
 
 // middlewares
 app.use(cors);
@@ -42,19 +41,4 @@ app.use(notFound);
 // middleware to handle the errors
 app.use(errorHandler);
 
-const serverConfig = () => {
-  const port = process.env.PORT || 5000;
-  const server = app.listen(port, () => {
-    const url =
-      process.env.NODE_ENV === 'development'
-        ? `http://localhost:${port}`
-        : process.env.API_URL;
-    console.info(`Server is up and listening at ${url}`);
-  });
-  // connect to db
-  dbConnect();
-
-  return server;
-};
-
-export default serverConfig;
+export default app;
