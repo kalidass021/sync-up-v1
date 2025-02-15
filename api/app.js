@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 // files
 import cors from './src/config/cors.js';
 import cloudinaryConfig from './src/config/cloudinary.js';
-import apiStatus from './src/middlewares/apiStatus.js';
+import apiStatus from './src/utils/apiStatus.js';
 import notFound from './src/middlewares/notFound.js';
 import errorHandler from './src/middlewares/errorHandler.js';
 
