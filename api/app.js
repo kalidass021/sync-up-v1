@@ -1,4 +1,3 @@
-// packages
 import express from 'express';
 import cookieParser from 'cookie-parser';
 
@@ -35,7 +34,9 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/posts', postRoutes);
 app.use('/api/v1/notifications', notificationRoutes);
 
-app.use(notFound); // middleware to handle undefined routes
-app.use(errorHandler); // middleware to handle the errors
+// handle undefined routes
+app.use(notFound);
+// handle the errors
+app.use(errorHandler);
 
 export default app;
