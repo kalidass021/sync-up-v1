@@ -11,11 +11,11 @@ const generateToken = (userId, res) => {
   res.cookie('jwt', token, {
     httpOnly: true, // prevent XSS attacks and cross-site scripting attacks
     secure: process.env.NODE_ENV === 'production', // ensure cookie is sent over HTTPS
-    sameSite: 'None', // prevent CSRF attacks and cross-site request forgery attacks if it set to strict
+    sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Strict', // prevent CSRF attacks and cross-site request forgery attacks if it set to strict
     domain:
       process.env.NODE_ENV === 'production'
         ? new URL(process.env.CLIENT_URL_PROD).hostname
-        : undefined,
+        : new URL(process.env.CLIENT_URL_DEV).hostname,
     maxAge: 30 * 24 * 60 * 60 * 1000, // milli seconds
   });
 

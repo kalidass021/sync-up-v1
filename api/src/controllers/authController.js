@@ -114,11 +114,11 @@ export const signout = async (req, res, next) => {
     res.cookie('jwt', null, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'None', // match the sameSite setting while cookie was set
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Strict', // match the sameSite setting while cookie was set
       domain:
-      process.env.NODE_ENV === 'production'
-        ? new URL(process.env.CLIENT_URL_PROD).hostname
-        : undefined, // match the domain name setting while cookie was set
+        process.env.NODE_ENV === 'production'
+          ? new URL(process.env.CLIENT_URL_PROD).hostname
+          : new URL(process.env.CLIENT_URL_DEV).hostname, // match the domain name setting while cookie was set
       maxAge: 0,
     });
 
