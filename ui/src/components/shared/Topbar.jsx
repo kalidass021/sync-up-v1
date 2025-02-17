@@ -1,9 +1,8 @@
+import { memo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
-import {
-  useSignoutMutation,
-} from '../../redux/api/authApiSlice';
+import { useSignoutMutation } from '../../redux/api/authApiSlice';
 import { signout } from '../../redux/features/auth/authSlice';
 import { Button } from '@/components/ui/button';
 import Logo from './Logo';
@@ -63,4 +62,4 @@ const Topbar = () => {
   );
 };
 
-export default Topbar;
+export default memo(Topbar);
