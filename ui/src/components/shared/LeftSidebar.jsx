@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
@@ -98,4 +99,4 @@ const LeftSidebar = () => {
   );
 };
 
-export default LeftSidebar;
+export default memo(LeftSidebar);
