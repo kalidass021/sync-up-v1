@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import bottombarLinks from '../../config/bottombarLinks';
 
@@ -20,9 +21,7 @@ const Bottombar = () => {
               alt={link.label}
               width={16}
               height={16}
-              className={`${
-                isActive && 'invert-white'
-              }`}
+              className={`${isActive && 'invert-white'}`}
             />
             <p className='tiny-medium text-light-2'>{link.label}</p>
           </Link>
@@ -32,4 +31,4 @@ const Bottombar = () => {
   );
 };
 
-export default Bottombar;
+export default memo(Bottombar);
