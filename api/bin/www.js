@@ -3,6 +3,9 @@ import dbConnect from '../src/config/dbConnect.js';
 
 const start = async () => {
   try {
+    // connect to db
+    await dbConnect();
+
     const port = parseInt(process.env.PORT, 10) || 5000;
     const server = app.listen(port, () => {
       const url =
@@ -11,8 +14,6 @@ const start = async () => {
           : process.env.API_URL;
       console.info(`Server is up and listening at ${url}`);
     });
-    // connect to db
-    await dbConnect();
 
     return server; // server instance
   } catch (err) {
