@@ -15,7 +15,7 @@ const start = async () => {
       console.info(`Server is up and listening at ${url}`);
     });
 
-    return server; // server instance
+    return server;
   } catch (err) {
     console.error(`Startup Error: ${err}`);
     process.exit(1); // exit with failure
