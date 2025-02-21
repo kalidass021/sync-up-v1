@@ -1,5 +1,11 @@
 {
   "version": 2,
-  "builds": [{ "src": "src/bin/www.js", "use": "@vercel/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "src/bin/www.js" }]
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
+    }
+  ],
+  "routes": [{ "src": "/(.*)", "dest": "dist/bin/www.js" }]
 }
