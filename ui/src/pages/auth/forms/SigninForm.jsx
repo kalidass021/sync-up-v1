@@ -9,6 +9,7 @@ import Logo from '../../../components/shared/Logo';
 import Loader from '../../../components/shared/Loader';
 import { useSigninMutation } from '../../../redux/api/authApiSlice';
 import { setCredentials } from '../../../redux/features/auth/authSlice';
+import { TEST_USER_EMAIL, TEST_USER_PASSWORD } from '../../../config/constants';
 
 const SigninForm = () => {
   const {
@@ -55,6 +56,14 @@ const SigninForm = () => {
       );
       toast.error(err?.data?.message || err?.error);
     }
+  };
+
+  const handleTestAccountSignin = async () => {
+    const testAccount = {
+      email: TEST_USER_EMAIL,
+      password: TEST_USER_PASSWORD,
+    };
+    await formSubmit(testAccount);
   };
 
   return (
@@ -107,7 +116,7 @@ const SigninForm = () => {
           )}
         </div>
 
-        <Button type='submit' className='shad-button-primary'>
+        <Button type='submit' className='shad-button-primary mt-3'>
           {isLoading ? (
             <div className='flex-center gap-2'>
               <Loader /> Signing in...
@@ -117,6 +126,15 @@ const SigninForm = () => {
           )}
         </Button>
         <p className='text-small-regular text-light-2 text-center mt-2'>
+          Explore with
+          <Link
+            onClick={handleTestAccountSignin}
+            className='text-primary-500 text-small-semibold ml-1'
+          >
+            Test account
+          </Link>
+        </p>
+        <p className='text-small-regular text-light-2 text-center mt-1'>
           Don&apos;t have an account?{' '}
           <Link
             to={redirect ? `/signup?redirect=${redirect}` : '/signup'}
