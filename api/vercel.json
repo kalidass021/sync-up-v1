@@ -1,5 +1,5 @@
 {
   "version": 2,
-  "builds": [{ "src": "output/bin/www.js", "use": "@vercel/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "output/bin/www.js" }]
+  "builds": [{ "src": "src/bin/www.js", "use": "@vercel/node" }],
+  "routes": [{ "src": "/(.*)", "dest": "src/bin/www.js" }]
 }
