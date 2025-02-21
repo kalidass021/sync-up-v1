@@ -11,11 +11,11 @@ import {
   deletePost,
   likeOrUnlikePost,
   saveOrUnsavePost,
-} from '../controllers/postController.js';
+} from '../controllers/postController';
 // middlewares
-import auth from '../middlewares/auth.js';
-import checkId from '../middlewares/checkId.js';
-import { MONGO_ID_REGEX as idRegex } from '../utils/constants.js';
+import auth from '../middlewares/auth';
+import checkId from '../middlewares/checkId';
+import { MONGO_ID_REGEX as idRegex } from '../utils/constants';
 
 const router = Router();
 

@@ -1,9 +1,9 @@
 import bcrypt from 'bcryptjs';
 import { v2 as cloudinary } from 'cloudinary';
-import User from '../models/User.js';
-import Notification from '../models/Notification.js';
-import error from '../utils/error.js';
-import { EMAIL_REGEX as emailRegex } from '../utils/constants.js';
+import User from '../models/User';
+import Notification from '../models/Notification';
+import error from '../utils/error';
+import { EMAIL_REGEX as emailRegex } from '../utils/constants';
 
 export const getUserProfile = async (req, res, next) => {
   try {

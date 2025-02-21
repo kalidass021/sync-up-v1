@@ -1,5 +1,5 @@
 import {isValidObjectId} from 'mongoose';
-import error from '../utils/error.js';
+import error from '../utils/error';
 
 // middleware to check, id parameter is valid mongo db objectId or not
 const checkId = (req, res, next) => {

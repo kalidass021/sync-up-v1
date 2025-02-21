@@ -4,8 +4,8 @@ import {
   signin,
   signout,
   getCurrentUserProfile,
-} from '../controllers/authController.js';
-import auth from '../middlewares/auth.js';
+} from '../controllers/authController';
+import auth from '../middlewares/auth';
 
 const router = Router();
 

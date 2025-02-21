@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
-import User from '../models/User.js';
-import generateToken from '../utils/generateToken.js';
-import error from '../utils/error.js';
-import { EMAIL_REGEX as emailRegex } from '../utils/constants.js';
+import User from '../models/User';
+import generateToken from '../utils/generateToken';
+import error from '../utils/error';
+import { EMAIL_REGEX as emailRegex } from '../utils/constants';
 
 export const signup = async (req, res, next) => {
   try {

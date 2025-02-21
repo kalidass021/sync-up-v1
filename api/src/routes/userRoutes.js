@@ -6,10 +6,10 @@ import {
   fetchAllUsers,
   searchUsers,
   updateUserProfile,
-} from '../controllers/userController.js';
-import auth from '../middlewares/auth.js';
-import checkId from '../middlewares/checkId.js';
-import { MONGO_ID_REGEX as idRegex } from '../utils/constants.js';
+} from '../controllers/userController';
+import auth from '../middlewares/auth';
+import checkId from '../middlewares/checkId';
+import { MONGO_ID_REGEX as idRegex } from '../utils/constants';
 
 const router = Router();
 
