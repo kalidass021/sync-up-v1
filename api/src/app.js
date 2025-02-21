@@ -2,17 +2,17 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 
 // files
-import cors from './src/config/cors.js';
-import cloudinaryConfig from './src/config/cloudinary.js';
-import apiStatus from './src/utils/apiStatus.js';
-import notFound from './src/middlewares/notFound.js';
-import errorHandler from './src/middlewares/errorHandler.js';
+import cors from './config/cors.js';
+import cloudinaryConfig from './config/cloudinary.js';
+import apiStatus from './utils/apiStatus.js';
+import notFound from './middlewares/notFound.js';
+import errorHandler from './middlewares/errorHandler.js';
 
 // routes
-import authRoutes from './src/routes/authRoutes.js';
-import userRoutes from './src/routes/userRoutes.js';
-import postRoutes from './src/routes/postRoutes.js';
-import notificationRoutes from './src/routes/notificationRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import postRoutes from './routes/postRoutes.js';
+import notificationRoutes from './routes/notificationRoutes.js';
 
 const app = express();
 

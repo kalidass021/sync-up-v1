@@ -1,5 +1,5 @@
 import app from '../app.js';
-import dbConnect from '../src/config/dbConnect.js';
+import dbConnect from '../config/dbConnect.js';
 
 const start = async () => {
   try {
