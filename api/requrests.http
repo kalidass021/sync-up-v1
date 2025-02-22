@@ -58,6 +58,7 @@ GET http://localhost:5000/api/v1/users/all
 // search users
 GET http://localhost:5000/api/v1/users/search?query=kalidass
 
+###
 PUT http://localhost:5000/api/v1/users/testuser/profile
 Content-Type: application/json
 
