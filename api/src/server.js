@@ -37,7 +37,7 @@ app.use('/v1/notifications', notificationRoutes);
 app.use(notFound); // handle undefined routes
 app.use(errorHandler); // handle errors
 
-const startServer = async () => {
+const startServer = () => {
   const port = parseInt(process.env.PORT, 10) || 5000;
   const server = app.listen(port, () => {
     const url =
