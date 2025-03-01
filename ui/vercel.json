@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://syncup-api.vercel.app/(.*)"
+      "destination": "https://syncup-api.vercel.app/$1"
     },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
