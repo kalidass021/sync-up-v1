@@ -34,9 +34,20 @@ app.use('/v1/users', userRoutes);
 app.use('/v1/posts', postRoutes);
 app.use('/v1/notifications', notificationRoutes);
 
-// handle undefined routes
-app.use(notFound);
-// handle the errors
-app.use(errorHandler);
+app.use(notFound); // handle undefined routes
+app.use(errorHandler); // handle errors
 
-export default app;
+const startServer = () => {
+  const port = parseInt(process.env.PORT, 10) || 5000;
+  const server = app.listen(port, () => {
+    const url =
+      process.env.NODE_ENV === 'development'
+        ? `http://localhost:${port}`
+        : process.env.API_URL;
+    console.info(`Server is up and listening at ${url}`);
+  });
+
+  return server;
+};
+
+export default startServer;

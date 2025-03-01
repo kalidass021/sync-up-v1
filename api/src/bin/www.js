@@ -1,25 +1,13 @@
-import app from '../app';
 import dbConnect from '../config/dbConnect';
 
-const start = async () => {
+(async () => {
   try {
     // connect to db
     await dbConnect();
-
-    const port = parseInt(process.env.PORT, 10) || 5000;
-    const server = app.listen(port, () => {
-      const url =
-        process.env.NODE_ENV === 'development'
-          ? `http://localhost:${port}`
-          : process.env.API_URL;
-      console.info(`Server is up and listening at ${url}`);
-    });
-
-    return server;
+    const { default: startServer } = await import('../server');
+    startServer(); // attempt to start the server
   } catch (err) {
     console.error(`Startup Error: ${err}`);
     process.exit(1); // exit with failure
   }
-};
-
-start(); // attempt to start the server
+})();
