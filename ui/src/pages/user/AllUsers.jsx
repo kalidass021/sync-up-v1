@@ -59,13 +59,21 @@ const AllUsers = () => {
         {isLoading && !creators ? (
           <Loader />
         ) : (
-          <ul className='user-grid'>
-            {creators?.map((creator) => (
-              <li key={creator._id} className='flex-1 min-w-[200px] w-full'>
-                <UserCard user={creator} />
-              </li>
-            ))}
-          </ul>
+          <>
+            {(shouldShowSearchResults && !creators?.length) ? (
+              <p className='text-light-4 mt-10 text-center w-full'>
+                No creator found
+              </p>
+            ) : (
+              <ul className='user-grid'>
+                {creators?.map((creator) => (
+                  <li key={creator._id} className='flex-1 min-w-[200px] w-full'>
+                    <UserCard user={creator} />
+                  </li>
+                ))}
+              </ul>
+            )}
+          </>
         )}
       </div>
     </div>
