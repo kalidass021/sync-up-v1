@@ -5,7 +5,7 @@
   "main": "./src/bin/www.js",
   "scripts": {
     "build": "babel src -d dist",
-    "dev": "nodemon --env-file=.env --exec babel-node ./src/bin/www.js",
+    "dev": "nodemon --env-file=.env --require @babel/register ./src/bin/www.js",
     "start": "nodemon dist/bin/www.js",
     "ui": "cd ../ui && npm run dev",
     "api": "npm run dev",
@@ -15,6 +15,9 @@
   "author": "Kalidass Boopathi",
   "license": "ISC",
   "dependencies": {
+    "@babel/cli": "^7.26.4",
+    "@babel/core": "^7.26.9",
+    "@babel/preset-env": "^7.26.9",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.3",
     "cloudinary": "^2.5.1",
@@ -27,9 +30,6 @@
     "nodemon": "^3.1.7"
   },
   "devDependencies": {
-    "@babel/cli": "^7.26.4",
-    "@babel/core": "^7.26.9",
-    "@babel/node": "^7.26.0",
-    "@babel/preset-env": "^7.26.9"
+    "@babel/register": "^7.25.9"
   }
 }
