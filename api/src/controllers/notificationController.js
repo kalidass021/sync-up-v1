@@ -1,4 +1,4 @@
-import Notification from '../models/Notification';
+import { Notification } from '../models';
 
 export const getNotifications = async (req, res, next) => {
   try {
@@ -20,16 +20,14 @@ export const getNotifications = async (req, res, next) => {
 
 // delete all notifications
 export const deleteNotifications = async (req, res, next) => {
-    try {
-        const {_id: userId} = req.user;
+  try {
+    const { _id: userId } = req.user;
 
-        await Notification.deleteMany({to: userId});
+    await Notification.deleteMany({ to: userId });
 
-        res.status(200).json({message: 'Notifications deleted successfully'});
-    } catch (err) {
-        console.error(`Error while deleting all notifications ${err}`);
-        next(err);
-    }
-}
-
-
+    res.status(200).json({ message: 'Notifications deleted successfully' });
+  } catch (err) {
+    console.error(`Error while deleting all notifications ${err}`);
+    next(err);
+  }
+};

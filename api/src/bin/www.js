@@ -1,4 +1,4 @@
-import dbConnect from '../config/dbConnect';
+import { dbConnect } from '../config';
 import startServer from '../server';
 
 (async () => {

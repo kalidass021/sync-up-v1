@@ -1,8 +1,6 @@
 import { v2 as cloudinary } from 'cloudinary';
-import Post from '../models/Post';
-import User from '../models/User';
-import Notification from '../models/Notification';
-import error from '../utils/error';
+import { Post, User, Notification } from '../models';
+import { error } from '../utils';
 
 export const createPost = async (req, res, next) => {
   try {

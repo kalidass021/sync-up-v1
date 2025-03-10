@@ -13,8 +13,7 @@ import {
   saveOrUnsavePost,
 } from '../controllers/postController';
 // middlewares
-import auth from '../middlewares/auth';
-import checkId from '../middlewares/checkId';
+import { auth, checkId } from '../middlewares';
 import { MONGO_ID_REGEX as idRegex } from '../utils/constants';
 
 const router = Router();

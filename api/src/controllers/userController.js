@@ -1,8 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { v2 as cloudinary } from 'cloudinary';
-import User from '../models/User';
-import Notification from '../models/Notification';
-import error from '../utils/error';
+import { User, Notification } from '../models';
+import { error } from '../utils';
 import { EMAIL_REGEX as emailRegex } from '../utils/constants';
 
 export const getUserProfile = async (req, res, next) => {
@@ -117,19 +116,19 @@ export const getSuggestedUsers = async (req, res, next) => {
 export const fetchAllUsers = async (req, res, next) => {
   try {
     // current userId
-    const {_id: userId} = req.user;
+    const { _id: userId } = req.user;
     // fetch the users from the mongo db except the current user
-    const users = await User.find({_id: {$ne: userId}});
+    const users = await User.find({ _id: { $ne: userId } });
     res.status(200).json(users);
   } catch (err) {
     console.error(`Error while fetching all users: ${err.message}`);
     next(err);
   }
-}
+};
 
 export const searchUsers = async (req, res, next) => {
   try {
-    const {query: searchText} = req.query;
+    const { query: searchText } = req.query;
     if (!searchText) {
       return next(error(400, 'Search text is required'));
     }
@@ -138,17 +137,17 @@ export const searchUsers = async (req, res, next) => {
     // perform search using mongo db's regex search
     const users = await User.find({
       $or: [
-        {fullName: {$regex: searchTextRegex}},
-        {username: {$regex: searchTextRegex}},
-      ]
+        { fullName: { $regex: searchTextRegex } },
+        { username: { $regex: searchTextRegex } },
+      ],
     });
-    
+
     res.status(200).json(users);
   } catch (err) {
     console.error(`Error while searching users: ${err.message}`);
     next(err);
   }
-}
+};
 
 export const updateUserProfile = async (req, res, next) => {
   try {

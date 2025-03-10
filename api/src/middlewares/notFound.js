@@ -1,4 +1,4 @@
-import error from '../utils/error';
+import { error } from '../utils';
 
 // middleware to handle undefined routes
 const notFound = (req, res, next) => {

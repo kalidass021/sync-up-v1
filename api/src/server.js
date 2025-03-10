@@ -2,11 +2,9 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 
 // files
-import cors from './config/cors';
-import cloudinaryConfig from './config/cloudinary';
-import apiStatus from './utils/apiStatus';
-import notFound from './middlewares/notFound';
-import errorHandler from './middlewares/errorHandler';
+import { cors, cloudinaryConfig } from './config';
+import { apiStatus } from './utils';
+import { notFound, errorHandler } from './middlewares';
 
 // routes
 import {
