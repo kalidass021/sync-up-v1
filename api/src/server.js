@@ -9,10 +9,12 @@ import notFound from './middlewares/notFound';
 import errorHandler from './middlewares/errorHandler';
 
 // routes
-import authRoutes from './routes/authRoutes';
-import userRoutes from './routes/userRoutes';
-import postRoutes from './routes/postRoutes';
-import notificationRoutes from './routes/notificationRoutes';
+import {
+  authRoutes,
+  userRoutes,
+  postRoutes,
+  notificationRoutes,
+} from './routes';
 
 const app = express();
 
