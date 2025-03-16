@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import PostForm from '../../components/forms/PostForm';
+import PostForm from '../../components/posts/forms/PostForm.jsx';
 import { useGetSpecificPostQuery } from '../../redux/api/postApiSlice.js';
 import Loader from '../../components/shared/Loader.jsx';
 import addPost from '../../assets/icons/add-post.svg';
