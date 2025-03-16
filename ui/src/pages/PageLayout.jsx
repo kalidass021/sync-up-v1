@@ -12,8 +12,10 @@ const PageLayout = () => {
 
   if (!online) {
     toast.error(`You're offline! Check your internet connection.`);
+  } else {
+    toast.success(`Connection restored. Let's sync things up!`);
   }
-  
+
   if (!userInfo) {
     return <Navigate to='/signin' replace />;
   }
