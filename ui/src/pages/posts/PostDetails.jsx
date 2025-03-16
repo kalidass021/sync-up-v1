@@ -5,7 +5,7 @@ import {
   useGetSpecificPostQuery,
   useDeletePostMutation,
 } from '../../redux/api/postApiSlice';
-import PostStats from '../../components/shared/PostStats';
+import PostStats from '../../components/posts/PostStats';
 import Loader from '../../components/shared/Loader';
 import { Button } from '@/components/ui/button';
 import formatDate from '../../utils/formatDate';

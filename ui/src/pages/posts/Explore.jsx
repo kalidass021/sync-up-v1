@@ -5,7 +5,7 @@ import {
   useLazySearchPostsQuery,
 } from '../../redux/api/postApiSlice';
 import Loader from '../../components/shared/Loader';
-import GridPostList from '../../components/shared/GridPostList';
+import GridPostList from '../../components/posts/GridPostList';
 import { Input } from '@/components/ui/input';
 import search from '../../assets/icons/search.svg';
 import filter from '../../assets/icons/filter.svg';

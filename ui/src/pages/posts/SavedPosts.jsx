@@ -1,6 +1,6 @@
 import { useGetCurrentUserProfileQuery } from '../../redux/api/authApiSlice';
 import { useGetPostsByIdsQuery } from '../../redux/api/postApiSlice';
-import GridPostList from '../../components/shared/GridPostList';
+import GridPostList from '../../components/posts/GridPostList';
 import Loader from '../../components/shared/Loader';
 import save from '../../assets/icons/save.svg';
 

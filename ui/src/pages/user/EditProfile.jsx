@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 import { useGetCurrentUserProfileQuery } from '../../redux/api/authApiSlice';
 import { useUpdateUserProfileMutation } from '../../redux/api/userApiSlice';
-import ProfileUploader from '../../components/shared/ProfileUploader';
+import ProfileUploader from '../../components/user/ProfileUploader';
 import Loader from '../../components/shared/Loader';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';

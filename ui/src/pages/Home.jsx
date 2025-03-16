@@ -1,7 +1,7 @@
 import { useGetRecentPostsQuery } from '../redux/api/postApiSlice';
 import { useGetSuggestedUsersQuery } from '../redux/api/userApiSlice';
-import PostCard from '../components/shared/PostCard';
-import UserCard from '../components/shared/UserCard';
+import PostCard from '../components/posts/PostCard';
+import UserCard from '../components/user/UserCard';
 import Loader from '../components/shared/Loader';
 
 const Home = () => {

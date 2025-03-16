@@ -6,7 +6,7 @@ import {
 } from '../../redux/api/userApiSlice';
 import useDebounce from '../../hooks/useDebounce';
 import { Input } from '@/components/ui/input';
-import UserCard from '../../components/shared/UserCard';
+import UserCard from '../../components/user/UserCard';
 import Loader from '../../components/shared/Loader';
 import search from '../../assets/icons/search.svg';
 

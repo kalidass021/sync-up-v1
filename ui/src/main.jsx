@@ -16,7 +16,7 @@ import PageLayout from './pages/PageLayout.jsx';
 import Home from './pages/Home.jsx';
 import Explore from './pages/posts/Explore.jsx';
 import AllUsers from './pages/user/AllUsers.jsx';
-import GridPostList from './components/shared/GridPostList.jsx';
+import GridPostList from './components/posts/GridPostList.jsx';
 // lazy
 const LazySavedPosts = lazy(() => import('./pages/posts/SavedPosts.jsx'));
 const LazyCreatePost = lazy(() => import('./pages/posts/CreatePost.jsx'));
@@ -29,7 +29,7 @@ const LazyEditProfile = lazy(() => import('./pages/user/EditProfile.jsx'));
 import Loader from './components/shared/Loader.jsx';
 
 // error page
-import ErrorDisplay from './components/ErrorDisplay.jsx';
+import ErrorDisplay from './pages/ErrorDisplay.jsx';
 
 const appRouter = createBrowserRouter([
   {

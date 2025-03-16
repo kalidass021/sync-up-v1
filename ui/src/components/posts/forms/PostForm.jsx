@@ -4,15 +4,15 @@ import { toast } from 'sonner';
 import {
   useCreatePostMutation,
   useUpdatePostMutation,
-} from '../../redux/api/postApiSlice';
+} from '../../../redux/api/postApiSlice';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { CLOUDINARY_URL } from '../../config/constants';
-import FileUploader from '../shared/FileUploader';
-import getUpdatedValues from '../../utils/form/getUpdatedValues';
-import { validatePostForm } from '../../utils/form/formValidation';
-import Loader from '../shared/Loader';
+import { CLOUDINARY_URL } from '../../../config/constants';
+import FileUploader from '../FileUploader';
+import getUpdatedValues from '../../../utils/form/getUpdatedValues';
+import { validatePostForm } from '../../../utils/form/formValidation';
+import Loader from '../../shared/Loader';
 
 const PostForm = ({ post, action }) => {
   const {
@@ -110,7 +110,7 @@ const PostForm = ({ post, action }) => {
               },
             })}
           />
-            <span className='shad-form-message'>{errors?.caption?.message}</span>
+          <span className='shad-form-message'>{errors?.caption?.message}</span>
         </div>
         {/* image */}
         <div>
@@ -120,7 +120,7 @@ const PostForm = ({ post, action }) => {
             mediaUrl={action === 'Update' && `${CLOUDINARY_URL}/${post?.imgId}`}
             // register happened in handleFileChange using setValue
           />
-            <span className='shad-form-message'>{errors?.image?.message}</span>
+          <span className='shad-form-message'>{errors?.image?.message}</span>
         </div>
         {/* location */}
         <div>
@@ -139,7 +139,7 @@ const PostForm = ({ post, action }) => {
               },
             })}
           />
-            <span className='shad-form-message'>{errors?.location?.message}</span>
+          <span className='shad-form-message'>{errors?.location?.message}</span>
         </div>
         {/* tags */}
         <div>
@@ -163,7 +163,7 @@ const PostForm = ({ post, action }) => {
                   : value, // ensure the value is string before transformation
             })}
           />
-            <span className='shad-form-message'>{errors?.tags?.message}</span>
+          <span className='shad-form-message'>{errors?.tags?.message}</span>
         </div>
         <div className='flex gap-4 items-center justify-end'>
           <Button
