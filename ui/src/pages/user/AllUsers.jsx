@@ -4,7 +4,7 @@ import {
   useFetchAllUsersQuery,
   useLazySearchUsersQuery,
 } from '../../redux/api/userApiSlice';
-import useDebounce from '../../hooks/useDebounce';
+import { useDebounce } from '../../hooks';
 import { Input } from '@/components/ui/input';
 import UserCard from '../../components/user/UserCard';
 import Loader from '../../components/shared/Loader';
@@ -60,7 +60,7 @@ const AllUsers = () => {
           <Loader />
         ) : (
           <>
-            {(shouldShowSearchResults && !creators?.length) ? (
+            {shouldShowSearchResults && !creators?.length ? (
               <p className='text-light-4 mt-10 text-center w-full'>
                 No creator found
               </p>

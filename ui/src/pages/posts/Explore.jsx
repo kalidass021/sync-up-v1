@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import useDebounce from '../../hooks/useDebounce';
+import { useDebounce } from '../../hooks';
 import {
   useLazyGetInfinitePostsQuery,
   useLazySearchPostsQuery,
