@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PostStats from './PostStats';
 import { CLOUDINARY_URL } from '../../config/constants';
-import postPlaceholder from '../../assets/images/post-placeholder.jpg';
+import { postPlaceholder } from '../../assets/images';
 import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
 
 const GridPostList = ({ posts, showUser, showStats }) => {
