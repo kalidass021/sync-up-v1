@@ -12,7 +12,7 @@ import google from './google.svg';
 import home from './home.svg';
 import like from './like.svg';
 import liked from './liked.svg';
-import loader from './loader.svg';
+import loaderImg from './loader.svg';
 import logout from './logout.svg';
 import people from './people.svg';
 import posts from './posts.svg';
@@ -38,7 +38,7 @@ export {
   home,
   like,
   liked,
-  loader,
+  loaderImg,
   logout,
   people,
   posts,
