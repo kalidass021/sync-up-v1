@@ -7,8 +7,7 @@ import {
 import Loader from '../../components/shared/Loader';
 import GridPostList from '../../components/posts/GridPostList';
 import { Input } from '@/components/ui/input';
-import search from '../../assets/icons/search.svg';
-import filter from '../../assets/icons/filter.svg';
+import { search, filter } from '../../assets/icons';
 
 const Explore = () => {
   const [searchText, setSearchText] = useState('');

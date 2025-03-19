@@ -4,14 +4,11 @@ import {
   useLikeOrUnlikePostMutation,
   useSaveOrUnsavePostMutation,
 } from '../../redux/api/postApiSlice';
-import like from '../../assets/icons/like.svg';
-import liked from '../../assets/icons/liked.svg';
-import save from '../../assets/icons/save.svg';
-import saved from '../../assets/icons/saved.svg';
+import { like, liked, save, saved } from '../../assets/icons';
 
 const PostStats = ({ post, userId }) => {
   const { _id: postId, likes: likesBefore, saves: savesBefore } = post;
-  
+
   const [likes, setLikes] = useState(likesBefore);
   const [saves, setSaves] = useState(savesBefore);
 
@@ -55,18 +52,20 @@ const PostStats = ({ post, userId }) => {
     const updatedSaves = isSaved
       ? saves.filter((id) => id !== userId)
       : [...saves, userId];
-      setSaves(updatedSaves);
+    setSaves(updatedSaves);
 
-      try {
-        // update the saves in the server
-        const res = await saveOrUnsavePost(postId);
-        setSaves(res.data); // sync state with server response
-      } catch (err) {
-        // revert optimistic update if server request fails
-        setSaves(savesBefore);
-        console.error(`Error while save or unsave post ${saveError.message || err}`);
-        toast.error(`Error while save or unsave ${saveError.message || err}`);
-      }
+    try {
+      // update the saves in the server
+      const res = await saveOrUnsavePost(postId);
+      setSaves(res.data); // sync state with server response
+    } catch (err) {
+      // revert optimistic update if server request fails
+      setSaves(savesBefore);
+      console.error(
+        `Error while save or unsave post ${saveError.message || err}`
+      );
+      toast.error(`Error while save or unsave ${saveError.message || err}`);
+    }
   };
   return (
     <div className='flex justify-between items-center z-20'>
@@ -80,7 +79,9 @@ const PostStats = ({ post, userId }) => {
           onClick={handleLikePost}
           className='cursor-pointer'
         />
-        <p className='small-medium lg:base-medium'>{likes.length ? likes.length : ' '}</p>
+        <p className='small-medium lg:base-medium'>
+          {likes.length ? likes.length : ' '}
+        </p>
       </div>
       {/* save */}
       <div className='flex gap-2'>

@@ -13,7 +13,7 @@ import { CLOUDINARY_URL } from '../../config/constants';
 import { validateUpdateProfileForm } from '../../utils/form/formValidation';
 import getUpdatedValues from '../../utils/form/getUpdatedValues';
 import { setCredentials } from '../../redux/features/auth/authSlice';
-import edit from '../../assets/icons/edit.svg';
+import { edit } from '../../assets/icons';
 import { useEffect } from 'react';
 
 const EditProfile = () => {

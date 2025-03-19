@@ -1,14 +1,14 @@
 import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Button } from '@/components/ui/button';
-import fileUpload from '../../assets/icons/file-upload.svg';
+import { fileUpload } from '../../assets/icons';
 
 const FileUploader = ({ fieldChange, mediaUrl }) => {
   // eslint-disable-next-line no-unused-vars
   const [file, setFile] = useState([]);
   // we're receiving the mediaUrl from PostForm only action === Update
   const [fileUrl, setFileUrl] = useState(mediaUrl || '');
-  
+
   const onDrop = useCallback(
     (acceptedFiles) => {
       setFile(acceptedFiles);

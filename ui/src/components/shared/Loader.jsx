@@ -1,4 +1,4 @@
-import loaderImg from '../../assets/icons/loader.svg';
+import { loaderImg } from '../../assets/icons';
 
 const Loader = () => {
   return (

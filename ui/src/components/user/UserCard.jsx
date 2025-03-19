@@ -10,7 +10,7 @@ import { useFollowOrUnfollowUserMutation } from '../../redux/api/userApiSlice';
 import { updateUserInfo } from '../../redux/features/auth/authSlice';
 import { Button } from '@/components/ui/button';
 import { CLOUDINARY_URL } from '../../config/constants';
-import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
+import { profilePlaceholder } from '../../assets/icons';
 
 const UserCard = ({ user }) => {
   const dispatch = useDispatch();

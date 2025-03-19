@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
-import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
+import { profilePlaceholder } from '../../assets/icons';
 
 const ProfileUploader = ({ fieldChange, mediaUrl }) => {
   const [fileUrl, setFileUrl] = useState(mediaUrl || '');

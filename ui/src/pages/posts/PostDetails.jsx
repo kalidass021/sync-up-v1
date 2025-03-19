@@ -10,9 +10,7 @@ import Loader from '../../components/shared/Loader';
 import { Button } from '@/components/ui/button';
 import formatDate from '../../utils/formatDate';
 import { CLOUDINARY_URL } from '../../config/constants';
-import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
-import editIcon from '../../assets/icons/edit.svg';
-import deleteIcon from '../../assets/icons/delete.svg';
+import { profilePlaceholder, editIcon, deleteIcon } from '../../assets/icons';
 
 const PostDetails = () => {
   const navigate = useNavigate();
@@ -68,7 +66,11 @@ const PostDetails = () => {
               className='flex items-center gap-3'
             >
               <img
-                src={creator.profileImgId && `${CLOUDINARY_URL}/${creator.profileImgId}` || profilePlaceholder}
+                src={
+                  (creator.profileImgId &&
+                    `${CLOUDINARY_URL}/${creator.profileImgId}`) ||
+                  profilePlaceholder
+                }
                 alt='creator'
                 className='rounded-full  w-9 h-9 lg:w-11 lg:h-11'
               />

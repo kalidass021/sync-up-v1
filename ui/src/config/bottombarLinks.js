@@ -1,7 +1,4 @@
-import home from '../assets/icons/home.svg';
-import wallpaper from '../assets/icons/wallpaper.svg';
-import people from '../assets/icons/people.svg';
-import galleryAdd from '../assets/icons/gallery-add.svg';
+import { home, wallpaper, people, galleryAdd } from '../assets/icons';
 
 const bottombarLinks = [
   {

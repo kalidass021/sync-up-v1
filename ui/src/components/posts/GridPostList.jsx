@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import PostStats from './PostStats';
 import { CLOUDINARY_URL } from '../../config/constants';
 import { postPlaceholder } from '../../assets/images';
-import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
+import { profilePlaceholder } from '../../assets/icons';
 
 const GridPostList = ({ posts, showUser, showStats }) => {
   const location = useLocation();

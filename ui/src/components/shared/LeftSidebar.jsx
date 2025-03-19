@@ -8,8 +8,7 @@ import { Button } from '@/components/ui/button';
 import Logo from './Logo';
 import sidebarLinks from '../../config/sidebarLinks';
 import { CLOUDINARY_URL } from '../../config/constants';
-import logout from '../../assets/icons/logout.svg';
-import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
+import {logout, profilePlaceholder} from '../assets/icons';
 
 const LeftSidebar = () => {
   const dispatch = useDispatch();

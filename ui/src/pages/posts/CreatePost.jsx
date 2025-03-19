@@ -1,5 +1,5 @@
 import PostForm from '../../components/posts/forms/PostForm';
-import addPost from '../../assets/icons/add-post.svg';
+import { addPost } from '../../assets/icons';
 
 const CreatePost = () => {
   return (

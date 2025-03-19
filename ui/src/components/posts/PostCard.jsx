@@ -2,8 +2,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import PostStats from './PostStats';
 import formatDate from '../../utils/formatDate';
-import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
-import edit from '../../assets/icons/edit.svg';
+import { profilePlaceholder, edit } from '../../assets/icons';
 import { CLOUDINARY_URL } from '../../config/constants';
 
 const PostCard = ({ post }) => {

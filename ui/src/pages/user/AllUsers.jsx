@@ -8,7 +8,7 @@ import { useDebounce } from '../../hooks';
 import { Input } from '@/components/ui/input';
 import UserCard from '../../components/user/UserCard';
 import Loader from '../../components/shared/Loader';
-import search from '../../assets/icons/search.svg';
+import { search } from '../../assets/icons';
 
 const AllUsers = () => {
   const [searchText, setSearchText] = useState('');
