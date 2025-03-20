@@ -3,7 +3,7 @@ import back from './back.svg';
 import bookmark from './bookmark.svg';
 import chat from './chat.svg';
 import deleteIcon from './delete.svg';
-import edit from './edit.svg';
+import editIcon from './edit.svg';
 import fileUpload from './file-upload.svg';
 import filter from './filter.svg';
 import follow from './follow.svg';
@@ -29,7 +29,7 @@ export {
   bookmark,
   chat,
   deleteIcon,
-  edit,
+  editIcon,
   fileUpload,
   filter,
   follow,
