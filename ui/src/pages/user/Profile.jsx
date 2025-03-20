@@ -16,7 +16,7 @@ import Loader from '../../components/shared/Loader';
 import { Button } from '@/components/ui/button';
 import { CLOUDINARY_URL } from '../../config/constants';
 import profilePlaceholder from '../../assets/icons/profile-placeholder.svg';
-import { edit, posts, like, save } from '../../assets/icons';
+import { editIcon, posts, like, save } from '../../assets/icons';
 
 const StatBlock = ({ value, label }) => (
   <div className='flex-center gap-2'>
@@ -101,7 +101,7 @@ const Profile = () => {
                   currentUser.username !== username && 'hidden'
                 }`}
               >
-                <img src={edit} alt='edit' width={20} height={20} />
+                <img src={editIcon} alt='edit' width={20} height={20} />
                 <p className='flex whitespace-nowrap small-medium'>
                   Edit Profile
                 </p>
