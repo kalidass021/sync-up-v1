@@ -8,18 +8,20 @@ const useOnlineStatus = () => {
   // check if online
   // add the event listener to the brower
   useEffect(() => {
+    // abort controller to handle cleanup efficiently
+    const controller = new AbortController();
+    const { signal, abort } = controller;
     // event handlers
     const handleOffline = () => setOnlineStatus(false);
     const handleOnline = () => setOnlineStatus(true);
 
     // add event listeners to track online/ offline status
-    window.addEventListener('offline', handleOffline);
-    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline, { signal });
+    window.addEventListener('online', handleOnline, { signal });
 
     return () => {
-      // cleanup: remove event listeners when the component unmounts
-      window.removeEventListener('offline', handleOffline);
-      window.removeEventListener('online', handleOnline);
+      // cleanup: abort to remove all the event listeners automatically
+      abort();
     };
   }, []);
 
