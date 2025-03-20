@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import PostStats from './PostStats';
 import formatDate from '../../utils/formatDate';
-import { profilePlaceholder, edit } from '../../assets/icons';
+import { profilePlaceholder, editIcon } from '../../assets/icons';
 import { CLOUDINARY_URL } from '../../config/constants';
 
 const PostCard = ({ post }) => {
@@ -49,7 +49,7 @@ const PostCard = ({ post }) => {
           to={`/posts/${postId}/edit`}
           className={`${signedInUser._id !== creator._id && 'hidden'}`}
         >
-          <img src={edit} alt='edit' width={20} height={20} />
+          <img src={editIcon} alt='edit' width={20} height={20} />
         </Link>
       </div>
       <Link to={`/posts/${postId}`}>

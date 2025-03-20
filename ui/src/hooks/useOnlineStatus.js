@@ -10,7 +10,7 @@ const useOnlineStatus = () => {
   useEffect(() => {
     // abort controller to handle cleanup efficiently
     const controller = new AbortController();
-    const { signal, abort } = controller;
+    const { signal } = controller;
     // event handlers
     const handleOffline = () => setOnlineStatus(false);
     const handleOnline = () => setOnlineStatus(true);
@@ -21,7 +21,7 @@ const useOnlineStatus = () => {
 
     return () => {
       // cleanup: abort to remove all the event listeners automatically
-      abort();
+      controller.abort();
     };
   }, []);
 
