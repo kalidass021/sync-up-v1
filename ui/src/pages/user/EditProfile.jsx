@@ -13,7 +13,7 @@ import { CLOUDINARY_URL } from '../../config/constants';
 import { validateUpdateProfileForm } from '../../utils/form/formValidation';
 import getUpdatedValues from '../../utils/form/getUpdatedValues';
 import { setCredentials } from '../../redux/features/auth/authSlice';
-import { edit } from '../../assets/icons';
+import { editIcon } from '../../assets/icons';
 import { useEffect } from 'react';
 
 const EditProfile = () => {
@@ -107,7 +107,7 @@ const EditProfile = () => {
       <div className='common-container'>
         <div className='flex-start gap-3 justify-start w-full max-w-5xl ml-[10%]'>
           <img
-            src={edit}
+            src={editIcon}
             width={36}
             height={36}
             alt='edit'
