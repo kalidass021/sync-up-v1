@@ -1,31 +1,17 @@
 import bcrypt from 'bcryptjs';
 import { User } from '../models';
-import { generateToken, error } from '../utils';
-import { EMAIL_REGEX as emailRegex } from '../utils/constants';
+import {
+  generateToken,
+  error,
+  validateSignupData,
+  validateSigninData,
+} from '../utils';
 
 export const signup = async (req, res, next) => {
   try {
     const { fullName, username, email, password } = req.body;
-
-    if (!fullName || !username || !email || !password) {
-      return next(error(400, 'All fields are required'));
-    }
-
-    if (!emailRegex.test(email)) {
-      return next(error(400, 'Invalid email format'));
-    }
-
-    if (fullName.length < 6) {
-      return next(error(400, 'Name must be at least 6 characters'));
-    }
-
-    if (username.length < 6) {
-      return next(error(400, 'Username must be at least 6 characters'));
-    }
-
-    if (password.length < 6) {
-      return next(error(400, 'Password must be at least 6 characters'));
-    }
+    // validate signup data
+    validateSignupData({ fullName, username, email, password }, next);
 
     const usernameExists = await User.findOne({ username });
     if (usernameExists) {
@@ -69,10 +55,8 @@ export const signup = async (req, res, next) => {
 export const signin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
-    if (!email || !password) {
-      return next(error(400, 'All fields are required'));
-    }
+    // validate signin data
+    validateSigninData({ email, password }, next);
 
     const user = await User.findOne({ email });
 
