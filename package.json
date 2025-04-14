@@ -1,5 +1,5 @@
 {
     "scripts": {
-        "app": "bash ./start.sh"
+        "dev": "bash ./start.sh"
     }
 }
