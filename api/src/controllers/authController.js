@@ -115,7 +115,7 @@ export const signout = async (req, res, next) => {
 export const getCurrentUserProfile = async (req, res, next) => {
   try {
     const { _id: userId } = req.user;
-    const user = await User.findById(userId).select('-password');
+    const user = await User.findById(userId);
 
     res.status(200).json(user);
   } catch (err) {

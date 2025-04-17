@@ -257,7 +257,7 @@ export const updateUserProfile = async (req, res, next) => {
 
     const updatedUser = await user.save();
     // password should be null in response
-    updatedUser.password = null;
+    // updatedUser.password = null;
 
     res.status(200).json(updatedUser);
   } catch (err) {
