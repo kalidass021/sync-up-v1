@@ -118,7 +118,9 @@ export const fetchAllUsers = async (req, res, next) => {
     // current userId
     const { _id: userId } = req.user;
     // fetch the users from the mongo db except the current user
-    const users = await User.find({ _id: { $ne: userId } });
+    const users = await User.find({
+      _id: { $ne: userId },
+    }).select('-password');
     res.status(200).json(users);
   } catch (err) {
     console.error(`Error while fetching all users: ${err.message}`);
@@ -257,7 +259,7 @@ export const updateUserProfile = async (req, res, next) => {
 
     const updatedUser = await user.save();
     // password should be null in response
-    // updatedUser.password = null;
+    updatedUser.password = null;
 
     res.status(200).json(updatedUser);
   } catch (err) {
