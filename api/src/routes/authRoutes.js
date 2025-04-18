@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import {
+  authCheck,
   signup,
   signin,
   signout,
@@ -9,6 +10,7 @@ import { auth } from '../middlewares';
 
 const router = Router();
 
+router.get('/', auth, authCheck);
 router.post('/signup', signup);
 router.post('/signin', signin);
 router.post('/signout', signout);

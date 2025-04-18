@@ -7,6 +7,10 @@ import {
   validateSigninData,
 } from '../utils';
 
+export const authCheck = async (req, res, next) => {
+  res.status(200).json({ message: 'Authorized' });
+};
+
 export const signup = async (req, res, next) => {
   try {
     const { fullName, username, email, password } = req.body;

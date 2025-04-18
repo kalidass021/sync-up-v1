@@ -5,11 +5,12 @@ import { Outlet, Navigate } from 'react-router-dom';
 import Topbar from '../components/shared/Topbar';
 import LeftSidebar from '../components/shared/LeftSidebar';
 import Bottombar from '../components/shared/Bottombar';
-import { useOnlineStatus } from '../hooks';
+import { useOnlineStatus, useAuthCheck } from '../hooks';
 
 const PageLayout = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const online = useOnlineStatus();
+  const authorized = useAuthCheck();
 
   // show online toast only when the app transitions from offline to online
   // Ref to track the previous online status
@@ -32,7 +33,7 @@ const PageLayout = () => {
     handleOnlineStatusChange();
   }, [handleOnlineStatusChange]);
 
-  if (!userInfo) {
+  if (!userInfo || !authorized) {
     return <Navigate to='/signin' replace />;
   }
 

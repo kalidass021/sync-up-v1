@@ -3,6 +3,11 @@ import { AUTH_URL } from '../../config/constants';
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    authCheck: builder.query({
+      query: () => `${AUTH_URL}`,
+      providesTags: 'User',
+    }),
+
     signup: builder.mutation({
       query: (data) => ({
         url: `${AUTH_URL}/signup`,
@@ -37,6 +42,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useAuthCheckQuery,
   useSignupMutation,
   useSigninMutation,
   useSignoutMutation,
