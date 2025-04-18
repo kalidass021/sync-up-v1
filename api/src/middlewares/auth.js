@@ -4,8 +4,8 @@ import { error } from '../utils';
 
 const auth = async (req, res, next) => {
   try {
-    // read jwt from the 'jwt' cookie
-    const token = req.cookies.jwt;
+    // read jwt from the cookie (syncup_token)
+    const token = req.cookies.syncup_token;
     if (!token) {
       return next(error(401, 'Unauthorized: No token provided'));
     }

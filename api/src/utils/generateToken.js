@@ -7,8 +7,8 @@ const generateToken = (userId, res) => {
   });
 
   // set jwt as an HTTP-Only cookie
-  // below jwt is variable name for the token
-  res.cookie('jwt', token, {
+  // below syncup_token is variable name for the token
+  res.cookie('syncup_token', token, {
     httpOnly: true, // prevent XSS attacks and cross-site scripting attacks
     secure: process.env.NODE_ENV === 'production', // ensure cookie is sent over HTTPS
     sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Strict', // prevent CSRF attacks and cross-site request forgery attacks if it set to strict

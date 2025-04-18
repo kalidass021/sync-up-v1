@@ -94,7 +94,7 @@ export const signin = async (req, res, next) => {
 
 export const signout = async (req, res, next) => {
   try {
-    res.cookie('jwt', null, {
+    res.cookie('syncup_token', null, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Strict', // match the sameSite setting while cookie was set
