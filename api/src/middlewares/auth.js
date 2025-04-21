@@ -15,8 +15,8 @@ const auth = async (req, res, next) => {
     if (!decodedObj) {
       return next(error(401, 'Unauthorized: Invalid token'));
     }
-
-    const user = await User.findById(decodedObj.userId).select('-password');
+    const { userId } = decodedObj;
+    const user = await User.findById(userId).select('-password');
     // check before adding the user to the req obj
     if (!user) {
       return next(error(404, 'User not found'));
