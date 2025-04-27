@@ -135,9 +135,9 @@ export const getPostsByIds = async (req, res, next) => {
 export const getInfinitePosts = async (req, res, next) => {
   try {
     const { page = 1, limit = 9 } = req.query;
-    // ensure page and limits are number
+    // ensure page and limit are integers
     const PAGE = parseInt(page);
-    const LIMIT = parseInt(limit);
+    const LIMIT = parseInt(limit > 9 ? 9 : limit); // restrict the max limit to 9
 
     const SKIP = (PAGE - 1) * LIMIT;
     const posts = await Post.find()
@@ -158,6 +158,7 @@ export const getInfinitePosts = async (req, res, next) => {
     const TOTAL_POSTS = await Post.countDocuments();
     // caculate total pages
     const TOTAL_PAGES = Math.ceil(TOTAL_POSTS / limit);
+
     // send the paginated posts along with pagination info
     res.status(200).json({
       success: true,
