@@ -135,10 +135,14 @@ export const getPostsByIds = async (req, res, next) => {
 export const getInfinitePosts = async (req, res, next) => {
   try {
     const { page = 1, limit = 9 } = req.query;
+    // ensure page and limits are number
+    const PAGE = parseInt(page);
+    const LIMIT = parseInt(limit);
 
+    const SKIP = (PAGE - 1) * LIMIT;
     const posts = await Post.find()
-      .skip((page - 1) * limit) // skip the number of posts based on current page
-      .limit(parseInt(limit)) // limit the number of posts returned
+      .skip(SKIP) // skip the number of posts based on current page
+      .limit(LIMIT) // limit the number of posts returned
       .sort({ createdAt: -1 })
       .populate({
         path: 'creator',
@@ -151,13 +155,15 @@ export const getInfinitePosts = async (req, res, next) => {
     }
 
     // count the number of posts for pagination calculation
-    const total = await Post.countDocuments();
+    const TOTAL_POSTS = await Post.countDocuments();
+    // caculate total pages
+    const TOTAL_PAGES = Math.ceil(TOTAL_POSTS / limit);
     // send the paginated posts along with pagination info
     res.status(200).json({
       success: true,
       posts,
-      totalPages: Math.ceil(total / limit), // calculate total pages
-      currentPage: parseInt(page), // current page
+      totalPages: TOTAL_PAGES,
+      currentPage: PAGE,
     });
   } catch (err) {
     console.error(`Error while fetching inifinite posts ${err.message}`);
