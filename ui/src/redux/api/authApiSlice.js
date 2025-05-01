@@ -5,7 +5,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     authCheck: builder.query({
       query: () => `${AUTH_URL}`,
-      providesTags: 'User',
+      providesTags: ['User'],
     }),
 
     signup: builder.mutation({
