@@ -9,7 +9,7 @@ import Logo from '../../../components/shared/Logo';
 import Loader from '../../../components/shared/Loader';
 import { useSigninMutation } from '../../../redux/api/authApiSlice';
 import { setCredentials } from '../../../redux/features/auth/authSlice';
-import { TEST_USER_EMAIL, TEST_USER_PASSWORD } from '../../../config/constants';
+import { TEST_USER } from '../../../config/constants';
 
 const SigninForm = () => {
   const {
@@ -60,8 +60,8 @@ const SigninForm = () => {
 
   const handleTestAccountSignin = async () => {
     const testAccount = {
-      email: TEST_USER_EMAIL,
-      password: TEST_USER_PASSWORD,
+      email: TEST_USER.EMAIL,
+      password: TEST_USER.PASSWORD,
     };
     await formSubmit(testAccount);
   };

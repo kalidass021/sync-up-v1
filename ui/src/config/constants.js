@@ -8,5 +8,9 @@ export const POST_URL = `${API_BASE_URL}/v1/posts`;
 export const USER_URL = `${API_BASE_URL}/v1/users`;
 
 export const CLOUDINARY_URL = import.meta.env.VITE_CLOUDINARY_BASE_URL;
-export const TEST_USER_EMAIL = import.meta.env.VITE_TEST_USER_EMAIL;
-export const TEST_USER_PASSWORD = import.meta.env.VITE_TEST_USER_PASSWORD;
+
+export const TEST_USER = {
+  EMAIL: import.meta.env.VITE_TEST_USER_EMAIL,
+  PASSWORD: import.meta.env.VITE_TEST_USER_PASSWORD,
+}
+
