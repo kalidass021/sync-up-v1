@@ -183,21 +183,50 @@ export const searchPosts = async (req, res, next) => {
     // create the case-insensitive regex for the search text
     const searchTextRegex = new RegExp(searchText, 'i'); // i flag for case-insensitive matching
     // perform search using mongo db's regex search
-    const posts = await Post.find({
-      // $text: { $search: searchText },
-      $or: [
-        { caption: { $regex: searchTextRegex } },
-        { location: { $regex: searchTextRegex } },
-        { tags: { $regex: searchTextRegex } },
-      ],
-    }).populate({
-      path: 'creator',
-      select: 'profileImgId fullName username',
-    });
-
-    // if (!posts.length) {
-    //   return next(error(404, 'No posts found'));
-    // }
+    const posts = await Post.aggregate([
+      {
+        $lookup: {
+          from: 'users', // collection name
+          localField: 'creator',
+          foreignField: '_id',
+          as: 'creator',
+        },
+      },
+      { $unwind: '$creator' },
+      {
+        $match: {
+          $or: [
+            { caption: { $regex: searchTextRegex } },
+            { location: { $regex: searchTextRegex } },
+            { tags: { $regex: searchTextRegex } },
+            { 'creator.username': { $regex: searchTextRegex } },
+            { 'creator.fullName': { $regex: searchTextRegex } },
+          ],
+        },
+      },
+      {
+        $project: {
+          caption: 1,
+          location: 1,
+          tags: 1,
+          imgId: 1,
+          likes: 1,
+          saves: 1,
+          comments: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          creator: {
+            _id: 1,
+            username: 1,
+            fullName: 1,
+            profileImgId: 1,
+          },
+        },
+      },
+    ]).sort({ createdAt: -1 });
+    if (!posts.length) {
+      return next(error(404, 'No posts found'));
+    }
 
     res.status(200).json(posts);
   } catch (err) {
