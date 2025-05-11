@@ -126,16 +126,16 @@ const SigninForm = () => {
           )}
         </Button>
         <p className='text-small-regular text-light-2 text-center mt-2'>
-          Explore with
+          Explore as
           <Link
             onClick={handleTestAccountSignin}
             className='text-primary-500 text-small-semibold ml-1'
           >
-            Test account
+            Test User
           </Link>
         </p>
         <p className='text-small-regular text-light-2 text-center mt-1'>
-          Don&apos;t have an account?{' '}
+          Don&apos;t have an account?
           <Link
             to={redirect ? `/signup?redirect=${redirect}` : '/signup'}
             className='text-primary-500 text-small-semibold ml-1'
