@@ -1,20 +1,14 @@
 import { Router } from 'express';
-import {
-  authCheck,
-  signup,
-  signin,
-  signout,
-  getCurrentUserProfile,
-} from '../controllers/authController';
+import * as authController from '../controllers/authController';
 import { auth } from '../middlewares';
 
 const router = Router();
 
-router.get('/', auth, authCheck);
-router.post('/signup', signup);
-router.post('/signin', signin);
-router.post('/signout', signout);
+router.get('/', auth, authController.authCheck);
+router.post('/signup', authController.signup);
+router.post('/signin', authController.signin);
+router.post('/signout', authController.signout);
 // private route
-router.get('/profile', auth, getCurrentUserProfile);
+router.get('/profile', auth, authController.getCurrentUserProfile);
 
 export default router;

@@ -1,14 +1,11 @@
 import { Router } from 'express';
-import {
-  getNotifications,
-  deleteNotifications,
-} from '../controllers/notificationController';
+import * as notificationController from '../controllers/notificationController';
 import { auth } from '../middlewares';
 
 const router = Router();
 
 router.route('/')
-    .get(auth, getNotifications)
-    .delete(auth, deleteNotifications);
+    .get(auth, notificationController.getNotifications)
+    .delete(auth, notificationController.deleteNotifications);
 
 export default router;
