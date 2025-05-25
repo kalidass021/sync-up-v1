@@ -81,6 +81,11 @@ export const postApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['User', 'Post'],
     }),
+
+    getMemeOfTheDay: builder.query({
+      query: () => `${POST_URL}/meme`,
+      providesTags: ['Post'],
+    }),
   }),
 });
 
@@ -97,4 +102,5 @@ export const {
   useDeletePostMutation,
   useLikeOrUnlikePostMutation,
   useSaveOrUnsavePostMutation,
+  useGetMemeOfTheDayQuery,
 } = postApiSlice;

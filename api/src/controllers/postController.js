@@ -1,6 +1,7 @@
 import { v2 as cloudinary } from 'cloudinary';
 import { Post, User, Notification } from '../models';
 import { error } from '../utils';
+import { MEME_API_URL } from '../utils/constants';
 
 export const createPost = async (req, res, next) => {
   try {
@@ -415,3 +416,15 @@ export const saveOrUnsavePost = async (req, res, next) => {
     next(err);
   }
 };
+
+export const fetchMemeOfTheDay = async (req, res, next) => {
+  try {
+    const memeAPIResponse = await fetch(MEME_API_URL);
+    const data = await memeAPIResponse.json();
+    const meme = data.memes[0];
+    res.status(200).json(meme);
+  } catch (err) {
+    console.error(`Error while fetching meme of the day: ${err.message}`);
+    next(err);
+  }
+}

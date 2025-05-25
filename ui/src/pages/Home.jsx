@@ -1,4 +1,4 @@
-import { useGetRecentPostsQuery } from '../redux/api/postApiSlice';
+import { useGetRecentPostsQuery, useGetMemeOfTheDayQuery } from '../redux/api/postApiSlice';
 import { useGetSuggestedUsersQuery } from '../redux/api/userApiSlice';
 import PostCard from '../components/posts/PostCard';
 import UserCard from '../components/user/UserCard';
@@ -10,6 +10,10 @@ const Home = () => {
     isLoading: isPostLoading,
     error: postError,
   } = useGetRecentPostsQuery();
+
+  const { data: meme, error: memeError } = useGetMemeOfTheDayQuery();
+
+  console.log('meme', meme);
 
   console.log('recentPosts', recentPosts);
 
