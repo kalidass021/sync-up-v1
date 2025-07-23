@@ -287,4 +287,8 @@
   .shad-button-ghost {
     @apply flex gap-4 items-center justify-start hover:bg-transparent hover:text-white !important;
   }
+
+  .meme-card-img {
+    @apply w-full h-auto object-contain rounded-md mx-auto;
+  }
 }

@@ -3,6 +3,7 @@ import { useGetSuggestedUsersQuery } from '../redux/api/userApiSlice';
 import PostCard from '../components/posts/PostCard';
 import UserCard from '../components/user/UserCard';
 import Loader from '../components/shared/Loader';
+import MemeCard from '../components/posts/MemeCard';
 
 const Home = () => {
   const {
@@ -53,6 +54,8 @@ const Home = () => {
             </ul>
           )}
         </div>
+        {/* meme of the day */}
+        <MemeCard />
       </div>
       {/* top creators */}
       <div className='home-creators'>
