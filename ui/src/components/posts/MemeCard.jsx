@@ -1,6 +1,6 @@
+import { Link } from 'react-router-dom';
 import { useGetMemeOfTheDayQuery } from '../../redux/api/postApiSlice';
 import { postPlaceholder } from '../../assets/images';
-import { Link } from 'react-router-dom';
 
 const MemeCard = () => {
   const { data: meme, isLoading, error } = useGetMemeOfTheDayQuery();
