@@ -240,6 +240,11 @@
     @apply h-64 xs:h-[400px] lg:h-[450px] w-full rounded-[24px] object-cover mb-5;
   }
 
+  /* Meme Card */
+  .meme-card-img {
+    @apply w-full h-auto object-contain rounded-md mx-auto;
+  }
+
   /* Topbar */
   .topbar {
     @apply sticky top-0 z-50 md:hidden bg-dark-2 w-full;
@@ -286,9 +291,5 @@
 
   .shad-button-ghost {
     @apply flex gap-4 items-center justify-start hover:bg-transparent hover:text-white !important;
-  }
-
-  .meme-card-img {
-    @apply w-full h-auto object-contain rounded-md mx-auto;
   }
 }
