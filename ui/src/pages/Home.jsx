@@ -1,5 +1,6 @@
-import { useGetRecentPostsQuery, useGetMemeOfTheDayQuery } from '../redux/api/postApiSlice';
+import { useGetRecentPostsQuery } from '../redux/api/postApiSlice';
 import { useGetSuggestedUsersQuery } from '../redux/api/userApiSlice';
+import { PostCardLoader } from '../components/skeleton/post';
 import PostCard from '../components/posts/PostCard';
 import UserCard from '../components/user/UserCard';
 import Loader from '../components/shared/Loader';
@@ -11,10 +12,6 @@ const Home = () => {
     isLoading: isPostLoading,
     error: postError,
   } = useGetRecentPostsQuery();
-
-  const { data: meme, error: memeError } = useGetMemeOfTheDayQuery();
-
-  console.log('meme', meme);
 
   console.log('recentPosts', recentPosts);
 
@@ -45,7 +42,7 @@ const Home = () => {
         <div className='home-posts'>
           <h2 className='h3-bold md:h2-bold text-left w-full'>Home Feed</h2>
           {isPostLoading && !recentPosts ? (
-            <Loader />
+            <PostCardLoader />
           ) : (
             <ul className='flex flex-col flex-1 gap-9 w-full'>
               {recentPosts?.map((post) => (
