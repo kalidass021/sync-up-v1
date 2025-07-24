@@ -12,7 +12,7 @@ const PostCardLoader = () => {
           {/* Username circle */}
           <Skeleton className='rounded-full w-32 h-6 bg-dark-4' />
         </div>
-        <Skeleton className='w-5 h-5 rounded-sm bg-dark-4' />
+        <Skeleton className='w-5 h-5 rounded-md bg-dark-4' />
       </div>
 
       {/* Text content */}
