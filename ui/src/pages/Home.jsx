@@ -1,10 +1,12 @@
 import { useGetRecentPostsQuery } from '../redux/api/postApiSlice';
 import { useGetSuggestedUsersQuery } from '../redux/api/userApiSlice';
 import { PostCardLoader } from '../components/skeleton/post';
+import { UserCardLoader } from '../components/skeleton/user';
 import PostCard from '../components/posts/PostCard';
 import UserCard from '../components/user/UserCard';
 import Loader from '../components/shared/Loader';
 import MemeCard from '../components/posts/MemeCard';
+import { _NEVER } from '@reduxjs/toolkit/query';
 
 const Home = () => {
   const {
@@ -58,7 +60,9 @@ const Home = () => {
       <div className='home-creators'>
         <h3 className='h3-bold text-light-1'>Top Creators</h3>
         {isUsersLoading && !creators ? (
-          <Loader />
+          Array(3)
+            .fill(0)
+            .map((_, i) => <UserCardLoader key={i} />)
         ) : (
           <ul className='grid 2xl:grid-cols-2 gap-6'>
             {creators.map((creator) => (
