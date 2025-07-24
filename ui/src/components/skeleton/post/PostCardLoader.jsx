@@ -17,10 +17,10 @@ const PostCardLoader = () => {
 
       {/* Text content */}
       <div className='space-y-2'>
-        <Skeleton className='h-4 w-full' />
-        <Skeleton className='h-4 w-[60%]' />
+        <Skeleton className='h-4 w-[90%] bg-dark-4' />
+        <Skeleton className='h-4 w-[60%] bg-dark-4' />
         <div className='flex gap-2 mt-2'>
-          <Skeleton className='h-6 w-full rounded-xl bg-dark-4' />
+          <Skeleton className='h-4 w-full bg-dark-4' />
           {/* <Skeleton className='h-4 w-[50px] rounded-full bg-dark-4' />
           <Skeleton className='h-4 w-[50px] rounded-full bg-dark-4' /> */}
         </div>
@@ -31,8 +31,8 @@ const PostCardLoader = () => {
 
       {/* Stats */}
       <div className='flex gap-4 justify-between pt-2'>
-        <Skeleton className='h-4 w-[60px] bg-dark-4' />
-        <Skeleton className='h-4 w-[60px] bg-dark-4' />
+        <Skeleton className='h-4 w-[30px] bg-dark-4' />
+        <Skeleton className='h-4 w-[30px] bg-dark-4' />
       </div>
     </div>
   );
