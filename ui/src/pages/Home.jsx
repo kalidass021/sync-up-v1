@@ -4,7 +4,6 @@ import { PostCardLoader } from '../components/skeleton/post';
 import { UserCardLoader } from '../components/skeleton/user';
 import PostCard from '../components/posts/PostCard';
 import UserCard from '../components/user/UserCard';
-import Loader from '../components/shared/Loader';
 import MemeCard from '../components/posts/MemeCard';
 import { _NEVER } from '@reduxjs/toolkit/query';
 
