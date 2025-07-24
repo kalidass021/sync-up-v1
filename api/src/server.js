@@ -1,10 +1,13 @@
-import express from 'express';
+import express, { Router } from 'express';
 import cookieParser from 'cookie-parser';
 
 // files
 import { cors, cloudinaryConfig } from './config';
 import { apiStatus } from './utils';
 import { notFound, errorHandler } from './middlewares';
+
+// constants
+import { ROUTES } from './constants/appConstants';
 
 // routes
 import {
@@ -27,12 +30,12 @@ app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(cookieParser());
 
 // handle api base url to show api status
-app.get('/', apiStatus);
+app.get(ROUTES.ROOT, apiStatus);
 
-app.use('/v1/auth', authRoutes);
-app.use('/v1/users', userRoutes);
-app.use('/v1/posts', postRoutes);
-app.use('/v1/notifications', notificationRoutes);
+app.use(ROUTES.AUTH, authRoutes);
+app.use(ROUTES.USERS, userRoutes);
+app.use(ROUTES.POSTS, postRoutes);
+app.use(ROUTES.NOTIFICATIONS, notificationRoutes);
 
 app.use(notFound); // handle undefined routes
 app.use(errorHandler); // handle errors
