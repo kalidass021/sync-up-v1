@@ -81,7 +81,7 @@ export const followOrUnfollowUser = async (req, res, next) => {
   }
 };
 
-export const getSuggestedUsers = async (req, res, next) => {
+export const fetchSuggestedUsers = async (req, res, next) => {
   try {
     // current userId
     const { _id: userId } = req.user;

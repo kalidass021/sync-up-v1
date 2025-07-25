@@ -1,21 +1,27 @@
 import { Router } from 'express';
+import { USER_ENDPOINTS } from '../constants/appConstants';
 import * as userController from '../controllers/userController';
 import { auth, checkId } from '../middlewares';
-import { MONGO_ID_REGEX as idRegex } from '../utils/constants';
 
 const router = Router();
 // apply auth middleware to all routes in the router
 router.use(auth);
 // private routes
-router.get('/:username/profile', userController.getUserProfile);
+router.get(USER_ENDPOINTS.GET_USER_PROFILE, userController.getUserProfile);
 router.post(
-  `/:id${idRegex}/follow`,
+  USER_ENDPOINTS.FOLLOW_OR_UNFOLLOW_USER,
   checkId,
   userController.followOrUnfollowUser
 );
-router.get('/suggested', userController.getSuggestedUsers);
-router.get('/all', userController.fetchAllUsers);
-router.get('/search', userController.searchUsers);
-router.put('/:username/profile', userController.updateUserProfile);
+router.get(
+  USER_ENDPOINTS.FETCH_SUGGESTED_USERS,
+  userController.fetchSuggestedUsers
+);
+router.get(USER_ENDPOINTS.FETCH_ALL_USERS, userController.fetchAllUsers);
+router.get(USER_ENDPOINTS.SEARCH_USERS, userController.searchUsers);
+router.put(
+  USER_ENDPOINTS.UPDATE_USER_PROFILE,
+  userController.updateUserProfile
+);
 
 export default router;

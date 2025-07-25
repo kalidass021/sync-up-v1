@@ -52,3 +52,12 @@ export const POST_ENDPOINTS = {
   LIKE_OR_UNLIKE_POST: `/:id${MONGO_ID_REGEX}/like`,
   SAVE_OR_UNSAVE_POST: `/:id${MONGO_ID_REGEX}/save`,
 };
+
+export const USER_ENDPOINTS = {
+  GET_USER_PROFILE: '/:username/profile',
+  FOLLOW_OR_UNFOLLOW_USER: `/:id${MONGO_ID_REGEX}/follow`,
+  FETCH_SUGGESTED_USERS: '/suggested',
+  FETCH_ALL_USERS: '/all',
+  SEARCH_USERS: '/search',
+  UPDATE_USER_PROFILE: '/:username/profile',
+}
