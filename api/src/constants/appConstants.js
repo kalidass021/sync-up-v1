@@ -22,3 +22,15 @@ export const ROUTES = {
     POSTS: '/v1/posts',
     NOTIFICATIONS: '/v1/notifications',
 }
+
+export const AUTH_ENDPOINTS = {
+  AUTH_CHECK: '/',
+  SIGNUP: '/signup',
+  SIGNIN: '/signin',
+  SIGNOUT: '/signout',
+  GET_CURRENT_USER_PROFILE: '/profile',
+}
+
+export const NOTIFICATION_ENDPOINTS = {
+  PROCESS_NOTIFICATIONS: '/',
+}
