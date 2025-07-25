@@ -43,7 +43,9 @@ const Home = () => {
         <div className='home-posts'>
           <h2 className='h3-bold md:h2-bold text-left w-full'>Home Feed</h2>
           {isPostLoading && !recentPosts ? (
-            <PostCardLoader />
+            Array(2)
+              .fill(0)
+              .map((_, i) => <PostCardLoader key={i} />)
           ) : (
             <ul className='flex flex-col flex-1 gap-9 w-full'>
               {recentPosts?.map((post) => (
