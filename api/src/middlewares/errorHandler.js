@@ -1,4 +1,4 @@
-import { STATUS_CODES } from "../constants/appConstants";
+import { STATUS_CODES } from '../constants/appConstants';
 
 const errorHandler = (err, req, res, next) => {
   // middleware to handle the erros
