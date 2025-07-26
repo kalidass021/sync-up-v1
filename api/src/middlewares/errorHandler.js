@@ -1,7 +1,9 @@
+import { STATUS_CODES } from "../constants/appConstants";
+
 const errorHandler = (err, req, res, next) => {
   // middleware to handle the erros
   err.stack && console.error(err.stack);
-  const statusCode = err.statusCode || 500;
+  const statusCode = err.statusCode || STATUS_CODES.InternalServerError;
   const errorResponse = {
     success: false,
     statusCode,
