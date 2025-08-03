@@ -3,12 +3,11 @@ import { useGetMemeOfTheDayQuery } from '../../redux/api/postApiSlice';
 import { postPlaceholder } from '../../assets/images';
 
 const MemeCard = () => {
-  const { data: meme, isLoading, error } = useGetMemeOfTheDayQuery();
+  const { data: meme = null, isLoading, error } = useGetMemeOfTheDayQuery();
 
-  if (isLoading) return;
+  if (isLoading || !meme) return;
 
   const {
-    author,
     subreddit,
     postLink,
     nsfw,
@@ -21,7 +20,9 @@ const MemeCard = () => {
 
   return (
     <div className='post-card'>
-      <h2 className='base-medium lg:body-bold text-light-3 mb-3'>Meme of the Day</h2>
+      <h2 className='base-medium lg:body-bold text-light-3 mb-3'>
+        Meme of the Day
+      </h2>
       <div className='flex-between'>
         <div className='flex flex-col'>
           {/* <p className='base-medium lg:body-bold text-light-1'>
