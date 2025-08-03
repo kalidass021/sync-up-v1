@@ -7,7 +7,7 @@ import { apiStatus } from './utils';
 import { notFound, errorHandler } from './middlewares';
 
 // constants
-import { ROUTES } from './constants/appConstants';
+import { ROUTES } from './constants';
 
 // routes
 import {

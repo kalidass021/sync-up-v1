@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { POST_ENDPOINTS } from '../constants/appConstants';
+import { POST_ENDPOINTS } from '../constants';
 import * as postController from '../controllers/postController';
 // middlewares
 import { auth, checkId } from '../middlewares';

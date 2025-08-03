@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { AUTH_ENDPOINTS } from '../constants/appConstants';
+import { AUTH_ENDPOINTS } from '../constants';
 import * as authController from '../controllers/authController';
 import { auth } from '../middlewares';
 

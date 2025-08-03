@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { NOTIFICATION_ENDPOINTS } from '../constants/appConstants';
+import { NOTIFICATION_ENDPOINTS } from '../constants';
 import * as notificationController from '../controllers/notificationController';
 import { auth } from '../middlewares';
 
