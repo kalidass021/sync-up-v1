@@ -52,9 +52,7 @@ const PostForm = ({ post, action }) => {
 
   const formSubmit = async (postData) => {
     // validate post
-    if (!validatePostForm(postData, setError)) {
-      return;
-    }
+    if (!validatePostForm(postData, setError)) return;
 
     const mutation = action === 'Update' ? updatePost : createPost;
     const updatedPost = action === 'Update' && getUpdatedValues(post, postData);
