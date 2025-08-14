@@ -24,7 +24,7 @@ const app = express();
 cloudinaryConfig();
 
 // middlewares
-app.use(helmet);
+// app.use(helmet);
 app.use(cors);
 // increase the payload size to handle larger base64 images
 app.use(express.json({ limit: '10mb' }));
