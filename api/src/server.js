@@ -3,7 +3,7 @@ import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 
 // files
-import { cors, cloudinaryConfig } from './config';
+import { cors, cloudinaryConfig, rateLimiter } from './config';
 import { apiStatus } from './utils';
 import { notFound, errorHandler } from './middlewares';
 
@@ -25,6 +25,7 @@ cloudinaryConfig();
 
 // middlewares
 app.use(helmet());
+app.use(rateLimiter);
 app.use(cors);
 // increase the payload size to handle larger base64 images
 app.use(express.json({ limit: '10mb' }));
