@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
+import { CONFIG_ERRORS } from '../constants';
 
 // configure cloudinary
 const cloudinaryConfig = () => {
@@ -9,7 +10,7 @@ const cloudinaryConfig = () => {
       api_secret: process.env.CLOUDINARY_API_SECRET,
     });
   } catch (err) {
-    console.error(`Error while configuring cloudinary ${err.message}`);
+    console.error(`${CONFIG_ERRORS.CLOUDINARY_ERROR} ${err.message}`);
   }
 };
 

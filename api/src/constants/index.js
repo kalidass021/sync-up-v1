@@ -7,6 +7,7 @@ import {
   POST_ENDPOINTS,
   USER_ENDPOINTS,
 } from './appConstants';
+import { CONFIG_ERRORS } from './errorMessages';
 
 export {
   MONGO_ID_REGEX,
@@ -16,4 +17,5 @@ export {
   NOTIFICATION_ENDPOINTS,
   POST_ENDPOINTS,
   USER_ENDPOINTS,
+  CONFIG_ERRORS,
 };
