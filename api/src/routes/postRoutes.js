@@ -3,7 +3,6 @@ import { POST_ENDPOINTS } from '../constants';
 import * as postController from '../controllers/postController';
 // middlewares
 import { auth, checkId } from '../middlewares';
-import { MONGO_ID_REGEX as idRegex } from '../utils/constants';
 
 const router = Router();
 
