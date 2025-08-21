@@ -10,6 +10,9 @@
     "ui": "cd ../ui && npm run dev",
     "api": "npm run dev",
     "app": "concurrently \"npm run api\" \"npm run ui\"",
+    "profile:doctor": "clinic doctor -- node --require @babel/register ./src/bin/www.js",
+    "profile:flame": "clinic flame -- node --require @babel/register ./src/bin/www.js",
+    "profile:bubble": "clinic bubbleprof -- node --require @babel/register ./src/bin/www.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Kalidass Boopathi",
