@@ -30,12 +30,12 @@ export const followOrUnfollowUser = async (req, res, next) => {
     // target user
     const targetUser = await User.findById(targetUserId);
 
-    if (currentUserId.toString() === targetUserId.toString) {
-      return next(error(400, "You can't follow or unfollow yourself"));
-    }
-
     if (!currentUser || !targetUser) {
       return next(error(400, 'User not found'));
+    }
+
+    if (currentUserId.toString() === targetUserId.toString) {
+      return next(error(400, "You can't follow or unfollow yourself"));
     }
 
     const isFollowing = currentUser.following.includes(targetUserId);
