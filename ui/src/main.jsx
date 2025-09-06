@@ -7,23 +7,22 @@ import './index.css';
 import App from './App.jsx';
 
 // public routes
-import AuthLayout from './pages/auth/AuthLayout.jsx';
-import SignupForm from './pages/auth/forms/SignupForm.jsx';
-import SigninForm from './pages/auth/forms/SigninForm.jsx';
+const LazyAuthLayout = lazy(() => import('./pages/auth/AuthLayout.jsx'));
+const LazySignupForm = lazy(() => import('./pages/auth/forms/SignupForm.jsx'));
+const LazySigninForm = lazy(() => import('./pages/auth/forms/SigninForm.jsx'));
 
 // private routes
-import PageLayout from './pages/PageLayout.jsx';
-import Home from './pages/Home.jsx';
-import Explore from './pages/posts/Explore.jsx';
-import AllUsers from './pages/user/AllUsers.jsx';
-import GridPostList from './components/posts/GridPostList.jsx';
-// lazy
+const LazyPageLayout = lazy(() => import('./pages/PageLayout.jsx'));
+const LazyHome = lazy(() => import('./pages/Home.jsx'));
+const LazyExplore = lazy(() => import('./pages/posts/Explore.jsx'));
+const LazyAllUsers = lazy(() => import('./pages/user/AllUsers.jsx'));
 const LazySavedPosts = lazy(() => import('./pages/posts/SavedPosts.jsx'));
 const LazyCreatePost = lazy(() => import('./pages/posts/CreatePost.jsx'));
 const LazyPostDetails = lazy(() => import('./pages/posts/PostDetails.jsx'));
 const LazyEditPost = lazy(() => import('./pages/posts/EditPost.jsx'));
 const LazyProfile = lazy(() => import('./pages/user/Profile.jsx'));
 const LazyEditProfile = lazy(() => import('./pages/user/EditProfile.jsx'));
+const LazyGridPostList = lazy(() => import('./components/posts/GridPostList.jsx'));
 
 // loader
 import Loader from './components/shared/Loader.jsx';
@@ -39,15 +38,15 @@ const appRouter = createBrowserRouter([
       {
         // private routes
         path: '',
-        element: <PageLayout />,
+        element: <LazyPageLayout />,
         children: [
           {
             path: '/',
-            element: <Home />,
+            element: <LazyHome />,
           },
           {
             path: '/explore',
-            element: <Explore />,
+            element: <LazyExplore />,
           },
           {
             path: '/posts/saved',
@@ -59,7 +58,7 @@ const appRouter = createBrowserRouter([
           },
           {
             path: '/users',
-            element: <AllUsers />,
+            element: <LazyAllUsers />,
           },
           {
             path: '/posts/create',
@@ -96,15 +95,15 @@ const appRouter = createBrowserRouter([
               {
                 path: '',
                 index: true,
-                element: <GridPostList />,
+                element: <LazyGridPostList />,
               },
               {
                 path: 'posts/liked',
-                element: <GridPostList />,
+                element: <LazyGridPostList />,
               },
               {
                 path: 'posts/saved',
-                element: <GridPostList />,
+                element: <LazyGridPostList />,
               },
             ],
           },
@@ -121,15 +120,15 @@ const appRouter = createBrowserRouter([
       {
         // public routes
         path: '',
-        element: <AuthLayout />,
+        element: <LazyAuthLayout />,
         children: [
           {
             path: '/signup',
-            element: <SignupForm />,
+            element: <LazySignupForm />,
           },
           {
             path: '/signin',
-            element: <SigninForm />,
+            element: <LazySigninForm />,
           },
         ],
       },
