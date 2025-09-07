@@ -63,7 +63,7 @@ const ErrorDisplay = () => {
               borderRadius: '0.5rem',
               textAlign: 'left',
               width: '70%',
-              minHeight: '65vh', // Reduced this value
+              minHeight: '65vh',
               overflowY: 'auto',
               fontSize: '0.875rem',
               color: '#d1d5db',
