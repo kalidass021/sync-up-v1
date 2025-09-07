@@ -20,11 +20,11 @@ export const validateUpdateProfileForm = (userData, setError) => {
   if (username && email) {
     setError('username', {
       type: 'manual',
-      message: "You can't update username and email together",
+      message: `You can't update username and email together`,
     });
     setError('email', {
       type: 'manual',
-      message: "You can't update username and email together",
+      message: `You can't update username and email together`,
     });
     return false;
   }
