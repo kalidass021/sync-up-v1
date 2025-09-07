@@ -1,34 +1,70 @@
-import { StrictMode, lazy, Suspense } from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import loadable from '@loadable/component';
 import appStore from './redux/appStore.js';
 import './index.css';
 import App from './App.jsx';
+import Loader from './components/shared/Loader.jsx'; // loader
+import ErrorDisplay from './pages/ErrorDisplay.jsx'; // error page
 
 // public routes
-const LazyAuthLayout = lazy(() => import('./pages/auth/AuthLayout.jsx'));
-const LazySignupForm = lazy(() => import('./pages/auth/forms/SignupForm.jsx'));
-const LazySigninForm = lazy(() => import('./pages/auth/forms/SigninForm.jsx'));
+const LoadableAuthLayout = loadable(
+  () => import('./pages/auth/AuthLayout.jsx'),
+  { fallback: <Loader /> }
+);
+const LoadableSignupForm = loadable(
+  () => import('./pages/auth/forms/SignupForm.jsx'),
+  { fallback: <Loader /> }
+);
+const LoadableSigninForm = loadable(
+  () => import('./pages/auth/forms/SigninForm.jsx'),
+  { fallback: <Loader /> }
+);
 
 // private routes
-const LazyPageLayout = lazy(() => import('./pages/PageLayout.jsx'));
-const LazyHome = lazy(() => import('./pages/Home.jsx'));
-const LazyExplore = lazy(() => import('./pages/posts/Explore.jsx'));
-const LazyAllUsers = lazy(() => import('./pages/user/AllUsers.jsx'));
-const LazySavedPosts = lazy(() => import('./pages/posts/SavedPosts.jsx'));
-const LazyCreatePost = lazy(() => import('./pages/posts/CreatePost.jsx'));
-const LazyPostDetails = lazy(() => import('./pages/posts/PostDetails.jsx'));
-const LazyEditPost = lazy(() => import('./pages/posts/EditPost.jsx'));
-const LazyProfile = lazy(() => import('./pages/user/Profile.jsx'));
-const LazyEditProfile = lazy(() => import('./pages/user/EditProfile.jsx'));
-const LazyGridPostList = lazy(() => import('./components/posts/GridPostList.jsx'));
+const LoadablePageLayout = loadable(() => import('./pages/PageLayout.jsx'), {
+  fallback: <Loader />,
+});
+const LoadableHome = loadable(() => import('./pages/Home.jsx'), {
+  fallback: <Loader />,
+});
+const LoadableExplore = loadable(() => import('./pages/posts/Explore.jsx'), {
+  fallback: <Loader />,
+});
+const LoadableAllUsers = loadable(() => import('./pages/user/AllUsers.jsx'), {
+  fallback: <Loader />,
+});
+const LoadableSavedPosts = loadable(
+  () => import('./pages/posts/SavedPosts.jsx'),
+  { fallback: <Loader /> }
+);
+const LoadableCreatePost = loadable(
+  () => import('./pages/posts/CreatePost.jsx'),
+  { fallback: <Loader /> }
+);
+const LoadablePostDetails = loadable(
+  () => import('./pages/posts/PostDetails.jsx'),
+  { fallback: <Loader /> }
+);
+const LoadableEditPost = loadable(() => import('./pages/posts/EditPost.jsx'), {
+  fallback: <Loader />,
+});
+const LoadableProfile = loadable(() => import('./pages/user/Profile.jsx'), {
+  fallback: <Loader />,
+});
+const LoadableEditProfile = loadable(
+  () => import('./pages/user/EditProfile.jsx'),
+  { fallback: <Loader /> }
+);
+const LoadableGridPostList = loadable(
+  () => import('./components/posts/GridPostList.jsx'),
+  { fallback: <Loader /> }
+);
 
-// loader
-import Loader from './components/shared/Loader.jsx';
-
-// error page
-import ErrorDisplay from './pages/ErrorDisplay.jsx';
+// preload home page early
+LoadableHome.preload();
 
 const appRouter = createBrowserRouter([
   {
@@ -38,97 +74,73 @@ const appRouter = createBrowserRouter([
       {
         // private routes
         path: '',
-        element: <LazyPageLayout />,
+        element: <LoadablePageLayout />,
         children: [
           {
             path: '/',
-            element: <LazyHome />,
+            element: <LoadableHome />,
           },
           {
             path: '/explore',
-            element: <LazyExplore />,
+            element: <LoadableExplore />,
           },
           {
             path: '/posts/saved',
-            element: (
-              <Suspense fallback={<Loader />}>
-                <LazySavedPosts />
-              </Suspense>
-            ),
+            element: <LoadableSavedPosts />,
           },
           {
             path: '/users',
-            element: <LazyAllUsers />,
+            element: <LoadableAllUsers />,
           },
           {
             path: '/posts/create',
-            element: (
-              <Suspense fallback={<Loader />}>
-                <LazyCreatePost />
-              </Suspense>
-            ),
+            element: <LoadableCreatePost />,
           },
           {
             path: '/posts/:id/edit',
-            element: (
-              <Suspense fallback={<Loader />}>
-                <LazyEditPost />
-              </Suspense>
-            ),
+            element: <LoadableEditPost />,
           },
           {
             path: '/posts/:id',
-            element: (
-              <Suspense fallback={<Loader />}>
-                <LazyPostDetails />
-              </Suspense>
-            ),
+            element: <LoadablePostDetails />,
           },
           {
             path: '/:username/profile',
-            element: (
-              <Suspense fallback={<Loader />}>
-                <LazyProfile />
-              </Suspense>
-            ),
+            element: <LoadableProfile />,
             children: [
               {
                 path: '',
                 index: true,
-                element: <LazyGridPostList />,
+                element: <LoadableGridPostList />,
               },
               {
                 path: 'posts/liked',
-                element: <LazyGridPostList />,
+                element: <LoadableGridPostList />,
               },
               {
                 path: 'posts/saved',
-                element: <LazyGridPostList />,
+                element: <LoadableGridPostList />,
               },
             ],
           },
           {
             path: '/:username/profile/edit',
-            element: (
-              <Suspense fallback={<Loader />}>
-                <LazyEditProfile />
-              </Suspense>
-            ),
+            element: <LoadableEditProfile />,
           },
         ],
       },
       {
         // public routes
         path: '',
-        element: <LazyAuthLayout />,
+        element: <LoadableAuthLayout />,
         children: [
           {
             path: '/signup',
-            element: <LazySignupForm />,
+            element: <LoadableSignupForm />,
           },
           {
             path: '/signin',
-            element: <LazySigninForm />,
+            element: <LoadableSigninForm />,
           },
         ],
       },
