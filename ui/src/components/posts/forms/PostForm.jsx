@@ -178,7 +178,7 @@ const PostForm = ({ post, action }) => {
           >
             {isCreatingPost || isUpdatingPost ? (
               <div className='flex-center gap-2'>
-                <Loader /> {action === 'Update' ? 'Updating...' : 'Creating...'}
+                <Loader /> {action === 'Create' ? 'Creating...' : 'Updating...'}
               </div>
             ) : (
               action
