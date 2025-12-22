@@ -20,6 +20,7 @@ const PostForm = ({ post, action }) => {
     handleSubmit,
     setValue,
     setError,
+    clearErrors,
     formState: { errors },
     reset,
   } = useForm({
@@ -29,6 +30,7 @@ const PostForm = ({ post, action }) => {
       location: post?.location || '',
       tags: post?.tags || [],
     },
+    mode: 'onChange', // error clear when the user types
   });
 
   const navigate = useNavigate();
@@ -37,6 +39,7 @@ const PostForm = ({ post, action }) => {
   const [updatePost, { isLoading: isUpdatingPost }] = useUpdatePostMutation();
 
   const handleFileChange = async (acceptedFiles) => {
+    clearErrors('image'); // clear previous error for image
     const reader = new FileReader();
     reader.readAsDataURL(acceptedFiles[0]); // read file as a base64 string
     reader.onload = () => {
