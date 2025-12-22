@@ -1,4 +1,5 @@
 import { STATUS_CODES } from '../constants/appConstants';
+import { APP_ERRORS } from '../constants';
 
 const errorHandler = (err, req, res, next) => {
   // middleware to handle the erros
@@ -7,7 +8,7 @@ const errorHandler = (err, req, res, next) => {
   const errorResponse = {
     success: false,
     statusCode,
-    message: err.message || err.error || 'Internal server error',
+    message: err.message || err.error || APP_ERRORS.INTERNAL_SERVER_ERROR,
     ...(err.stack && { stack: err.stack }),
   };
 
