@@ -41,7 +41,10 @@ const PostForm = ({ post, action }) => {
   const handleFileChange = async (acceptedFiles) => {
     clearErrors('image'); // clear previous error for image
     const reader = new FileReader();
-    reader.readAsDataURL(acceptedFiles[0]); // read file as a base64 string
+    const file = acceptedFiles[0];
+    if (!file) return;
+    
+    reader.readAsDataURL(file); // read file as a base64 string
     reader.onload = () => {
       setValue('image', reader.result); // set image as a base64 string
     };
@@ -72,16 +75,17 @@ const PostForm = ({ post, action }) => {
           };
 
     try {
-      const res = await mutation(payload);
+      const res = await mutation(payload).unwrap();
 
-      if (res.error) {
-        throw new Error(res?.error);
-      }
+      // if (res.error) {
+      //   throw new Error(res?.error);
+      // }
 
       toast.success(`Post ${action === 'Update' ? 'updated' : 'created'}`);
       reset();
       navigate(action === 'Update' ? `/posts/${post._id}` : '/');
     } catch (err) {
+      console.log(JSON.stringify(err));
       console.error(
         `Failed to ${action === 'Update' ? 'update' : 'create'} post: ${err}`
       );
