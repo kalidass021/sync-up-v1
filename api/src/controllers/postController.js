@@ -29,7 +29,7 @@ export const createPost = async (req, res, next) => {
         await cloudinary.uploader.upload(image, {
           folder: 'sync-up/posts',
         })
-      ).public_id; // upload will return upload response // on upload response we're getting secure url
+      ).public_id; // upload will return upload response // on upload response we're getting public_id
     // if we need https url we need to use .secure_url
 
     const newPost = new Post({
