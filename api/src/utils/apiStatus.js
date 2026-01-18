@@ -1,9 +1,9 @@
+import sendResponse from '../core/sendResponse';
+
 const apiStatus = (req, res) => {
-  res.status(200).json({
-    statusCode: 200,
-    message: 'API is working!',
+  return sendResponse(200, 'API is working!', {
     environment: process.env.NODE_ENV,
-  });
+  })(req, res);
 };
 
 export default apiStatus;

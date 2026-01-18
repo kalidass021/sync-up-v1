@@ -1,15 +1,17 @@
-const sendResponse = (res, statusCode, message, data = null) => {
-  const success = statusCode >= 200 && statusCode < 300;
+const sendResponse = (statusCode, message, data = null) => {
+  return (req, res) => {
+    const success = statusCode >= 200 && statusCode < 300;
 
-  const responsePayload = {
-    success,
-    statusCode,
-    message,
-    ...(data && { data }),
-    timeStamp: new Date().toISOString(),
+    const responsePayload = {
+      success,
+      statusCode,
+      message,
+      ...(data && { data }),
+      timeStamp: new Date().toISOString(),
+    };
+
+    return res.status(statusCode).json(responsePayload);
   };
-
-  return res.status(statusCode).json(responsePayload);
 };
 
 export default sendResponse;
