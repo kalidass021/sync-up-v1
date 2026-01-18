@@ -6,6 +6,7 @@ import {
   NOTIFICATION_ENDPOINTS,
   POST_ENDPOINTS,
   USER_ENDPOINTS,
+  API_STATUS,
 } from './appConstants';
 import { APP_ERRORS } from './errorMessages';
 import { CONFIG_ERRORS } from './errorMessages';
@@ -18,6 +19,7 @@ export {
   NOTIFICATION_ENDPOINTS,
   POST_ENDPOINTS,
   USER_ENDPOINTS,
+  API_STATUS,
   APP_ERRORS,
   CONFIG_ERRORS,
 };

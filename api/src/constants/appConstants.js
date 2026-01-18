@@ -61,3 +61,7 @@ export const USER_ENDPOINTS = {
   SEARCH_USERS: '/search',
   UPDATE_USER_PROFILE: '/:username/profile',
 }
+
+export const API_STATUS = {
+  WORKING: 'API is working!',
+}
