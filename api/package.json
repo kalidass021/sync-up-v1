@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@babel/register": "^7.25.9",
+    "@types/bcryptjs": "^2.4.6",
     "concurrently": "^9.1.2"
   }
 }
