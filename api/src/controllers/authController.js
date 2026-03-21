@@ -1,7 +1,6 @@
 import bcrypt from 'bcryptjs';
 import { sendResponse } from '../core';
-import { STATUS_CODES } from '../constants';
-import { API_STATUS } from '../constants';
+import { STATUS_CODES, API_STATUS, AUTH_CONSTANTS } from '../constants';
 import { User } from '../models';
 import {
   generateToken,
@@ -44,6 +43,16 @@ export const signup = async (req, res, next) => {
     // generate token
     generateToken(newUser._id, res);
 
+    // return sendResponse(STATUS_CODES.Created, AUTH_CONSTANTS.SIGN_UP, {
+    //   _id: newUser._id,
+    //   fullName: newUser.fullName,
+    //   username: newUser.username,
+    //   email: newUser.email,
+    //   followers: newUser.followers,
+    //   following: newUser.following,
+    //   profileImgId: newUser.profileImgId,
+    // });
+
     res.status(201).json({
       _id: newUser._id,
       fullName: newUser.fullName,
@@ -74,7 +83,7 @@ export const signin = async (req, res, next) => {
     // if existingUser check the password
     const isPasswordValid = await bcrypt.compare(
       password,
-      user?.password || ''
+      user?.password || '',
     );
 
     if (!isPasswordValid) {
