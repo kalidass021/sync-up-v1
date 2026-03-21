@@ -51,7 +51,7 @@ export const signup = async (req, res, next) => {
     //   followers: newUser.followers,
     //   following: newUser.following,
     //   profileImgId: newUser.profileImgId,
-    // });
+    // })(req, res);
 
     res.status(201).json({
       _id: newUser._id,
