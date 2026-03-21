@@ -1,4 +1,7 @@
 import bcrypt from 'bcryptjs';
+import { sendResponse } from '../core';
+import { STATUS_CODES } from '../constants';
+import { API_STATUS } from '../constants';
 import { User } from '../models';
 import {
   generateToken,
@@ -8,7 +11,7 @@ import {
 } from '../utils';
 
 export const authCheck = async (req, res, next) => {
-  res.status(200).json({ message: 'Authorized' });
+  return sendResponse(STATUS_CODES.OK, API_STATUS.AUTHORIZED)(req, res);
 };
 
 export const signup = async (req, res, next) => {

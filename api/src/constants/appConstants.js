@@ -64,4 +64,5 @@ export const USER_ENDPOINTS = {
 
 export const API_STATUS = {
   WORKING: 'API is working!',
+  AUTHORIZED: 'Authorized!',
 }
