@@ -7,11 +7,13 @@ import {
   POST_ENDPOINTS,
   USER_ENDPOINTS,
   API_STATUS,
+  AUTH_CONSTANTS
 } from './appConstants';
 import { APP_ERRORS } from './errorMessages';
 import { CONFIG_ERRORS } from './errorMessages';
 
 export {
+  // constants
   MONGO_ID_REGEX,
   STATUS_CODES,
   ROUTES,
@@ -20,6 +22,8 @@ export {
   POST_ENDPOINTS,
   USER_ENDPOINTS,
   API_STATUS,
+  AUTH_CONSTANTS,
+  // errors
   APP_ERRORS,
   CONFIG_ERRORS,
 };

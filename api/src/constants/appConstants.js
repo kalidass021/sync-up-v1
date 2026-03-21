@@ -66,3 +66,10 @@ export const API_STATUS = {
   WORKING: 'API is working!',
   AUTHORIZED: 'Authorized!',
 }
+
+export const AUTH_CONSTANTS = {
+  SIGN_UP: 'Signed Up',
+  SIGN_IN: 'Signed In',
+  SIGN_OUT: 'Sign Out',
+  CURRENT_USER: 'Currrent User',
+}
