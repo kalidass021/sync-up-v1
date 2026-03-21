@@ -8,7 +8,7 @@ import { apiStatus } from './utils';
 import { notFound, errorHandler } from './middlewares';
 
 // constants
-import { ROUTES } from './constants';
+import { ROUTES, APP_ENV } from './constants';
 
 // routes
 import {
@@ -47,7 +47,7 @@ const startServer = () => {
   const port = parseInt(process.env.PORT, 10) || 5000;
   const server = app.listen(port, () => {
     const url =
-      process.env.NODE_ENV === 'development'
+      process.env.NODE_ENV === APP_ENV.DEV
         ? `http://localhost:${port}`
         : process.env.API_URL;
     console.info(`Server is up and listening at ${url}`);

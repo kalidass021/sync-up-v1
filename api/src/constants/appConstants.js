@@ -1,6 +1,11 @@
 // mongo db object id pattern regex
 export const MONGO_ID_REGEX = '([0-9a-fA-F]{24})';
 
+export const APP_ENV = {
+  DEV: 'development',
+  PROD: 'production',
+}
+
 export const STATUS_CODES = {
   OK: 200,
   Created: 201,

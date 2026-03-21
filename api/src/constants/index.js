@@ -1,5 +1,6 @@
 import {
   MONGO_ID_REGEX,
+  APP_ENV,
   STATUS_CODES,
   ROUTES,
   AUTH_ENDPOINTS,
@@ -15,6 +16,7 @@ import { CONFIG_ERRORS } from './errorMessages';
 export {
   // constants
   MONGO_ID_REGEX,
+  APP_ENV,
   STATUS_CODES,
   ROUTES,
   AUTH_ENDPOINTS,
