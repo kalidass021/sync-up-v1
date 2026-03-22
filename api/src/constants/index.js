@@ -10,8 +10,7 @@ import {
   API_STATUS,
   AUTH_CONSTANTS
 } from './appConstants';
-import { APP_ERRORS } from './errorMessages';
-import { CONFIG_ERRORS } from './errorMessages';
+import { APP_ERRORS, CONFIG_ERRORS, AUTH_ERRORS } from './errorMessages';
 
 export {
   // constants
@@ -28,4 +27,5 @@ export {
   // errors
   APP_ERRORS,
   CONFIG_ERRORS,
+  AUTH_ERRORS,
 };
