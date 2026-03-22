@@ -9,5 +9,5 @@ export const CONFIG_ERRORS = {
 
 export const AUTH_ERRORS = {
     USERNAME_EXISTS: 'Username already exists',
-    EMAIL_EXISTS: 'exists',
+    EMAIL_EXISTS: 'Email already exists',
 }

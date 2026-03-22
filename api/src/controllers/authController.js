@@ -1,6 +1,11 @@
 import bcrypt from 'bcryptjs';
 import { sendResponse } from '../core';
-import { STATUS_CODES, API_STATUS, AUTH_CONSTANTS } from '../constants';
+import {
+  STATUS_CODES,
+  API_STATUS,
+  AUTH_CONSTANTS,
+  AUTH_ERRORS,
+} from '../constants';
 import { User } from '../models';
 import {
   generateToken,
@@ -21,12 +26,20 @@ export const signup = async (req, res, next) => {
 
     const usernameExists = await User.findOne({ username });
     if (usernameExists) {
-      return next(error(400, 'Username already exists'));
+      return sendResponse(STATUS_CODES.BadRequest, AUTH_ERRORS.USERNAME_EXISTS)(
+        req,
+        res,
+        next,
+      );
     }
 
     const emailExists = await User.findOne({ email });
     if (emailExists) {
-      return next(error(400, 'Email already exists'));
+      return sendResponse(STATUS_CODES.BadRequest, AUTH_ERRORS.EMAIL_EXISTS)(
+        req,
+        res,
+        next,
+      );
     }
 
     // hash the password
