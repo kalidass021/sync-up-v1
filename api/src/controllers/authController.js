@@ -43,17 +43,7 @@ export const signup = async (req, res, next) => {
     // generate token
     generateToken(newUser._id, res);
 
-    // return sendResponse(STATUS_CODES.Created, AUTH_CONSTANTS.SIGN_UP, {
-    //   _id: newUser._id,
-    //   fullName: newUser.fullName,
-    //   username: newUser.username,
-    //   email: newUser.email,
-    //   followers: newUser.followers,
-    //   following: newUser.following,
-    //   profileImgId: newUser.profileImgId,
-    // })(req, res);
-
-    res.status(201).json({
+    return sendResponse(STATUS_CODES.Created, AUTH_CONSTANTS.SIGN_UP, {
       _id: newUser._id,
       fullName: newUser.fullName,
       username: newUser.username,
@@ -61,7 +51,17 @@ export const signup = async (req, res, next) => {
       followers: newUser.followers,
       following: newUser.following,
       profileImgId: newUser.profileImgId,
-    });
+    })(req, res);
+
+    // res.status(201).json({
+    //   _id: newUser._id,
+    //   fullName: newUser.fullName,
+    //   username: newUser.username,
+    //   email: newUser.email,
+    //   followers: newUser.followers,
+    //   following: newUser.following,
+    //   profileImgId: newUser.profileImgId,
+    // });
   } catch (err) {
     console.error(`Error in signup controller ${err.message}`);
     next(err);

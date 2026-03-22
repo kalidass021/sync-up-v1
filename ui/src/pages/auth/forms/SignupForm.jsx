@@ -51,14 +51,14 @@ const SignupForm = () => {
     }
 
     try {
-      const res = await signup({
+      const { data } = await signup({
         fullName,
         username,
         email,
         password,
       }).unwrap();
       // console.log('res', res);
-      dispatch(setCredentials({ ...res }));
+      dispatch(setCredentials({ ...data }));
       reset(); // reset the form after successful signup
       navigate(redirect);
       toast.success('User signed up successfully');
