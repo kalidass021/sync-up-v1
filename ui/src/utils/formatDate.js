@@ -8,6 +8,11 @@ const formatDate = (createdAt) => {
 
   const diffInSeconds = Math.floor((now - createdDate) / 1000);
 
+  // if less than 60 seconds, always shos 'just now'
+  if (diffInSeconds < 60) {
+    return 'just now';
+  }
+
   const units = [
     { label: 'year', seconds: 365 * 24 * 60 * 60 },
     { label: 'month', seconds: 30 * 24 * 60 * 60 },
